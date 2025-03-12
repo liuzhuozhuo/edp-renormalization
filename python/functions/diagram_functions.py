@@ -86,14 +86,14 @@ def trim_zeros_3D(array):
     
     return trimmed_array
 
-def connection(points1, paths1, points2, paths2):
+def connection(points1, paths1, points2, paths2, offset = 0):
     in_out_paths1 = in_out_paths(paths1)
     in_out_paths2 = in_out_paths(paths2)
 
     #Create the new points array
     points = np.zeros((len(points1) + len(points2), 2))
     points[:len(points1)] = points1
-    points[len(points1):] = points2 + np.array([np.max(points1)+1,0])
+    points[len(points1):] = points2 + np.array([np.max(points1)+1, offset])
 
     for i in range(len(in_out_paths2)):
         for j in range(len(in_out_paths2[0])):
@@ -109,9 +109,7 @@ def connection(points1, paths1, points2, paths2):
     for i in range (max_connections):
         n_connections += int(binom(n_1, i+1)*binom(n_2, i+1) * factorial(i+1))
 
-    combinations = np.zeros((n_connections, max_connections, 2), dtype=int)
-
-    combinations = how_connected(combinations, max_connections, n_connections, n_1, n_2)
+    combinations = how_connected(max_connections, n_connections, n_1, n_2)
     combinations = trim_zeros_3D(combinations)
     n  = len(combinations)
     n_paths = len(combinations[0])
@@ -126,7 +124,8 @@ def connection(points1, paths1, points2, paths2):
 
     return points, paths
 
-def how_connected(combinations, max_connections, n_connections, n_1, n_2):
+def how_connected( max_connections, n_connections, n_1, n_2):
+    combinations = np.zeros((n_connections, max_connections, 2), dtype=int)
     n = 0 
     while n < n_connections:
         for j in range (n_1):
@@ -137,7 +136,7 @@ def how_connected(combinations, max_connections, n_connections, n_1, n_2):
                     break
             if n == n_connections:
                 break
-
+            
     n = n_1*n_2
     if max_connections >1:
         while n < n_connections:

@@ -1,0 +1,17 @@
+Issues with the code
+
+- [ ] Deal with multi-particle
+    - [x] Add connections
+    - [ ] Add simplification of paths
+
+- [ ] Automatize higher order calculations
+    - [x] Starting by canonical diagrams of order 1.
+    - [ ] Add canonical diagrams of higher order.
+
+- [ ] Avoid line superpositions 
+    - [x] Make it possible
+    - [ ] Detect superpositions 
+        * The superpositions happen when 3 points are alinged, but not all cases are problematic:
+            * 2 lines are connected with an additional point in between
+            * 3 point alingned (say 1, 2, 3) with a path connected as (1, 3, 2). This way a path is invisible.
+    - [ ] Avoid superpositions when needed

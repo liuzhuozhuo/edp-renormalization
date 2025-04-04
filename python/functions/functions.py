@@ -46,10 +46,13 @@ def find_equal_subarrays(array):
     duplicate_positions = [np.where((sorted_subarrays == unique_subarrays[i]).all(axis=1))[0] for i in range(len(unique_subarrays)) if counts[i] > 1]
     return duplicate_positions
 
-def represent_diagram (points, paths, index = False, directory = "", colors = "tab:blue"):
+def represent_diagram (points, paths, index = False, directory = "", colors = "tab:blue", number = 0):
     fig=plt.figure(figsize=(5,3)) 
     ax=fig.add_subplot(111)
     ax.axis('off')
+    paths = trim_zeros_2D(paths)
+    points = trim_zeros_2D(points)
+
     loops = find_equal_subarrays(paths)
     
     for i in range(len(paths)):
@@ -62,6 +65,8 @@ def represent_diagram (points, paths, index = False, directory = "", colors = "t
     if index:
         for i in range(np.max(paths)):
             ax.text(points[i, 0], points[i, 1], str(i+1), fontsize=12, color="black", ha="right", va="top")
+    if number !=0:
+        ax.text(0.5, 0.5, f"N = {number}", fontsize=12, color="black", ha="center", va="center")
     if directory != "":
         plt.savefig(directory, bbox_inches='tight')
         plt.close()
@@ -224,16 +229,16 @@ def simplify_diagram_it(points, paths):
             for j in range(len(points)):
                 if points[j, 1] > i:
                     points[j, 1] -= 1
-    # for i in range(0, int(np.min(points, axis=0)[1])-1, -1):
-    #     count = 0
-    #     for j in range(len(points)):
-    #         if points[j, 1] == i:
-    #             count +=1
-    #             break
-    #     if count == 0:
-    #         for j in range(len(points)):
-    #             if points[j, 1] < i:
-    #                 points[j, 1] += 1
+    for i in range(0, int(np.min(points, axis=0)[1])-1, -1):
+        count = 0
+        for j in range(len(points)):
+            if points[j, 1] == i:
+                count +=1
+                break
+        if count == 0:
+            for j in range(len(points)):
+                if points[j, 1] < i:
+                    points[j, 1] += 1
     # i = 0
     # while i < len(points):
     #     if points[i, 0] == 0 and points[i, 1] == 0:
@@ -334,3 +339,37 @@ def combine_diagrams_order (points, paths, offset = 0):
                         new_paths[n, l] = simp_paths[l]
                     n += 1
     return new_points, trim_zeros_3D(new_paths)
+
+def all_components_in_other(array1, array2):
+    for row1 in array1:
+        found = False
+        for row2 in array2:
+            if np.array_equal(np.sort(row1), np.sort(row2)):
+                found = True
+                break
+        if not found:
+            return False
+    return True
+
+def group_diagrams (points, paths):
+    group_paths = np.zeros((1, len(paths[0]), 2), dtype=int)
+    group_points = np.zeros((1, len(points[0]), 2))
+    group_points[0] = points[0]
+    group_paths[0] = paths[0]
+    count = np.zeros((1), dtype=int)
+    count[0] = 1
+    for i in range(1, len(paths)):
+        cont = False
+        for j in range(len(group_paths)):
+            if all_components_in_other(paths[i], group_paths[j]):
+                count[j] += 1
+                cont = False
+                break
+            else:
+                cont = True
+
+        if cont:
+            group_paths = np.append(group_paths, [paths[i]], axis=0)
+            group_points = np.append(group_points, [points[i]], axis=0)
+            count = np.append(count, [1])
+    return group_points, group_paths, count

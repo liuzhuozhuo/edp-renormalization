@@ -4,6 +4,13 @@ import matplotlib as mpl
 from scipy.special import binom, factorial
 
 def combine_paths(*paths):
+    """ 
+    Combine multiple paths into a single array with the same length by padding with zeros.
+    Args:
+        paths (list): list of paths to combine
+    Returns:
+        final_path (np.array): combined path of dimension (len(paths), max_len, 2)
+    """
     max_len = max([len(path) for path in paths])
     final_path = np.zeros((len(paths), max_len, 2), dtype=int)
     for i in range(len(paths)):
@@ -12,14 +19,35 @@ def combine_paths(*paths):
         else:
             final_path[i] = paths[i]
     return final_path
-
+        
+#From Chatgpt
 def find_equal_subarrays(array):
+    """"
+    Find the positions of duplicate subarrays in a 2D array.
+    Args:
+        array (np.array): 2D array to search for duplicates
+    Returns:
+        duplicate_positions (list): list of positions of duplicate
+    """
     sorted_subarrays = [np.sort(subarray) for subarray in array]
     unique_subarrays, indices, counts = np.unique(sorted_subarrays, axis=0, return_index=True, return_counts=True)
     duplicate_positions = [np.where((sorted_subarrays == unique_subarrays[i]).all(axis=1))[0] for i in range(len(unique_subarrays)) if counts[i] > 1]
     return duplicate_positions
 
 def represent_diagram (points, all_paths, index = False, directory = "", colors = ["tab:blue", "tab:red", "black"], line = ["solid", "solid", "dashed"]):
+    """
+    Represent a diagram with points and paths.
+    Args:
+        points (np.array): array of points of dimension (n, 2)
+        all_paths (list): list of paths to represent
+        index (bool): whether to show the index of each point
+        directory (str): directory to save the diagram
+        colors (list): list of colors for each path
+        line (list): list of line styles for each path
+    """
+    if (np.all(all_paths == 0)):
+        return 
+
     fig=plt.figure(figsize=(5,3)) 
     ax=fig.add_subplot(111)
     ax.axis('off')
@@ -49,12 +77,15 @@ def represent_diagram (points, all_paths, index = False, directory = "", colors 
     if directory != "":
         plt.savefig(directory, bbox_inches='tight')
         plt.close()
-
+#From Chatgpt
 def unique_values(array):
     unique, counts = np.unique(array, return_counts=True)
     unique_values = unique[counts == 1]
     return unique_values
 
+#From Eddmik in https://stackoverflow.com/questions/34593824/trim-strip-zeros-of-a-numpy-array
+#Note that for numpy 2.2 the function trim_zeros is available for ndarrays.
+#I may rewirte this function as i would have done it myself, but for now we will use this one.
 def trim_zeros_2D(array, axis=1):
     mask = ~(array==0).all(axis=axis)
     inv_mask = mask[::-1]
@@ -65,6 +96,7 @@ def trim_zeros_2D(array, axis=1):
     else:
         return array[:, start_idx:end_idx]
     
+#From chatgpt 
 def trim_zeros_3D(array, axis=None):
     if axis is None:
         # Trim along all axes
@@ -112,6 +144,17 @@ def in_out_paths (paths):
     return in_out_paths
 
 def how_connected( max_connections, n_connections, n_1, n_2):
+    """
+    Generate all possible combinations of connections between two diagrams.
+    Args:
+        max_connections (int): maximum number of connections between the two diagrams for each type of particle
+        n_connections (int): number of connections between the two diagrams taking into account the number of types of particles
+        n_1 (int): number of input for each type of particle
+        n_2 (int): number of output for each type of particle
+    Returns:
+        combinations (np.array): array of all possible combinations of connections between the two diagrams
+        of dimension (n_connections, max_connections, 2)
+    """
     combinations = np.zeros((n_connections, max_connections, 2), dtype=int)
     n = 0 
     while n < n_connections:
@@ -191,6 +234,7 @@ def connection (points1, paths1, points2, paths2, offset = 0):
                 product *= n_connections[i]
         n_connec += product
 
+    #Use a dummy array to store all possible combinations of connections for each type of particle between the two diagrams
     dummy_combinations = np.zeros((sum(n_connections), n_types,  max(max_connections), 2), dtype=int)
     n = 0
     for i in range(n_types):
@@ -203,7 +247,12 @@ def connection (points1, paths1, points2, paths2, offset = 0):
                     break
             n+=1
 
+    #From the dummy array, create the array combinations that will store all possible combinations of connections between the two diagrams
+    #taking into account mixing different types of particles
     combinations = np.zeros((n_connec, n_types, max(max_connections), 2), dtype=int)
+
+    #The first step is to store a copy of the dummy array in the combinations array, without considering the mixing of different 
+    #types of particles since there will be diagrams without mixed particles.
     n = 0
     for i in range(n_types):
         if (n_connections[i] == 0):
@@ -216,12 +265,19 @@ def connection (points1, paths1, points2, paths2, offset = 0):
                     break
             n+=1        
 
+    #The second step is to store the combinations of connections between the two diagrams taking into account the mixing of 
+    #different types of particles. The process could be though as filling a tringular matrix with the combinations of connections
+    #between the two diagrams. The first row of the matrix corresponds to the one type case, the second row combining 2 elements of 
+    #the first row, this means combining 2 types of particles, and so on.
+
+    #The variable n_start indicates the position in the combinations array where the combinations of connections between 
+    #the two diagrams taking into account the mixing of different types of particles start.
     n_start = n
 
     n_prime = 0
     for i in range(n_types-1):
         leng = 0
-        for l in range(i+1, n_types):
+        for l in range(i+1, n_types):   
             leng += n_connections[i]*n_connections[l]
         for n in range(n_start, leng+n_start):
             combinations[n, i] = dummy_combinations[n_prime, i]
@@ -229,6 +285,7 @@ def connection (points1, paths1, points2, paths2, offset = 0):
                 combinations[n, j] = dummy_combinations[n-n_start+n_connections[i], j]
         n_prime += 1    
 
+    #Create the paths array that will store the connections between the two diagrams.
     paths = np.zeros((n_connec, n_types, len(paths1) + len(paths2) + max(max_connections), 2), dtype=int)
     paths[:n_connec,:n_types,:len(paths1)] = paths1
     for i in range(n_connec):
@@ -237,6 +294,73 @@ def connection (points1, paths1, points2, paths2, offset = 0):
                 if (combinations[i,j, k, 0] != 0 and combinations[i,j, k, 1] != 0):
                     paths[i,j, len(paths1)+k] = np.array([in_out_paths1[j,0, combinations[i, j, k, 0]-1], in_out_paths2[j,1, combinations[i, j, k, 1]-1]])
             if (np.count_nonzero(paths2[j]) != 0):
-                paths[i,j, len(paths1)+max(max_connections):] = paths2[j] + np.array([len(points1), len(points1)])
+                for k in range(len(paths2[j])):
+                    if (paths2[j, k, 0] != 0 and paths2[j, k, 1] != 0):
+                        paths[i,j, len(paths1)+max(max_connections)+k] = paths2[j, k] + np.array([len(points1), len(points1)])
 
     return points, paths
+
+def decrement_number_in_array(array, number):
+    array[array == number] -= 1
+    return array
+
+def decrement_number_in_array_2D(array, number):
+    """
+    Decrement a number in a 2D array.
+    Args:
+        array (np.array): 2D array to decrement the number
+        number (int): number to decrement
+    Returns:
+        array (np.array): decremented array
+    """
+    for i in range(len(array)):
+        for j in range(len(array[i])):
+            for k in range(2):
+                if array[i, j, k] == number:
+                    array[i, j, k] -= 1
+    return array
+
+def simplify_diagram_it (points, paths):
+    pos = np.zeros((2, 3), dtype=int)
+    for i in range(1, np.max(paths)+1):
+        count = 0
+        for j in range(len(paths)):
+            for k in range(len(paths[j])):
+                for l in range(2):
+                    if paths[j, k, l] == i:
+                        count += 1
+                        if count == 1:
+                            pos[0] = np.array([j, k, l])
+                        elif count == 2:
+                            pos[1] = np.array([j, k, l])
+                        else:
+                            break
+        if count == 2 and pos[0, 0] == pos[1, 0]:
+            j = pos[0, 0] # type of particle
+            points = np.delete(points, i-1, axis=0)
+            if pos[0, 2] == 0:
+                if pos[1, 2] == 0:
+                    prov = np.array([paths[j, pos[0, 1], 1], paths[j, pos[1, 1], 1]])
+                elif pos[1, 2] == 1:
+                    prov = np.array([paths[j, pos[0, 1], 1], paths[j, pos[1, 1], 0]])  
+            elif pos[0, 2] == 1:
+                if pos[1, 2] == 0:
+                    prov = np.array([paths[j, pos[0, 1], 0], paths[j, pos[1, 1], 1]])                  
+                elif pos[1, 1] == 1:
+                    prov = np.array([paths[j, pos[0, 1], 0], paths[j, pos[1, 1], 0]])
+            paths[j, pos[1, 1]] = np.array([0, 0])
+            paths[j, pos[0, 1]] = prov
+                    
+            for k in range(i, np.max(paths)+1):
+                paths = decrement_number_in_array(paths, k)
+
+    return points, trim_zeros_3D(paths, axis=1)
+
+def simplify_diagram (points, paths):
+    new_points, new_paths = simplify_diagram_it(points, paths)
+    new_new_points, new_new_paths = simplify_diagram_it(new_points, new_paths)
+    while len(new_points) != len(new_new_points) or len(new_paths) != len(new_new_paths):
+        new_points, new_paths = new_new_points, new_new_paths
+        new_new_points, new_new_paths = simplify_diagram_it(new_points, new_paths)
+    return new_new_points, new_new_paths
+

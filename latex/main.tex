@@ -1,0 +1,322 @@
+\documentclass[11pt,a4paper,twoside,pdf]{article}
+
+% Paquetes (añade otros si los necesitas):
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+\usepackage[pdftex,final]{graphicx}
+\bibliographystyle{plain} % We choose the "plain" reference style
+
+% Style package
+% Font Package (Palatino)
+\usepackage{mathpazo}
+% Packages for specific capabilities
+\usepackage{rotating} % for text rotation in tables
+\usepackage{multirow} % for multirow in tables
+\usepackage{subfigure} % Place subfigures in figure environment
+% Packages for specific symbols
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{eurosym} % Euro symbol
+\usepackage{bbding} % for \XSolidBrush
+\usepackage{pifont} % for \ding{55} (a check mark)
+\usepackage{macro}
+
+
+\usepackage{latexsym}
+\usepackage{soul}
+\usepackage{array}
+%\usepackage{marvosym}
+\usepackage{epsfig}
+\usepackage{graphics}
+\usepackage{amsfonts}
+\usepackage{xspace}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{xtab}
+\usepackage[colorlinks=true,urlcolor=blue,linkcolor=blue,citecolor=blue]{hyperref}
+\numberwithin{equation}{section}
+
+
+\linespread{1.05}
+
+% TFG en inglés:
+\usepackage[english]{babel} 
+\addto\captionsenglish{\renewcommand{\chaptername}{}}
+
+% TFG en español:
+%\usepackage[spanish,es-nodecimaldot,es-tabla,es-lcroman,es-nosectiondot,es-noindentfirst]{babel}
+%\renewcommand\spanishchaptername{}
+
+% Formato de la página:
+\usepackage{fancyhdr}
+\usepackage[top=2.88cm,bottom=2.97cm,left=2.95cm,right=2.95cm]{geometry}
+\setlength{\parskip}{0.1cm}
+
+% Pon aquí tus definiciones:
+
+\newcommand{\dis}{\displaystyle}
+%\sodef\an{}{.2em}{1em plus1em}{2em plus.1em minus.1em}
+
+\begin{document}
+
+% Portada %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{empty}
+
+
+\noindent
+\begin{tabular}{r}
+\includegraphics[width=8.8cm]{escudoUGRmonocromo.png} \\[-1.8ex]
+\hspace{31mm}\vspace{-8mm}
+\begin{tabular}{c}
+\hline\\[-1ex]\hskip-2mm
+{\bf Facultad de Ciencias}\hspace{18mm}
+\end{tabular}
+\end{tabular}
+
+\large
+\vspace{30mm}
+\hspace{25mm}
+\begin{tabular}{l}
+GRADO EN F\'ISICA
+\end{tabular}
+
+\vspace{45mm}
+\hspace{25mm}
+\begin{tabular}{l}
+TRABAJO FIN DE GRADO
+\\[1.5ex]
+\LARGE\bf Herramientas para cálculos \\ 
+\LARGE\bf perturbativos en renormalización \\
+\LARGE\bf de Hamiltonianos \\
+\end{tabular}
+%
+\vfill
+\hspace{25mm}
+\begin{tabular}{l}
+Presentado por:
+\\
+{\bf D. ZhuoZhuo Liu}
+\\[3ex]
+Curso Académico 2024/2025
+\end{tabular}
+%
+
+\newpage
+%
+\begin{center}
+{\bf Resumen}
+\bigskip
+
+\begin{minipage}{0.8\linewidth}
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla 
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+\end{minipage}
+
+\newpage
+
+{\bf Abstract} 
+\bigskip
+
+\begin{minipage}{0.8\linewidth}
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla 
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+\end{minipage}
+
+\newpage
+
+\end{center}
+
+% Indice %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+
+\tableofcontents
+
+% Texto %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+
+\pagestyle{fancy}
+\fancyhead[RO,LE]{\leftmark}
+\fancyhead[LO,RE]{\thepage}
+\fancyfoot{}
+
+\newpage
+
+\section{Introduction}
+
+
+It's in our interest to formulate a theory compatible with special relativity and
+quantum mechanics, this culminates in quantum field theories. 
+
+we should expect the most general theories to be scale invariant, 
+
+In the context of theoretical physics renormalization is an important procedure 
+
+Tipical renormalization procedures apply to Lagrangian dynamics, 
+
+\newpage
+
+\section{Theoretical background}
+
+To describe the relativistic interactions of effective particles in the framework of 
+the renormalization group procedure for effective particles, making use of quantum 
+theory in the front form of Hamiltonian dynamics. 
+
+\subsection{Canonical Hamiltonian}
+
+This is the Hamiltonian that describes the theory, it dictates the evolution and 
+interactions of the elements in the theory. In 
+
+In the case of field theories, a Hamiltonian density can be defined such that 
+integrating over space coordinates the Hamiltonian is obtained. 
+
+\begin{equation}
+    H = \int d^3x \mathcal{H}
+\end{equation}
+for simplicity we will call the Hamiltonian density $\mathcal{H}$, as Hamiltonian.
+
+Solving the system means diagonalizing the Hamiltonian matrix, and finding the 
+eigenvalues, or in this context eigenenergies of the system. In general this is a 
+non trivial process.
+
+In field theory calculations the fundamental quantities to consider are the 
+energy-momentums, angular momentums, and boosts, due to it's relation or conservation
+under the Poincaré group, this is a set of transformation.
+
+It's expression in point form of dynamics, this is expressing the set of dynamical 
+variables refering to the physical condition of the system at some instant of time, 
+we could say this is the "usual way" of expressing the dynamical variables, are,
+
+
+
+
+\subsection{Fock space}
+
+In order to describe a varible number of particles, the theory needs to be build 
+in the Fock space, this is of the form,
+
+
+\subsection{Front form of Hamiltonian Dynamics}
+
+The front form of dynamics introduced by Dirac (1949) \cite{dirac_front_forms_1949} 
+offers a couple advantages to the 
+
+The quantization hypersurface considered is,
+
+\begin{equation}
+    x^+ = t+z = x^0 + x^3 = 0,
+\end{equation}
+then the rest of coordinates will be defined as
+
+\begin{equation}
+    x^- = x^0-x^3, \quad x^\perp = \{x^1, x^2\},
+\end{equation}
+
+In this set of coordinates, the fundamental quantities 
+
+\subsection{RGPEP}
+
+The solution 
+
+RGPEP introduces effective particle operators (namely creation and annihilation 
+operators) that differs from the canonical ones by a unitary transformation
+
+\begin{equation}
+    a_s = \mathcal{U}_sa_0\mathcal{U}_s^\dagger,
+    \label{eq:effective_particle_operator}
+\end{equation}
+labeled by the parameter $s$, the renormalization group parameter. This parameter 
+has dimension of length. Physically $s$ has the interpretation of the characteristic 
+size of the effective particles.
+
+Then $s=0$ correspond to the point-like or bare particles
+
+Due to dimensional and notational reasons, it's convenient to use the scale parameter 
+$t = s^4$ instead of $s$.
+
+The effective Hamiltonian is related to the regulated canonical one with counter-terms 
+by the condition,
+
+\begin{equation}
+    \mathcal{H}_t(a_t) = \mathcal{H}_0(a_0)
+\end{equation}
+combining with the equation \eqref{eq:effective_particle_operator}, and considering 
+the parameter $t$ instead of $s$, the condition becomes,
+
+\begin{equation}
+    \mathcal{H}_t(a_0) = \mathcal{U}_t^\dagger\mathcal{H}_0(a_0) \mathcal{U}_t,
+\end{equation}
+differentiating with respect of $t$, 
+
+\begin{equation}
+    \mathcal{H}_t^\prime (a_0) \equiv \frac{d}{dt}\mathcal{H}_t(a_0) = 
+    \sbrackets{-\mathcal{U}_t^\dagger \mathcal{U}_t^\prime, \mathcal{H}_t(a_0)} 
+    = \sbrackets{\mathcal{G}_t(a_0), \mathcal{H}_t(a_0)},
+\end{equation}
+where $\mathcal{G}_t$ is the RGPEP generator, this generator is defined as 
+
+We will consider the generator from Ref. \cite{PEP}
+
+\begin{equation}
+    \mathcal{G}_t = \sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}},
+\end{equation}
+where $\mathcal{H}_f$, the free part of $\mathcal{H}_t$, and $\mathcal{H}_{Pt}$ is 
+defined as function of the interacting term.
+
+\begin{equation}
+    =  \sbrackets{\sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}}, \mathcal{H}_t}
+\end{equation}
+
+where $\mathcal{H}_t$ is the Hamiltonian interested in solving, 
+
+\subsection{Counterterms}
+
+The counterterms is an additional term added to the initial or bare Hamiltonian 
+$\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
+process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
+finite at all values of $t$.
+
+\subsection{Diagram representation}
+
+From the expression of the Hamiltonian, different terms can be separated and correlate
+to a diagram representation of the process, similar to the Feymann diagrams.
+
+
+\section{Cases}
+
+\subsection{Scalar case}
+
+
+\section{Code implementation}
+
+\section{Diagrams obtained}
+
+\subsection{Scalar}
+
+\subsection{QED}
+
+\subsection{QCD}
+
+\section{Conclusions and future work}
+
+
+
+% Referencias %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newpage
+
+\bibliography{references} % Entries are in the references.bib file
+\nocite{QFT}
+\nocite{QCDG}
+
+\end{document}
+

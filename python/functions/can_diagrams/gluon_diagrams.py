@@ -47,6 +47,8 @@ can_paths_1st = np.empty((2, max(len(paths_1st_1), len(paths_1st_2)), max(len(pa
 can_paths_1st[0] = paths_1st_1
 can_paths_1st[1] = paths_1st_2
 
+can_number_1st = np.array([[1], [1], [1], [1]])
+
 #Second order
 points_2nd_1_1 = np.array([[0, 1], [0, 3], [0, 5], [1, 4], [2, 3], [4, 1]])
 paths_2nd_1_1g = np.array([[1, 5], [2, 4], [3, 4], [5, 6]])
@@ -114,5 +116,8 @@ can_paths_2nd[8] = herm_conj(points_2nd_1_1, paths_2nd_1_1)[1]
 can_paths_2nd[9] = herm_conj(points_2nd_1_2, paths_2nd_1_2)[1]
 can_paths_2nd[10] = herm_conj(points_2nd_1_3, paths_2nd_1_3)[1]
 
+can_number_2nd = np.array([[1], [1], [1], [1], [1], [1], [1], [1], [1], [1], [1]])
+
 can_points = [can_points_1st, can_points_2nd]
 can_paths = [can_paths_1st, can_paths_2nd]
+can_number = [can_number_1st, can_number_2nd]

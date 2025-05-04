@@ -15,3 +15,6 @@ Issues with the code
             * 2 lines are connected with an additional point in between
             * 3 point alingned (say 1, 2, 3) with a path connected as (1, 3, 2). This way a path is invisible.
     - [x] Avoid superpositions when needed
+
+- How the counterterms are implemented
+- Fix the counting when canonical diagrams are present.

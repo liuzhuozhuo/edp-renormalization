@@ -20,6 +20,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{braket}
 \usepackage{eurosym} % Euro symbol
 \usepackage{bbding} % for \XSolidBrush
 \usepackage{pifont} % for \ding{55} (a check mark)
@@ -155,10 +156,13 @@ bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
 \section{Introduction}
 
 
+
 It's in our interest to formulate a theory compatible with special relativity and
 quantum mechanics, this culminates in quantum field theories. 
 
 we should expect the most general theories to be scale invariant, 
+
+In the field of theoretical physics, divergences are a common occurrence, 
 
 In the context of theoretical physics renormalization is an important procedure 
 
@@ -172,39 +176,114 @@ To describe the relativistic interactions of effective particles in the framewor
 the renormalization group procedure for effective particles, making use of quantum 
 theory in the front form of Hamiltonian dynamics. 
 
-\subsection{Canonical Hamiltonian}
+\subsection{Canonical Hamiltonian}\label{sec:canonical_hamiltonian}
 
-This is the Hamiltonian that describes the theory, it dictates the evolution and 
-interactions of the elements in the theory. In 
+\subsubsection{Classical mechanics}
+
+The canonical Hamiltonian is a function of the canonical coordinates $q_i$,
+the canonical momenta $p_i$, and time $t$. The Hamiltonian is a function that
+describes the total energy of the system, and is obtained from applying the Legendre 
+transformation to the Lagrangian of the system, this is defined as,
+\begin{equation}
+    H(q,p,t) = \sum_i p_i \dot{q}_i - L(q,\dot{q},t),
+\end{equation}
+where $H$ is the Hamiltonian, $L$ is the Lagrangian, $q_i$ are the canonical
+coordinates, $\dot{q}_i$ are the canonical velocities, and $p_i$ are the
+canonical momenta. The canonical momenta are defined as,
+\begin{equation}
+    p_i = \frac{\partial L}{\partial \dot{q}_i},
+\end{equation}
+
+The canonical Hamiltonian governs the time evolution of the system via the 
+Hamilton equations of motion, which are given by,
+\begin{equation}
+    \dot{q}_i = \frac{\partial H}{\partial p_i}, \quad \dot{p}_i = -\frac{\partial H}{\partial q_i}.
+\end{equation}
+
+\subsubsection{Field theory}
 
 In the case of field theories, a Hamiltonian density can be defined such that 
 integrating over space coordinates the Hamiltonian is obtained. 
 
 \begin{equation}
-    H = \int d^3x \mathcal{H}
+    H = \int d^3x \mathcal{H},
 \end{equation}
 for simplicity we will call the Hamiltonian density $\mathcal{H}$, as Hamiltonian.
 
-Solving the system means diagonalizing the Hamiltonian matrix, and finding the 
-eigenvalues, or in this context eigenenergies of the system. In general this is a 
-non trivial process.
+For a classical field $\phi(x)$, with the Lagrangian density $\mathcal{L}
+(\phi,\partial_\mu\phi)$, the Hamiltonian density is defined as,
+
+\begin{equation}
+    \mathcal{H} = \pi \dot{\phi} - \mathcal{L},
+\end{equation}
+where $\pi$ is the canonical momentum, defined as,
+
+\begin{equation}
+    \pi = \frac{\partial \mathcal{L}}{\partial \dot{\phi}}.
+\end{equation}
+
+\subsubsection{Quantum field theory}
+
+In quantum mechanics, or quantum field theory, the Hamiltonian becomes an operator 
+acting on a Hilbert space. 
+
+Solving the system means obtaining the spectrum of the theory, this is finding the 
+eigenenergies of the system. In general this is a non trivial process. 
 
 In field theory calculations the fundamental quantities to consider are the 
-energy-momentums, angular momentums, and boosts, due to it's relation or conservation
-under the Poincaré group, this is a set of transformation.
+energy-momenta, angular momentum, and boosts, due to its symmetries
+under the Poincaré group.
 
-It's expression in point form of dynamics, this is expressing the set of dynamical 
-variables refering to the physical condition of the system at some instant of time, 
-we could say this is the "usual way" of expressing the dynamical variables, are,
-
-
+The Poincaré group contains the Lorentz group and the translations, the generators of
+the Poincaré group are the four-momentum operator $P^\mu$ and the angular momentum
+$M^{\mu\nu}$, which satisfy the following commutation relations,
+\begin{align}
+    \sbrackets{P^\mu, P^\nu} &= 0, \\
+    \sbrackets{M^{\mu\nu}, P^\rho} &= 
+    i\left( g^{\nu\rho}P^\mu - g^{\mu\rho}P^\nu \right), \\
+    \sbrackets{M^{\mu\nu}, M^{\rho\sigma}} &    = i\left( g^{\nu\rho}M^{\mu\sigma} 
+    - g^{\mu\rho}M^{\nu\sigma} + g^{\sigma\mu}M^{\nu\rho} - g^{\sigma\nu}
+    M^{\mu\rho}\right).
+\end{align}
 
 
 \subsection{Fock space}
 
-In order to describe a varible number of particles, the theory needs to be build 
-in the Fock space, this is of the form,
+In order to describe a variable number of particles in our system, the use of the Fock
+space is needed. Intoduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock 
+space is a sum of a set of Hilbert spaces, each one corresponding to a different number of
+particles in the system. 
 
+The Fock space is defined as the direct sum of tensor products of the single 
+particle Hilbert space $\mathbb{H}$,
+
+\begin{equation}
+    \mathbb{F}_\nu = \bigoplus_{n=0}^{\infty} S_\nu \mathbb{H}^{\otimes n} = 
+    \mathbb{C} \oplus \mathbb{H} \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}) 
+    \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
+\end{equation}
+where $S_\nu$ is the symmetrization operator depending on whether the particles described
+are bosonic or fermionic, it symmetrizes or antisymmetric the tensors, and 
+$\mathbb{C}$ is the complex scalar, corresponding to the states with no particles. 
+
+This way a general state in the Fock space can be expressed as,
+
+\begin{equation}
+    \ket{\Psi}_\nu = \ket{\Psi_0}_\nu \oplus \ket{\Psi_1}_\nu \oplus
+    \ket{\Psi_2}_\nu \oplus \cdots = a \ket{0}_\nu + \sum_{i=1}a_i \ket{\psi_i}_\nu +
+    \sum_{i,j=1}a_{ij} \ket{\psi_i \psi_j}_\nu + \cdots,
+\end{equation}
+where $\ket{\Psi_0}_\nu$ is the vacuum state, $\ket{\Psi_1}_\nu$ is the one particle
+state, $\ket{\Psi_2}_\nu$ is the two particle state, and so on. The coefficients $a_i$
+are the amplitudes of the states, in general complex numbers. 
+
+In the case of QCD, a geneal state in the Fock space involves a superposition of all 
+possible multiparticle states, build from quarks, antiquarks, and gluons, with the
+correct quantum numbers. This way a general state in the Fock space can be expressed as,
+\begin{equation}
+    \ket{\Psi} = c_0 \ket{0} + c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{qqq} 
+    + c_4 \ket{gg} + \cdots,
+\end{equation}
 
 \subsection{Front form of Hamiltonian Dynamics}
 
@@ -219,17 +298,31 @@ The quantization hypersurface considered is,
 then the rest of coordinates will be defined as
 
 \begin{equation}
-    x^- = x^0-x^3, \quad x^\perp = \{x^1, x^2\},
+    x^- = x^0-x^3, \quad x^\perp = (x^1, x^2),
 \end{equation}
 
 In this set of coordinates, the fundamental quantities 
 
+The Hamiltonian in FF quantization is obtained from the Lagrangian density using 
+the Legendre transformation, similar to the procedure explained in the section
+\ref{sec:canonical_hamiltonian}, but with respect to the new coordinates.
+
+\subsection{Counterterms}
+
+The counterterms is an additional term added to the initial or bare Hamiltonian 
+$\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
+process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
+finite at all values of $t$.
+
 \subsection{RGPEP}
+The renormalization group procedure for effective particles (RGPEP), as it's name 
+indicate is a renormalization group procedure applied to the Hamiltonian formulation.
 
-The solution 
-
-RGPEP introduces effective particle operators (namely creation and annihilation 
-operators) that differs from the canonical ones by a unitary transformation
+By considering a series of unitary transformations, the RGPEP is able to construct a 
+series of effective Hamiltonians $\mathcal{H}_s$, and the corresponding effective 
+particles, by the use of effective particle operators (namely creation and 
+annihilation operators) that differs from the canonical ones by the unitary 
+transformation $\mathcal{U}_s$,
 
 \begin{equation}
     a_s = \mathcal{U}_sa_0\mathcal{U}_s^\dagger,
@@ -239,10 +332,8 @@ labeled by the parameter $s$, the renormalization group parameter. This paramete
 has dimension of length. Physically $s$ has the interpretation of the characteristic 
 size of the effective particles.
 
-Then $s=0$ correspond to the point-like or bare particles
-
-Due to dimensional and notational reasons, it's convenient to use the scale parameter 
-$t = s^4$ instead of $s$.
+Due to dimensional and notational reasons that will be explained latter, it's 
+convenient to consider the scale parameter $t = s^4$ instead of $s$. 
 
 The effective Hamiltonian is related to the regulated canonical one with counter-terms 
 by the condition,
@@ -250,6 +341,11 @@ by the condition,
 \begin{equation}
     \mathcal{H}_t(a_t) = \mathcal{H}_0(a_0)
 \end{equation}
+
+
+
+Then $s=0$ correspond to the point-like or bare particles, and recovering the original
+
 combining with the equation \eqref{eq:effective_particle_operator}, and considering 
 the parameter $t$ instead of $s$, the condition becomes,
 
@@ -277,19 +373,18 @@ defined as function of the interacting term.
     =  \sbrackets{\sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}}, \mathcal{H}_t}
 \end{equation}
 
-where $\mathcal{H}_t$ is the Hamiltonian interested in solving, 
+where $\mathcal{H}_t$ is the Hamiltonian interested in solving.
 
-\subsection{Counterterms}
+The free Hamiltonian $\mathcal{H}_f$ is the part of $\mathcal{H}_0(a_0)$ that does 
+not depend on the coupling constants, 
 
-The counterterms is an additional term added to the initial or bare Hamiltonian 
-$\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
-process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
-finite at all values of $t$.
 
 \subsection{Diagram representation}
 
 From the expression of the Hamiltonian, different terms can be separated and correlate
-to a diagram representation of the process, similar to the Feymann diagrams.
+to a diagram representation of the process, similar to the Feynman diagrams.
+
+
 
 
 \section{Cases}

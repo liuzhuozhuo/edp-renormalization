@@ -18,3 +18,5 @@ Issues with the code
 
 - How the counterterms are implemented
 - Fix the counting when canonical diagrams are present.
+
+-[ ]  

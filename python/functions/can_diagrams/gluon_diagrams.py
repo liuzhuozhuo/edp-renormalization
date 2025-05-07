@@ -17,15 +17,6 @@ def combine_paths(*paths):
             final_path[i] = paths[i]
     return final_path
 
-def herm_conj (points, paths):
-    """
-    Given a diagram it return the hermitic conjugate
-    """
-    max = np.max(points)
-    for i in range(len(points)):
-        points[i, 0] = max - points[i, 0]-1
-    return points, paths
-
 # First order
 points_1st_1 = np.array([[0, 1], [0, 3], [1, 2], [2, 2]])
 paths_1st_1g = np.array([[1, 3], [2, 3], [3, 4]]) 
@@ -90,6 +81,21 @@ paths_2nd_2_5g = np.array([[1, 3], [2, 4], [3, 6], [4, 5]])
 paths_2nd_2_5i = np.array([[3, 4]])
 paths_2nd_2_5 = combine_paths(paths_2nd_2_5g, paths_2nd_2_5i)
 
+points_2nd_3_1 = np.array([[0, 1], [2, 3], [3, 4], [4, 1], [4, 3], [4, 5]])
+paths_2nd_3_1g = np.array([[1, 2], [2, 4], [3, 5], [3, 6]])
+paths_2nd_3_1i = np.array([[2, 3]])
+paths_2nd_3_1 = combine_paths(paths_2nd_3_1g, paths_2nd_3_1i)
+
+points_2nd_3_2 = np.array([[0, 1], [2, 3], [3, 2], [4, 1], [4, 3], [4, 5]])
+paths_2nd_3_2g = np.array([[1, 2], [3, 4], [3, 5], [2, 6]])
+paths_2nd_3_2i = np.array([[2, 3]])
+paths_2nd_3_2 = combine_paths(paths_2nd_3_2g, paths_2nd_3_2i)
+
+points_2nd_3_3 = np.array([[0, 1], [2, 3], [3, 4], [4, 1], [4, 3], [4, 5]])
+paths_2nd_3_3g = np.array([[1, 2], [3, 4], [2, 5], [3, 6]])
+paths_2nd_3_3i = np.array([[2, 3]])
+paths_2nd_3_3 = combine_paths(paths_2nd_3_3g, paths_2nd_3_3i)
+
 can_points_2nd = np.empty((11, max(len(points_2nd_1_1), len(points_2nd_1_2), len(points_2nd_1_3)), 2))
 can_points_2nd[0] = points_2nd_1_1
 can_points_2nd[1] = points_2nd_1_2
@@ -99,9 +105,9 @@ can_points_2nd[4] = points_2nd_2_2
 can_points_2nd[5] = points_2nd_2_3
 can_points_2nd[6] = points_2nd_2_4
 can_points_2nd[7] = points_2nd_2_5
-can_points_2nd[8] = herm_conj(points_2nd_1_1, paths_2nd_1_1)[0]
-can_points_2nd[9] = herm_conj(points_2nd_1_2, paths_2nd_1_2)[0]
-can_points_2nd[10] = herm_conj(points_2nd_1_3, paths_2nd_1_3)[0]
+can_points_2nd[8] = points_2nd_3_1
+can_points_2nd[9] = points_2nd_3_2
+can_points_2nd[10] = points_2nd_3_3
 
 can_paths_2nd = np.empty((11, max(len(paths_2nd_1_1), len(paths_2nd_1_2), len(paths_2nd_1_3)), max(len(paths_2nd_1_1[0]), len(paths_2nd_1_2[0]), len(paths_2nd_1_3[0])), 2), dtype=int)
 can_paths_2nd[0] = paths_2nd_1_1
@@ -112,9 +118,9 @@ can_paths_2nd[4] = paths_2nd_2_2
 can_paths_2nd[5] = paths_2nd_2_3
 can_paths_2nd[6] = paths_2nd_2_4
 can_paths_2nd[7] = paths_2nd_2_5
-can_paths_2nd[8] = herm_conj(points_2nd_1_1, paths_2nd_1_1)[1]
-can_paths_2nd[9] = herm_conj(points_2nd_1_2, paths_2nd_1_2)[1]
-can_paths_2nd[10] = herm_conj(points_2nd_1_3, paths_2nd_1_3)[1]
+can_paths_2nd[8] = paths_2nd_3_1
+can_paths_2nd[9] = paths_2nd_3_2
+can_paths_2nd[10] = paths_2nd_3_3
 
 can_number_2nd = np.array([[1], [1], [1], [1], [1], [1], [1], [1], [1], [1], [1]])
 

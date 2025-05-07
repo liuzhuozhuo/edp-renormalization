@@ -28,6 +28,7 @@
 
 
 \usepackage{latexsym}
+\usepackage{comment}
 \usepackage{soul}
 \usepackage{array}
 %\usepackage{marvosym}
@@ -176,8 +177,31 @@ To describe the relativistic interactions of effective particles in the framewor
 the renormalization group procedure for effective particles, making use of quantum 
 theory in the front form of Hamiltonian dynamics. 
 
+\subsection{Front form of Hamiltonian Dynamics}
+
+The front form of dynamics introduced by Dirac (1949) \cite{dirac_front_forms_1949} 
+offers a couple advantages to the 
+
+The quantization hypersurface considered is,
+
+\begin{equation}
+    x^+ = t+z = x^0 + x^3 = 0,
+\end{equation}
+then the rest of coordinates will be defined as
+
+\begin{equation}
+    x^- = x^0-x^3, \quad x^\perp = (x^1, x^2),
+\end{equation}
+
+In this set of coordinates, the fundamental quantities 
+
+The Hamiltonian in FF quantization is obtained from the Lagrangian density using 
+the Legendre transformation, similar to the procedure explained in the section
+\ref{sec:canonical_hamiltonian}, but with respect to the new coordinates.
+
 \subsection{Canonical Hamiltonian}\label{sec:canonical_hamiltonian}
 
+\begin{comment}
 \subsubsection{Classical mechanics}
 
 The canonical Hamiltonian is a function of the canonical coordinates $q_i$,
@@ -221,6 +245,10 @@ where $\pi$ is the canonical momentum, defined as,
 \begin{equation}
     \pi = \frac{\partial \mathcal{L}}{\partial \dot{\phi}}.
 \end{equation}
+\end{comment}
+
+\begin{comment}
+    
 
 \subsubsection{Quantum field theory}
 
@@ -245,6 +273,48 @@ $M^{\mu\nu}$, which satisfy the following commutation relations,
     - g^{\mu\rho}M^{\nu\sigma} + g^{\sigma\mu}M^{\nu\rho} - g^{\sigma\nu}
     M^{\mu\rho}\right).
 \end{align}
+
+\end{comment}
+
+\subsubsection{Scalar fields}
+
+\subsubsection{Gluon fields}
+
+The Lagrangian density for the gluon fields is given by,
+\begin{equation}
+    \mathcal{L} = -\frac{1}{2}\text{tr}F^{\mu\nu}F_{\mu\nu}
+\end{equation}
+where $F^{\mu\nu}$ is the field strength tensor, defined as,
+\begin{equation}
+    F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu + ig [A^\mu, A^\nu],
+\end{equation}
+and $A^\mu = A^{a\mu}t^a$, $t^a$ are the generators of the gauge group, and $g$ is the
+coupling constant. Verifying the following relations,
+
+\begin{equation}
+    [t^a, t^b] = i f^{abc} t^c, \quad \text{tr}(t^a t^b) = \frac{1}{2} \delta^{ab},
+\end{equation}
+
+We will be working in the gauge $A^+=0$, in this gauge the Lagrange equations constrain
+the component $A^-$ to become, 
+
+\begin{equation}
+    A^- = \frac{1}{\partial^+}2 \partial^\perp A^\perp - \frac{2}{\partial^{+2}} ig 
+    \sbrackets{\partial^+ A^\perp, A^\perp},
+\end{equation}
+this way the only degree of freedom left is the transverse component $A^\perp$.
+
+This way the associated energy-momentum tensor reads,
+
+\begin{equation}
+    \mathcal{T}^{\mu\nu} = -F^{a\mu\alpha}\partial^\nu A^a_\alpha + 
+    \frac{1}{4}g^{\mu\nu}F^{\alpha\beta} F_{\alpha\beta}.
+\end{equation}
+
+The Hamiltonian density in FF quantization is obtained from integrating the component
+$\mathcal{T}^{+-}$ of the energy-momentum tensor, over the hyperplane $x^+=0$.
+
+
 
 
 \subsection{Fock space}
@@ -280,32 +350,13 @@ are the amplitudes of the states, in general complex numbers.
 In the case of QCD, a geneal state in the Fock space involves a superposition of all 
 possible multiparticle states, build from quarks, antiquarks, and gluons, with the
 correct quantum numbers. This way a general state in the Fock space can be expressed as,
+quarkonium
+
 \begin{equation}
-    \ket{\Psi} = c_0 \ket{0} + c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{qqq} 
+    \ket{\Psi} = c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{qqq} 
     + c_4 \ket{gg} + \cdots,
 \end{equation}
 
-\subsection{Front form of Hamiltonian Dynamics}
-
-The front form of dynamics introduced by Dirac (1949) \cite{dirac_front_forms_1949} 
-offers a couple advantages to the 
-
-The quantization hypersurface considered is,
-
-\begin{equation}
-    x^+ = t+z = x^0 + x^3 = 0,
-\end{equation}
-then the rest of coordinates will be defined as
-
-\begin{equation}
-    x^- = x^0-x^3, \quad x^\perp = (x^1, x^2),
-\end{equation}
-
-In this set of coordinates, the fundamental quantities 
-
-The Hamiltonian in FF quantization is obtained from the Lagrangian density using 
-the Legendre transformation, similar to the procedure explained in the section
-\ref{sec:canonical_hamiltonian}, but with respect to the new coordinates.
 
 \subsection{Counterterms}
 
@@ -313,6 +364,8 @@ The counterterms is an additional term added to the initial or bare Hamiltonian
 $\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
 process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
 finite at all values of $t$.
+
+
 
 \subsection{RGPEP}
 The renormalization group procedure for effective particles (RGPEP), as it's name 

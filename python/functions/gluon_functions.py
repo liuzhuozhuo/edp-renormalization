@@ -117,7 +117,7 @@ def represent_diagram (points, all_paths, index = False, directory = "", colors 
         ax.text(0.5, 0.5, f"N = {number}", fontsize=12, color="black", ha="center", va="center")
     if directory != "":
         plt.savefig(directory, bbox_inches='tight')
-        plt.close()
+        plt.close() #Added to not show in the notebook 
 
 #From Github copilot
 def unique_values(array):
@@ -189,7 +189,7 @@ def how_connected( max_connections, n_connections, n_1, n_2):
     else:
         return combinations
 
-def connection (points1, paths1, points2, paths2, offset = 0):
+def connection (points1, paths1, points2, paths2, offset = 0, in_out_limit = [0, 0]):
     in_out_paths1 = in_out_paths(paths1)
     in_out_paths2 = in_out_paths(paths2)
 
@@ -389,8 +389,8 @@ def partitions_limited(n, allowed=(1,2), min_part=None):
             for tail in partitions_limited(n - part, allowed, part):
                 yield [part] + tail
 
-def combine_diagrams_order (points, paths, number, offset = 0, sector=[]):
-    curr_max_order = len(points)
+def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset = 0):
+    curr_order = len(points)
     n_types = len(paths[0][0])
     max_points = np.zeros((n_types, 2), dtype=int)
 
@@ -403,7 +403,7 @@ def combine_diagrams_order (points, paths, number, offset = 0, sector=[]):
                 max_points[j, 0] = n1[j]
             n2[j] = len(np.trim_zeros(in_out_paths(paths[0][i])[j, 1]))
             if (n2[j] > max_points[j, 1]):
-                max_points[j, 1] = n2[j]
+                max_points[j, 1] = n2[j]            
     for i in range(len(paths[-1])):
         for j in range(n_types):
             n1[j] = len(np.trim_zeros(in_out_paths(paths[-1][i])[j, 0]))
@@ -430,149 +430,83 @@ def combine_diagrams_order (points, paths, number, offset = 0, sector=[]):
                 if subset & (1 << k):
                     product *= n_connections[k]
             n_connec += product
-
     n = 0
-    d = 200
     f = 20
-    """
-    if(canonical_it == 0 or canonical_it == 1):
-        new_points = np.zeros((n_types*n_connec+d, len(points[0][0]) + len(points[-1][0]), 2))
-        new_paths = np.zeros((n_types*n_connec+d, n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+f , 2), dtype=int)
-        new_number = np.zeros((n_types*n_connec+d, 1), dtype=int)
-        for k in range(len(can_paths[canonical_it])):
-            for l in range(len(paths[0])):
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[0][l]), trim_zeros_3D(paths[0][l], axis=1), trim_zeros_2D(can_points[canonical_it][k]), trim_zeros_3D(can_paths[canonical_it][k], axis = 1), offset=offset)
-                for m in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[m], axis=1))
-                    for o in range(len(simp_points)):
-                        new_points[n, o] = simp_points[o]
-                    for o in range(n_types):
-                        for p in range(len(simp_paths[0])):
-                            new_paths[n, o, p] = simp_paths[o, p]
-                    new_number[n] = 1
-                    n += 1
-    """              
-    if len(points) == 1:
-        new_points = np.zeros((n_types*n_connec+d, len(points[0][0]) + len(points[-1][0]), 2))
-        new_paths = np.zeros((n_types*n_connec+d, n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+f , 2), dtype=int)
-        new_number = np.zeros((n_types*n_connec+d, 1), dtype=int)
-        for i in range(len(paths[0])):
-            for j in range(len(paths[-1])):
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1), offset=offset)
-                for k in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
-                    for l in range(len(simp_points)):
-                        new_points[n, l] = simp_points[l]
-                    for l in range(n_types):
-                        for m in range(len(simp_paths[0])):
-                            new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
-                    n += 1
-        sector = [[2, 0],[n, 0]]
-        for i in range(len(can_points[1])):
-            for j in range(len(can_points[1][i])):
-                new_points[n, j] = can_points[1][i][j]
-            for j in range(n_types):
-                for k in range(len(can_paths[1][i][j])):
-                    new_paths[n, j, k] = can_paths[1][i][j][k]
-            new_number[n] = can_number[1][i][0]
-            n += 1
-    else:
-        new_points = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec+d, len(points[0][0]) + len(points[-1][0]), 2))
-        new_paths = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec+d, n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+d, 2), dtype=int)
-        new_number = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec+d, 1), dtype=int)
-        # H_{t_{n-1}}· H_1
 
-        for i in range(len(paths[0])):
-            for j in range(sector[-1][0]):
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1),trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), offset=offset)
-                for k in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
-                    for l in range(len(simp_points)):
-                        new_points[n, l] = simp_points[l]
-                    for l in range(n_types):
-                        for m in range(len(simp_paths[0])):
-                            new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
-                    n += 1
-            for j in range(sector[-1][0], len(paths[-1])):
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1),trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), offset=offset)
-                for k in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
-                    for l in range(len(simp_points)):
-                        new_points[n, l] = simp_points[l]
-                    for l in range(n_types):
-                        for m in range(len(simp_paths[0])):
-                            new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
-                    n += 1
-                
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1),trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1), offset=offset)
-                for k in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
-                    for l in range(len(simp_points)):
-                        new_points[n, l] = simp_points[l]
-                    for l in range(n_types):
-                        for m in range(len(simp_paths[0])):
-                            new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
-                    n += 1
-        
+    new_points = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), len(points[0][0]) + len(points[-1][0]), 2))
+    new_paths = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+5, 2), dtype=int)
+    new_number = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), 1), dtype=int)
 
-
-
- 
-
-
-        """
-        canonical_combination = [p for p in partitions_limited(curr_max_order+1, allowed=(1,2)) if len(p)!=curr_max_order+1]
-        
-        for comb in canonical_combination:
-            dummy_points_2, dummy_paths_2, dummy_number_2 = combine_diagrams_order([can_points[comb[0]]], [can_paths[comb[0]]], can_number[comb[0]], offset=offset, canonical_it=comb[1]-1)
-            for k in range(len(dummy_paths_2)):
-                for l in range(len(dummy_points_2[k])):
-                    new_points[n, l] = dummy_points_2[k][l]
-                for l in range(len(dummy_paths_2[k])):
-                    for m in range(len(dummy_paths[k][l])):
-                        new_paths[n, l, m] = dummy_paths_2[k][l][m]
-                new_number[n] = dummy_number_2[k]
+    for i in range(len(paths[0])):
+        for j in range(len(paths[-1])):
+            dummy_points, dummy_paths = connection(trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1),trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), offset=offset)
+            for k in range(len(dummy_paths)):
+                if(curr_order+1  == max_order): 
+                    in_out_path = in_out_paths(dummy_paths[k])
+                    if (len(np.trim_zeros(in_out_path[0, 0])) != typeofproc[0][0] or len(np.trim_zeros(in_out_path[0, 1]))!= typeofproc[0][1]):
+                        continue
+                elif (curr_order == max_order):
+                    in_out_path = in_out_paths(dummy_paths[k])
+                    if (len(np.trim_zeros(in_out_path[0, 0])) > typeofproc[0][0]+1 or len(np.trim_zeros(in_out_path[0, 1])) > typeofproc[0][1]+1):
+                        continue
+                simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
+                for l in range(len(simp_points)):
+                    new_points[n, l] = simp_points[l]
+                for l in range(n_types):
+                    for m in range(len(simp_paths[0])):
+                        new_paths[n, l, m] = simp_paths[l, m]
+                new_number[n] = number[0][i] * number[-1][j]
                 n += 1
+    for i in range(1, 2):
+        for j in range(i-1, len(paths)):
+            if (i+1 + j) == curr_order:
+                for k in range(len(can_paths[i])):
+                    for l in range(len(paths[j])):
+                        dummy_points, dummy_paths = connection(trim_zeros_2D(can_points[i][k]), trim_zeros_3D(can_paths[i][k], axis=1), trim_zeros_2D(points[j][l]), trim_zeros_3D(paths[j][l], axis = 1), offset=offset)
+                        for m in range(len(dummy_paths)):
+                            if(curr_order+1  == max_order): 
+                                in_out_path = in_out_paths(dummy_paths[m])
+                                if (len(np.trim_zeros(in_out_path[0, 0])) != typeofproc[0][0] or len(np.trim_zeros(in_out_path[0, 1]))!= typeofproc[0][1]):
+                                    continue
+                            simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[m], axis=1))
+                            for o in range(len(simp_points)):
+                                new_points[n, o] = simp_points[o]
+                            for o in range(n_types):
+                                for p in range(len(simp_paths[0])):
+                                    new_paths[n, o, p] = simp_paths[o, p]
+                            new_number[n] = can_number[i][k] * number[j][l]        
+                            n += 1
+                for k in range(len(can_paths[i])):
+                    for l in range(len(paths[j])):
+                        dummy_points, dummy_paths = connection(trim_zeros_2D(points[j][l]), trim_zeros_3D(paths[j][l], axis=1), trim_zeros_2D(can_points[i][k]), trim_zeros_3D(can_paths[i][k], axis = 1), offset=offset)
+                        for m in range(len(dummy_paths)):
+                            if(curr_order+1  == max_order): 
+                                in_out_path = in_out_paths(dummy_paths[m])
+                                if (len(np.trim_zeros(in_out_path[0, 0])) != typeofproc[0][0] or len(np.trim_zeros(in_out_path[0, 1]))!= typeofproc[0][1]):
+                                    continue
+                            simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[m], axis=1))
+                            for o in range(len(simp_points)):
+                                new_points[n, o] = simp_points[o]
+                            for o in range(n_types):
+                                for p in range(len(simp_paths[0])):
+                                    new_paths[n, o, p] = simp_paths[o, p]
+                            new_number[n] = can_number[i][k] * number[j][l] 
+                            n += 1
                 
-            if len(comb) > 2:
-                for i in range(2, len(comb)):
-                    dummy_dummy_points, dummy_dummy_paths, dummy_dummy_number = combine_diagrams_order([dummy_points_2], [dummy_paths_2], dummy_number_2, offset=offset, canonical_it=comb[i]-1)
-                    for k in range(len(dummy_dummy_paths)):
-                        for l in range(len(dummy_dummy_points[k])):
-                            new_points[n, l] = dummy_dummy_points[k][l]
-                        for l in range(len(dummy_dummy_paths[k])):
-                            for m in range(len(dummy_dummy_paths[k][l])):
-                                new_paths[n, l, m] = dummy_dummy_paths[k][l][m]
-                        new_number[n] = dummy_dummy_number[k]
-                        n += 1
-                    dummy_number_2 = dummy_dummy_number
-                    dummy_paths_2 = dummy_dummy_paths
-                    dummy_points_2 = dummy_dummy_points
-        """
-        """
-        for i in range(1, curr_max_order):
-            for j in range(i-1, len(paths)):
-                if (i+1 + j) == curr_max_order:
-                    for k in range(len(can_paths[i])):
-                        for l in range(len(paths[j])):
-                            dummy_points, dummy_paths = connection(trim_zeros_2D(can_points[i][k]), trim_zeros_3D(can_paths[i][k], axis=1), trim_zeros_2D(points[j][l]), trim_zeros_3D(paths[j][l], axis = 1), offset=offset)
-                            for m in range(len(dummy_paths)):
-                                simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[m], axis=1))
-                                for o in range(len(simp_points)):
-                                    new_points[n, o] = simp_points[o]
-                                for o in range(n_types):
-                                    for p in range(len(simp_paths[0])):
-                                        new_paths[n, o, p] = simp_paths[o, p]
-                                new_number[n] = can_number[i][k][0] * number[j][l]        
-                                n += 1
-                                
-        """
+    #In the case of the gluon diagrams, there is only it second order diagrams, so this will only be used for curr_order = 1, but it should be general, for the cases where 
+    #there are higher order canonical diagrams.
+    if curr_order < len(can_paths):
+        for i in range(len(can_points[curr_order])):
+            for j in range(len(can_points[curr_order][i])):
+                new_points[n, j] = can_points[curr_order][i][j]
+            for j in range(n_types):
+                for k in range(len(can_paths[curr_order][i][j])):
+                    new_paths[n, j, k] = can_paths[curr_order][i][j][k]
+            new_number[n] = can_number[curr_order][i][0]
+            n += 1
 
-    return new_points, new_paths, new_number, sector
+    
+    return new_points, new_paths, new_number
 
 def all_components_in_other(array1, array2):
     for row1 in array1:
@@ -585,7 +519,7 @@ def all_components_in_other(array1, array2):
             return False
     return True
 
-def group_diagrams (points, paths, number, sector):
+def group_diagrams (points, paths, number):
     group_paths = np.zeros((1, len(paths[0]), len(paths[0, 0]), 2), dtype=int)
     group_points = np.zeros((1, len(points[0]), 2))
     group_paths[0] = paths[0]
@@ -607,23 +541,14 @@ def group_diagrams (points, paths, number, sector):
             if cont_2:
                 cont = False
                 count[j] += number[i][0]
-                if i == sector[0]:
-                    sector[0] = j
-                if i == sector[1]:
-                    sector[1] = j
                 break
             else:
-                
                 cont = True
         if cont: 
-            if i == sector[0]:
-                sector[0] = len(group_paths)
-            if i == sector[1]:
-                sector[1] = len(group_paths)
             group_paths = np.append(group_paths, [paths[i]], axis=0)
             group_points = np.append(group_points, [points[i]], axis=0)
             count = np.append(count, [number[i][0]], axis=0)
-    return group_points, group_paths, count, sector
+    return group_points, group_paths, count
     
 def reposition_diagram (points, in_out_path):
     minx_point = np.min(points[:, 0])

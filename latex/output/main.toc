@@ -6,7 +6,7 @@
 \contentsline {subsubsection}{\numberline {2.2.1}Scalar fields}{6}{subsubsection.2.2.1}%
 \contentsline {subsubsection}{\numberline {2.2.2}Gluon fields}{6}{subsubsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.3}Fock space}{7}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Counterterms}{7}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.4}Counterterms}{8}{subsection.2.4}%
 \contentsline {subsection}{\numberline {2.5}RGPEP}{8}{subsection.2.5}%
 \contentsline {subsection}{\numberline {2.6}Diagram representation}{9}{subsection.2.6}%
 \contentsline {section}{\numberline {3}Cases}{9}{section.3}%

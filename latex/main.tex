@@ -156,26 +156,66 @@ bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
 
 \section{Introduction}
 
+When trying to build a theory that describes the particles and their interactions, 
+it's fundamental that the theory is compatible with the 2 pillars of modern physics,
+the special relativity and quantum mechanics. The special relativity is a theory 
+that's able to describe the behavior of particles at high energies, and quantum 
+mechanics is a theory that describes the behavior of particles at small scales.
+The combination of these two theories is the basis of the quantum field theory,
+building a theory that describes the particles as excitations of a field.
+
+Other important aspect of the theory is that it should be able to describe the 
+different phenomena that occur at different scales. At low energies, the dominant 
+physics involves, bound states, and the interactions between particles are weak. 
+While at high energies, the dominant physics involves scattering processes, and the
+interactions between particles are strong. The theory should be able to describe
+the transition between these two regimes.
+
+In the context of theoretical physics, the renormalization group procedure is a 
+powerful tool to study the behavior of physical systems at different scales. In
+the case of quantum field theories, renormalization allows to study the system
+at different energy scales by introducing a scale parameter, and by changing 
+this parameter, the "resolution" of the system is changed, allowing to focus from 
+the smallest details (the short distance behavior) to the largest ones (the grand 
+scale behavior). 
+
+The typical renormalization procedures tend to apply to Lagrangian dynamics, but 
+in the framework of RGPEP, the renormalization group procedure is applied to 
+Hamiltonian dynamics, the benefit of this approach is the ability obtain directly 
+the solutions of the system (the spectrum of the theory, and the eigenstates of the 
+Hamiltonian). RGPEP introduces a effective Hamiltonian, that describes the system at a
+given scale. This effective Hamiltonian is the solution to a differential equation,
+that describes the evolution of the effective Hamiltonian with respect to the
+scale parameter.
+
+In general, the exact solution of the Hamiltonian is a non-trivial task, and a 
+perturbative method is used to obtain the solution, by identifying each order in the
+Hamiltonian expansion with a series of diagrams, the next order in the expansion can
+be obtained by some operations on the diagrams of previous orders. In the past, 
+these diagrams were obtained by hand, but the number of diagrams increases 
+exponentially with each order, making the process tedious and error-prone.
+The goal of this thesis is to develop a code that automates the process of
+obtaining the diagrams, and to obtain the diagrams for a given order in the expansion.
+
+This thesis is organized as follows. Section \ref{sec:theoretical_background} describes
+the theoretical background needed to understand the renormalization group procedure
+for effective particles, and the Hamiltonian dynamics. Section \ref{sec:cases}
+describes the different cases studied in this thesis, mainly the gluon case, where
+the simplicity similar of the scalar case is preserved, but the some of the
+peculiarities of the QCD theory are present. The section \ref{sec:code} describes the
+connection between the diagrams and the objects are defined in the code, as well
+as the steps taken to obtain higher order diagrams, that are presented in the section
+\ref{sec:diagrams}. Finally, the section \ref{sec:conclusions} presents the conclusions, 
+future work and the improvement that can be done to the code.
 
 
-It's in our interest to formulate a theory compatible with special relativity and
-quantum mechanics, this culminates in quantum field theories. 
 
-we should expect the most general theories to be scale invariant, 
-
-In the field of theoretical physics, divergences are a common occurrence, 
-
-In the context of theoretical physics renormalization is an important procedure 
-
-Tipical renormalization procedures apply to Lagrangian dynamics, 
-
-\newpage
-
-\section{Theoretical background}
+\section{Theoretical background} \label{sec:theoretical_background}
 
 To describe the relativistic interactions of effective particles in the framework of 
-the renormalization group procedure for effective particles, making use of quantum 
-theory in the front form of Hamiltonian dynamics. 
+the renormalization group procedure for effective particles, and making use of 
+quantum theory in the front form of Hamiltonian dynamics. It's important to 
+understand each of the concepts involved in the process.
 
 \subsection{Front form of Hamiltonian Dynamics}
 
@@ -440,14 +480,13 @@ to a diagram representation of the process, similar to the Feynman diagrams.
 
 
 
-\section{Cases}
-
+\section{Cases} \label{sec:cases}
 \subsection{Scalar case}
 
 
-\section{Code implementation}
+\section{Code implementation} \label{sec:code}
 
-\section{Diagrams obtained}
+\section{Diagrams obtained} \label{sec:diagrams}
 
 \subsection{Scalar}
 
@@ -455,7 +494,7 @@ to a diagram representation of the process, similar to the Feynman diagrams.
 
 \subsection{QCD}
 
-\section{Conclusions and future work}
+\section{Conclusions and future work} \label{sec:conclusions}
 
 
 

@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex output/main"] 1746611048.92057 "output/main.aux" "output/main.bbl" "output/main" 1746613592.98864 0
+["bibtex output/main"] 1746957117.54225 "output/main.aux" "output/main.bbl" "output/main" 1746966496.12806 0
   "./references.bib" 1746352034.31003 1609 2754a652ea82dbe8299f0580d4e2c566 ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "output/main.aux" 1746613592.67093 2817 da7d0f34779e53e1b4b119e79715bea5 "pdflatex"
+  "output/main.aux" 1746966495.81923 3152 535fbd2f863bed9eb36545399b8d4f08 "pdflatex"
   (generated)
   "output/main.bbl"
   "output/main.blg"
   (rewritten before read)
-["pdflatex"] 1746613591.44267 "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" "output/main.pdf" "main" 1746613592.98877 0
-  "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" 1746613591.15731 14577 f7bd57f4c0f7628814c5f22e6d2ba0d0 ""
+["pdflatex"] 1746966494.52957 "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" "output/main.pdf" "main" 1746966496.12821 0
+  "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" 1746966494.21357 17900 84905619f5f4485d6d97dbc2f38506a4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/palatino/pplb8r.tfm" 1136768653 2532 9ad73cf4dd2173a847f2a5f5608e0b9a ""
@@ -153,11 +153,11 @@
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "escudoUGRmonocromo.png" 1746294072.03916 160809 de7617aa95455ecd794fe6065fc4748a ""
   "macro.sty" 1746352763.23593 184 e9b7167b3a3bcef5fa51dcefca54a4c6 ""
-  "main.tex" 1746613591.15731 14577 f7bd57f4c0f7628814c5f22e6d2ba0d0 ""
-  "output/main.aux" 1746613592.67093 2817 da7d0f34779e53e1b4b119e79715bea5 "pdflatex"
-  "output/main.bbl" 1746611049.01623 859 3b387c156e9f3c5b0aa825414ddba8be "bibtex output/main"
-  "output/main.out" 1746613592.6716 2289 a210dddb55804a08f5b83821220fa1be "pdflatex"
-  "output/main.toc" 1746613592.67179 1432 369811ba0f76660218614db6695db724 "pdflatex"
+  "main.tex" 1746966494.21357 17900 84905619f5f4485d6d97dbc2f38506a4 ""
+  "output/main.aux" 1746966495.81923 3152 535fbd2f863bed9eb36545399b8d4f08 "pdflatex"
+  "output/main.bbl" 1746957117.63991 859 3b387c156e9f3c5b0aa825414ddba8be "bibtex output/main"
+  "output/main.out" 1746966495.81999 2289 a210dddb55804a08f5b83821220fa1be "pdflatex"
+  "output/main.toc" 1746966495.82019 1432 09a6584634a65c88f6c78d234893f008 "pdflatex"
   (generated)
   "output/main.aux"
   "output/main.log"

@@ -2,12 +2,12 @@
 \contentsline {section}{\numberline {1}Introduction}{5}{section.1}%
 \contentsline {section}{\numberline {2}Theoretical background}{6}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Front form of Hamiltonian Dynamics}{6}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Canonical Hamiltonian}{6}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}Scalar fields}{6}{subsubsection.2.2.1}%
-\contentsline {subsubsection}{\numberline {2.2.2}Gluon fields}{6}{subsubsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2}Canonical Hamiltonian}{7}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Scalar fields}{7}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Gluon fields}{7}{subsubsection.2.2.2}%
 \contentsline {subsection}{\numberline {2.3}Fock space}{7}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Counterterms}{8}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}RGPEP}{8}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.4}RGPEP}{8}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Counterterms}{9}{subsection.2.5}%
 \contentsline {subsection}{\numberline {2.6}Diagram representation}{9}{subsection.2.6}%
 \contentsline {section}{\numberline {3}Cases}{9}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Scalar case}{9}{subsection.3.1}%

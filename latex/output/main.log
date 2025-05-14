@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.17)  11 MAY 2025 14:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.17)  13 MAY 2025 21:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -601,6 +601,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [5] Excluding 'comment' comment. Excluding 'comment' comment.
+Underfull \vbox (badness 2229) has occurred while \output is active []
+
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -609,7 +612,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [6]
-LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 368.
+LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 385.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 )
@@ -621,7 +624,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [7]
-Overfull \hbox (5.77417pt too wide) in paragraph at lines 431--433
+Overfull \hbox (5.77417pt too wide) in paragraph at lines 437--439
 []\T1/ppl/m/n/12 The ef-fec-tive Hamil-to-nian is re-lated to the reg-u-lated canon-i-cal one with counter-
  []
 
@@ -632,7 +635,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[8] (output/main.bbl)
+[8]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -640,27 +643,35 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[9] (output/main.aux)
+[9] (output/main.bbl)
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[10] (output/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A210DDDB55804A08F5B83821220FA1BE;2289.
+(rerunfilecheck)             Checksum: 48DD440DA83C5A88CCAF9BF1485764B9;2289.
  ) 
 Here is how much of TeX's memory you used:
- 13289 strings out of 474116
- 205996 string characters out of 5743682
+ 13290 strings out of 474116
+ 206003 string characters out of 5743682
  1937187 words of memory out of 5000000
  35326 multiletter control sequences out of 15000+600000
  594299 words of font info for 126 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,79p,346b,527s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathpazo/fplmbb.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on output/main.pdf (9 pages, 254623 bytes).
+Output written on output/main.pdf (10 pages, 255925 bytes).
 PDF statistics:
- 232 PDF objects out of 1000 (max. 8388607)
- 199 compressed objects within 2 object streams
- 51 named destinations out of 1000 (max. 500000)
+ 237 PDF objects out of 1000 (max. 8388607)
+ 202 compressed objects within 3 object streams
+ 52 named destinations out of 1000 (max. 500000)
  150 words of extra memory for PDF output out of 10000 (max. 10000000)
 

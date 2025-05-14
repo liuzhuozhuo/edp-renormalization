@@ -162,14 +162,16 @@ the special relativity and quantum mechanics. The special relativity is a theory
 that's able to describe the behavior of particles at high energies, and quantum 
 mechanics is a theory that describes the behavior of particles at small scales.
 The combination of these two theories is the basis of the quantum field theory,
-building a theory that describes the particles as excitations of a field.
+building a formalism that describes the particles as excitations of a field.
 
 Other important aspect of the theory is that it should be able to describe the 
-different phenomena that occur at different scales. At low energies, the dominant 
-physics involves, bound states, and the interactions between particles are weak. 
-While at high energies, the dominant physics involves scattering processes, and the
-interactions between particles are strong. The theory should be able to describe
-the transition between these two regimes.
+different phenomena that occur at different scales. In the context of QCD, the 
+experiments performed at low energies, or high length scales, smear the interaction
+between the particles, and does not resolve the details of the structure inside the
+particles, observing strongly bound states. While at high energies, or low length 
+scales, the hadrons are broken into their constituents, quarks and gluons, and the 
+interaction between the particles is weak, forming the so-called asymptotic freedom.
+The theory should be able to describe the transition between these two regimes.
 
 In the context of theoretical physics, the renormalization group procedure is a 
 powerful tool to study the behavior of physical systems at different scales. In
@@ -179,38 +181,47 @@ this parameter, the "resolution" of the system is changed, allowing to focus fro
 the smallest details (the short distance behavior) to the largest ones (the grand 
 scale behavior). 
 
-The typical renormalization procedures tend to apply to Lagrangian dynamics, but 
+We will adopt the Hamiltonian formalism to describe the dynamics of the system, 
+working in the operator space, where the Hamiltonian operator governs the time
+evolution of the states. 
+
+Many widely used renormalization procedures tend to apply to Lagrangian dynamics. But 
 in the framework of RGPEP, the renormalization group procedure is applied to 
-Hamiltonian dynamics, the benefit of this approach is the ability obtain directly 
+Hamiltonian dynamics. The benefit of this approach is the ability obtain directly 
 the solutions of the system (the spectrum of the theory, and the eigenstates of the 
-Hamiltonian). RGPEP introduces a effective Hamiltonian, that describes the system at a
+Hamiltonian). RGPEP introduces an effective Hamiltonian, that describes the system at a
 given scale. This effective Hamiltonian is the solution to a differential equation,
 that describes the evolution of the effective Hamiltonian with respect to the
 scale parameter.
 
-In general, the exact solution of the Hamiltonian is a non-trivial task, and a 
-perturbative method is used to obtain the solution, by identifying each order in the
-Hamiltonian expansion with a series of diagrams, the next order in the expansion can
-be obtained by some operations on the diagrams of previous orders. In the past, 
-these diagrams were obtained by hand, but the number of diagrams increases 
-exponentially with each order, making the process tedious and error-prone.
-The goal of this thesis is to develop a code that automates the process of
-obtaining the diagrams, and to obtain the diagrams for a given order in the expansion.
+In general, obtaining the exact solution of the RGPEP equation is a non-trivial task, 
+and a perturbative expansion of the effective Hamiltonian is used to obtain the 
+solution. By identifying each order in the Hamiltonian expansion with a series of 
+products of diagrams, the next order in the expansion can be obtained from the 
+diagrams of previous orders. Typically, these diagrams were analyzed hand, but the 
+number of diagrams increases exponentially with each order, making the process 
+tedious and error-prone. The goal of this thesis is to develop a code that automates 
+the process of obtaining the diagrams associated with a certain interaction for a 
+given order.
 
 This thesis is organized as follows. Section \ref{sec:theoretical_background} describes
 the theoretical background needed to understand the renormalization group procedure
 for effective particles, and the Hamiltonian dynamics. Section \ref{sec:cases}
 describes the different cases studied in this thesis, mainly the gluon case, where
-the simplicity similar of the scalar case is preserved, but the some of the
-peculiarities of the QCD theory are present. The section \ref{sec:code} describes the
-connection between the diagrams and the objects are defined in the code, as well
-as the steps taken to obtain higher order diagrams, that are presented in the section
-\ref{sec:diagrams}. Finally, the section \ref{sec:conclusions} presents the conclusions, 
-future work and the improvement that can be done to the code.
+holding the simplicity of the scalar case, some peculiarities of the QCD theory are 
+present. The section \ref{sec:code} describes the connection between the diagrams 
+and the objects are defined in the code, as well as the steps taken to obtain higher 
+order diagrams, that are presented in the section \ref{sec:diagrams}. Finally, the 
+section \ref{sec:conclusions} presents the conclusions, future work and the 
+improvement that can be done to the code.
 
 
 
 \section{Theoretical background} \label{sec:theoretical_background}
+
+To understand the basis of the RGPEP, we need to understand the different
+concepts involved in the process, as well as the theories that the process is
+applied to.  
 
 To describe the relativistic interactions of effective particles in the framework of 
 the renormalization group procedure for effective particles, and making use of 
@@ -219,8 +230,9 @@ understand each of the concepts involved in the process.
 
 \subsection{Front form of Hamiltonian Dynamics}
 
-The front form of dynamics introduced by Dirac (1949) \cite{dirac_front_forms_1949} 
-offers a couple advantages to the 
+The front form (FF) or light front of dynamics introduced by Dirac (1949) 
+\cite{dirac_front_forms_1949} offers a couple advantages to the instant form of 
+dynamics typically considered in quantum field theory. 
 
 The quantization hypersurface considered is,
 
@@ -232,6 +244,10 @@ then the rest of coordinates will be defined as
 \begin{equation}
     x^- = x^0-x^3, \quad x^\perp = (x^1, x^2),
 \end{equation}
+
+In the FF quantization, the space-time coordinate $x^+$ is treated as the evolution 
+parameter, similar to the time parameter in the instant form, and the rest of 
+coordinates, $x^-$ and $x^\perp$, are treated as spatial coordinates.
 
 In this set of coordinates, the fundamental quantities 
 
@@ -322,7 +338,7 @@ $M^{\mu\nu}$, which satisfy the following commutation relations,
 
 The Lagrangian density for the gluon fields is given by,
 \begin{equation}
-    \mathcal{L} = -\frac{1}{2}\text{tr}F^{\mu\nu}F_{\mu\nu}
+    \mathcal{L} = -\frac{1}{2}\text{tr}F^{\mu\nu}F_{\mu\nu},
 \end{equation}
 where $F^{\mu\nu}$ is the field strength tensor, defined as,
 \begin{equation}
@@ -332,19 +348,20 @@ and $A^\mu = A^{a\mu}t^a$, $t^a$ are the generators of the gauge group, and $g$ 
 coupling constant. Verifying the following relations,
 
 \begin{equation}
-    [t^a, t^b] = i f^{abc} t^c, \quad \text{tr}(t^a t^b) = \frac{1}{2} \delta^{ab},
+    [t^a, t^b] = i f^{abc} t^c, \quad \text{tr}(t^a t^b) = \frac{1}{2} \delta^{ab}.
 \end{equation}
 
-We will be working in the gauge $A^+=0$, in this gauge the Lagrange equations constrain
-the component $A^-$ to become, 
+We will be working in the gauge $A^+=0$, where the Lagrange equations constrain
+the component $A^-$ to become 
 
 \begin{equation}
     A^- = \frac{1}{\partial^+}2 \partial^\perp A^\perp - \frac{2}{\partial^{+2}} ig 
-    \sbrackets{\partial^+ A^\perp, A^\perp},
+    \sbrackets{\partial^+ A^\perp, A^\perp}.
 \end{equation}
-this way the only degree of freedom left is the transverse component $A^\perp$.
 
-This way the associated energy-momentum tensor reads,
+In this way, the only degree of freedom left is the transverse component $A^\perp$.
+
+As for the associated energy-momentum tensor,
 
 \begin{equation}
     \mathcal{T}^{\mu\nu} = -F^{a\mu\alpha}\partial^\nu A^a_\alpha + 
@@ -359,10 +376,10 @@ $\mathcal{T}^{+-}$ of the energy-momentum tensor, over the hyperplane $x^+=0$.
 
 \subsection{Fock space}
 
-In order to describe a variable number of particles in our system, the use of the Fock
-space is needed. Intoduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock 
-space is a sum of a set of Hilbert spaces, each one corresponding to a different number of
-particles in the system. 
+Intoduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock space is a sum 
+of a set of Hilbert spaces, each one corresponding to a different number of 
+particles in the system. So in order to describe a variable number of particles in our 
+system, the use of the Fock space is needed.
 
 The Fock space is defined as the direct sum of tensor products of the single 
 particle Hilbert space $\mathbb{H}$,
@@ -373,7 +390,7 @@ particle Hilbert space $\mathbb{H}$,
     \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
 \end{equation}
 where $S_\nu$ is the symmetrization operator depending on whether the particles described
-are bosonic or fermionic, it symmetrizes or antisymmetric the tensors, and 
+are bosonic or fermionic, it symmetrizes or antisymmetrizes the tensors, and 
 $\mathbb{C}$ is the complex scalar, corresponding to the states with no particles. 
 
 This way a general state in the Fock space can be expressed as,
@@ -389,8 +406,7 @@ are the amplitudes of the states, in general complex numbers.
 
 In the case of QCD, a geneal state in the Fock space involves a superposition of all 
 possible multiparticle states, build from quarks, antiquarks, and gluons, with the
-correct quantum numbers. This way a general state in the Fock space can be expressed as,
-quarkonium
+correct quantum numbers. For instance, a quarkonium state in QCD is given by:
 
 \begin{equation}
     \ket{\Psi} = c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{qqq} 
@@ -398,20 +414,10 @@ quarkonium
 \end{equation}
 
 
-\subsection{Counterterms}
-
-The counterterms is an additional term added to the initial or bare Hamiltonian 
-$\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
-process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
-finite at all values of $t$.
-
-
 
 \subsection{RGPEP}
-The renormalization group procedure for effective particles (RGPEP), as it's name 
-indicate is a renormalization group procedure applied to the Hamiltonian formulation.
-
-By considering a series of unitary transformations, the RGPEP is able to construct a 
+The RGPEP, is a renormalization group procedure applied to the Hamiltonian 
+formulation. By considering a series of unitary transformations, the RGPEP is able to construct a 
 series of effective Hamiltonians $\mathcal{H}_s$, and the corresponding effective 
 particles, by the use of effective particle operators (namely creation and 
 annihilation operators) that differs from the canonical ones by the unitary 
@@ -421,12 +427,12 @@ transformation $\mathcal{U}_s$,
     a_s = \mathcal{U}_sa_0\mathcal{U}_s^\dagger,
     \label{eq:effective_particle_operator}
 \end{equation}
-labeled by the parameter $s$, the renormalization group parameter. This parameter 
-has dimension of length. Physically $s$ has the interpretation of the characteristic 
-size of the effective particles.
+labeled by the parameter $s$, and is associated with the renormalization group scale
+$\lambda = 1/s$. This parameter which has dimension of length, physically has the 
+interpretation of the characteristic size of the effective particles.
 
-Due to dimensional and notational reasons that will be explained latter, it's 
-convenient to consider the scale parameter $t = s^4$ instead of $s$. 
+Due to dimensional and notational reasons, it's convenient to consider the scale 
+parameter $t = s^4$.
 
 The effective Hamiltonian is related to the regulated canonical one with counter-terms 
 by the condition,
@@ -434,8 +440,6 @@ by the condition,
 \begin{equation}
     \mathcal{H}_t(a_t) = \mathcal{H}_0(a_0)
 \end{equation}
-
-
 
 Then $s=0$ correspond to the point-like or bare particles, and recovering the original
 
@@ -452,7 +456,7 @@ differentiating with respect of $t$,
     \sbrackets{-\mathcal{U}_t^\dagger \mathcal{U}_t^\prime, \mathcal{H}_t(a_0)} 
     = \sbrackets{\mathcal{G}_t(a_0), \mathcal{H}_t(a_0)},
 \end{equation}
-where $\mathcal{G}_t$ is the RGPEP generator, this generator is defined as 
+where $\mathcal{G}_t$ is the RGPEP generator. This generator is defined as 
 
 We will consider the generator from Ref. \cite{PEP}
 
@@ -470,6 +474,14 @@ where $\mathcal{H}_t$ is the Hamiltonian interested in solving.
 
 The free Hamiltonian $\mathcal{H}_f$ is the part of $\mathcal{H}_0(a_0)$ that does 
 not depend on the coupling constants, 
+
+
+\subsection{Counterterms}
+
+The counterterms is an additional term added to the initial or bare Hamiltonian 
+$\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
+process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
+finite at all values of $t$.
 
 
 \subsection{Diagram representation}
@@ -499,7 +511,7 @@ to a diagram representation of the process, similar to the Feynman diagrams.
 
 
 % Referencias %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\newpage
+\newpage
 
 \bibliography{references} % Entries are in the references.bib file
 \nocite{QFT}

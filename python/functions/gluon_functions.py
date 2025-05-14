@@ -1,7 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 import matplotlib as mpl
 from scipy.special import binom, factorial
+from numba import jit
 
 #Import the canoncial diagrams
 from functions.can_diagrams.gluon_diagrams import *
@@ -437,7 +439,7 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
     new_paths = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+5, 2), dtype=int)
     new_number = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), 1), dtype=int)
 
-    for i in range(len(paths[0])):
+    for i in tqdm(range(len(paths[0]))):
         for j in range(len(paths[-1])):
             dummy_points, dummy_paths = connection(trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1),trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), offset=offset)
             for k in range(len(dummy_paths)):
@@ -457,7 +459,7 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
                         new_paths[n, l, m] = simp_paths[l, m]
                 new_number[n] = number[0][i] * number[-1][j]
                 n += 1
-    for i in range(1, 2):
+    for i in tqdm(range(1, 2)):
         for j in range(i-1, len(paths)):
             if (i+1 + j) == curr_order:
                 for k in range(len(can_paths[i])):
@@ -508,6 +510,7 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
     
     return new_points, new_paths, new_number
 
+
 def all_components_in_other(array1, array2):
     for row1 in array1:
         found = False
@@ -519,14 +522,14 @@ def all_components_in_other(array1, array2):
             return False
     return True
 
-def group_diagrams (points, paths, number):
+def my_group_diagrams (points, paths, number):
     group_paths = np.zeros((1, len(paths[0]), len(paths[0, 0]), 2), dtype=int)
-    group_points = np.zeros((1, len(points[0]), 2))
+    group_points = np.zeros((1, len(points[0]), 2), dtype=int)
     group_paths[0] = paths[0]
     group_points[0] = points[0]
-    count = np.zeros((1), dtype=int)
-    count[0] = number[0][0]
-    for i in range(1, len(paths)):
+    count = np.zeros((1))
+    count[0] = number[0]
+    for i in tqdm(range(1, len(paths))):
         if (paths[i] == 0).all():
             continue
         cont = False
@@ -540,16 +543,123 @@ def group_diagrams (points, paths, number):
                     break
             if cont_2:
                 cont = False
-                count[j] += number[i][0]
+                count[j] += number[i]
                 break
             else:
                 cont = True
         if cont: 
             group_paths = np.append(group_paths, [paths[i]], axis=0)
             group_points = np.append(group_points, [points[i]], axis=0)
-            count = np.append(count, [number[i][0]], axis=0)
+            count = np.append(count, [number[i]], axis=0)
     return group_points, group_paths, count
+
+def chat_group_diagrams(points, paths, numbers):
+    """
+    points:  (N, P, 2)
+    paths:   (N, K, M, 2)
+    numbers: (N, 1)
     
+    Returns grouped_points (G, P, 2), grouped_paths (G, K, M, 2), counts (G,)
+    where G is the number of unique diagrams (order‐sensitive).
+    """
+
+    # 1) Filter out any “all zeros” entries once
+    flat = paths.reshape(len(paths), -1)
+    valid = ~(flat == 0).all(axis=1)
+    pts  = points[valid]
+    pths = paths[valid]
+    nums = numbers[valid, 0]
+
+    # 2) Build an order‐preserving hashable signature for each diagram:
+    #    a tuple of row‐tuples, each row flattened in its given order.
+    sigs = []
+    for diag in pths:
+        row_sigs = tuple(tuple(row.ravel()) for row in diag)
+        sigs.append(row_sigs)
+
+    # 3) Group by signature in a dict → O(N)
+    groups = {}
+    for idx, sig in enumerate(sigs):
+        groups.setdefault(sig, []).append(idx)
+
+    # 4) Pre‐allocate the outputs
+    G, P, K, M = len(groups), pts.shape[1], pths.shape[1], pths.shape[2]
+    grouped_points = np.empty((G, P, 2),   dtype=pts.dtype)
+    grouped_paths  = np.empty((G, K, M, 2), dtype=pths.dtype)
+    counts         = np.empty((G,),         dtype=nums.dtype)
+
+    # 5) Pick the first‐seen rep for points & paths; sum the counts
+    for g, inds in enumerate(groups.values()):
+        first = inds[0]
+        grouped_points[g] = pts[first]
+        grouped_paths[g]  = pths[first]
+        counts[g]         = nums[inds].sum()
+
+    return grouped_points, grouped_paths, counts
+
+import numpy as np
+
+def diagram_signature(paths: np.ndarray) -> tuple:
+    """
+    paths: (K, M, 2)
+    returns: a tuple of length K, where each element is
+             a flattened tuple of that row's points sorted lexicographically.
+    """
+    sig = []
+    for row in paths:
+        # sort points by (x, then y)
+        idx = np.lexsort((row[:,1], row[:,0]))
+        sorted_row = row[idx]
+        sig.append(tuple(sorted_row.ravel()))
+    return tuple(sig)
+
+
+def group_diagrams(points: np.ndarray,
+                   paths: np.ndarray,
+                   numbers: np.ndarray):
+    """
+    points:  (N, P, 2)
+    paths:   (N, K, M, 2)
+    numbers: (N, 1)
+    """
+    # 1) filter out the “all-zero” diagrams in one vectorized mask
+    nonzero_mask = ~((paths == 0).all(axis=(1,2,3)))
+    pts  = points [nonzero_mask]
+    pths = paths  [nonzero_mask]
+    nums = numbers[nonzero_mask, 0]
+
+    # 2) single-pass grouping via a dict
+    sig2group = {}
+    grouped_pts  = []
+    grouped_pths = []
+    counts       = []
+
+    for idx, (pt, pth, num) in enumerate(zip(pts, pths, nums)):
+        sig = diagram_signature(pth)
+        if sig in sig2group:
+            gi = sig2group[sig]
+            counts[gi] += num
+        else:
+            gi = len(grouped_pts)
+            sig2group[sig] = gi
+            grouped_pts .append(pt)
+            grouped_pths.append(pth)
+            counts    .append(num)
+
+    # 3) stack into arrays
+    G = len(grouped_pts)
+    grouped_points = np.stack(grouped_pts, axis=0)   # (G, P, 2)
+    grouped_paths  = np.stack(grouped_pths, axis=0)  # (G, K, M, 2)
+    counts         = np.array(counts)                # (G,)
+
+    return grouped_points, grouped_paths, counts
+
+"""
+def group_diagrams(points, paths, number):
+    grouped_points, grouped_paths, counts = chat_group_diagrams(points, paths, number)
+    new_grouped_points, new_grouped_paths, new_counts = my_group_diagrams(grouped_points, grouped_paths, counts)
+    return new_grouped_points, new_grouped_paths, new_counts
+"""
 def reposition_diagram (points, in_out_path):
     minx_point = np.min(points[:, 0])
     maxx_point = np.max(points[:, 0])

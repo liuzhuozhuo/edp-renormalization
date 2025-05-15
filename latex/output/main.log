@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.17)  13 MAY 2025 21:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.17)  14 MAY 2025 17:55
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -612,7 +612,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [6]
-LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 385.
+LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 383.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/psnfss/ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 )
@@ -624,7 +624,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [7]
-Overfull \hbox (5.77417pt too wide) in paragraph at lines 437--439
+Overfull \hbox (5.77417pt too wide) in paragraph at lines 435--437
 []\T1/ppl/m/n/12 The ef-fec-tive Hamil-to-nian is re-lated to the reg-u-lated canon-i-cal one with counter-
  []
 

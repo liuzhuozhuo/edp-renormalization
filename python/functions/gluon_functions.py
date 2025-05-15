@@ -4,7 +4,7 @@ from tqdm import tqdm
 import matplotlib as mpl
 from scipy.special import binom, factorial
 from numba import jit
-import itertools
+from collections import deque
 
 #Import the canoncial diagrams
 from functions.can_diagrams.gluon_diagrams import *
@@ -23,7 +23,7 @@ def trim_zeros_2D(array, axis=1):
     else:
         return array[:, start_idx:end_idx]
 """    
-
+#From Chatgpt
 def trim_zeros_2D(array: np.ndarray, axis: int = 1) -> np.ndarray:
     """
     Remove any rows (axis=1) or columns (axis=0) that are entirely zero,
@@ -94,6 +94,7 @@ def find_equal_subarrays(array):
     duplicate_positions = [np.where((sorted_subarrays == unique_subarrays[i]).all(axis=1))[0] for i in range(len(unique_subarrays)) if counts[i] > 1]
     return duplicate_positions
 
+#From Chatgpt
 def prune_points_and_reindex(points: np.ndarray,
                               paths: np.ndarray
                              ) -> tuple[np.ndarray, np.ndarray]:
@@ -450,7 +451,7 @@ def simplify_diagram (points, paths):
         new_new_points, new_new_paths = simplify_diagram_it(new_points, new_paths)
     return new_new_points, new_new_paths
 
-
+#From Chatgpt
 def partitions_limited(n, allowed=(1,2), min_part=None):
     """
     Yield all partitions of n using only parts in `allowed`,
@@ -599,7 +600,6 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
     
     return new_points, new_paths, new_number
 
-
 def all_components_in_other(array1, array2):
     for row1 in array1:
         found = False
@@ -642,50 +642,7 @@ def my_group_diagrams (points, paths, number):
             count = np.append(count, [number[i]], axis=0)
     return group_points, group_paths, count
 
-def chat_group_diagrams(points, paths, numbers):
-    """
-    points:  (N, P, 2)
-    paths:   (N, K, M, 2)
-    numbers: (N, 1)
-    
-    Returns grouped_points (G, P, 2), grouped_paths (G, K, M, 2), counts (G,)
-    where G is the number of unique diagrams (order‐sensitive).
-    """
-
-    # 1) Filter out any “all zeros” entries once
-    flat = paths.reshape(len(paths), -1)
-    valid = ~(flat == 0).all(axis=1)
-    pts  = points[valid]
-    pths = paths[valid]
-    nums = numbers[valid, 0]
-
-    # 2) Build an order‐preserving hashable signature for each diagram:
-    #    a tuple of row‐tuples, each row flattened in its given order.
-    sigs = []
-    for diag in pths:
-        row_sigs = tuple(tuple(row.ravel()) for row in diag)
-        sigs.append(row_sigs)
-
-    # 3) Group by signature in a dict → O(N)
-    groups = {}
-    for idx, sig in enumerate(sigs):
-        groups.setdefault(sig, []).append(idx)
-
-    # 4) Pre‐allocate the outputs
-    G, P, K, M = len(groups), pts.shape[1], pths.shape[1], pths.shape[2]
-    grouped_points = np.empty((G, P, 2),   dtype=pts.dtype)
-    grouped_paths  = np.empty((G, K, M, 2), dtype=pths.dtype)
-    counts         = np.empty((G,),         dtype=nums.dtype)
-
-    # 5) Pick the first‐seen rep for points & paths; sum the counts
-    for g, inds in enumerate(groups.values()):
-        first = inds[0]
-        grouped_points[g] = pts[first]
-        grouped_paths[g]  = pths[first]
-        counts[g]         = nums[inds].sum()
-
-    return grouped_points, grouped_paths, counts
-
+#From Chatgpt
 def diagram_signature(paths: np.ndarray) -> tuple:
     """
     paths: (K, M, 2)
@@ -700,7 +657,7 @@ def diagram_signature(paths: np.ndarray) -> tuple:
         sig.append(tuple(sorted_row.ravel()))
     return tuple(sig)
 
-
+#From Chatgpt
 def group_diagrams(points: np.ndarray,
                    paths: np.ndarray,
                    numbers: np.ndarray):
@@ -747,6 +704,8 @@ def group_diagrams(points, paths, number):
     new_grouped_points, new_grouped_paths, new_counts = my_group_diagrams(grouped_points, grouped_paths, counts)
     return new_grouped_points, new_grouped_paths, new_counts
 """
+
+#From Chatgpt
 def find_partner(paths: np.ndarray, x: int) -> int:
     # find the indices (type_idx, pair_idx, slot_idx) where paths == x
     type_idx, pair_idx, slot_idx = np.where(paths == x)
@@ -757,52 +716,7 @@ def find_partner(paths: np.ndarray, x: int) -> int:
     # the “other” slot in that pair is 1-k
     return int(paths[i, j, 1 - k])
 
-from collections import deque
-
-def find_shortest_connection(paths: np.ndarray, start: int, end: int):
-    """
-    Given:
-      - paths: an array of shape (T, P, 2), where each paths[t,p] = [u, v] is an undirected edge
-                (placeholders/self-loops are skipped),
-      - start: the index of the starting point,
-      - end:   the index of the target point,
-    Returns:
-      - (num_edges, path_list), where
-          * num_edges = the minimum number of hops from start to end
-          * path_list  = the list of point‐indices visited, e.g. [start, …, end]
-    Raises:
-      - ValueError if no path exists.
-    """
-    # 1) Build adjacency list
-    adj = {}
-    T, P, _ = paths.shape
-    for t in range(T):
-        for p in range(P):
-            u, v = paths[t, p]
-            # skip placeholders or self-loops
-            if u == v:
-                continue
-            # if your zeros really are just placeholders, you could also skip (u==0 and v==0)
-            if u == 0 and v == 0:
-                continue
-            adj.setdefault(int(u), set()).add(int(v))
-            adj.setdefault(int(v), set()).add(int(u))
-
-    # 2) BFS from start → end
-    visited = {start}
-    queue = deque([(start, [start])])
-    while queue:
-        node, path = queue.popleft()
-        if node == end:
-            return len(path) - 1, path
-        for nbr in adj.get(node, ()):
-            if nbr not in visited:
-                visited.add(nbr)
-                queue.append((nbr, path + [nbr]))
-
-    # no route found
-    raise ValueError(f"No path found from {start} to {end}")
-
+#From Chatgpt
 def find_shortest_undirected_path(paths: np.ndarray, start: int, end: int):
     """
     Given:
@@ -845,6 +759,7 @@ def find_shortest_undirected_path(paths: np.ndarray, start: int, end: int):
 
     raise ValueError(f"No path found from {start} to {end}")
 
+#From Chatgpt
 def is_ordered_route(route):
     """
     Return True if `route` is strictly monotonic (either all increasing or all decreasing).
@@ -862,6 +777,7 @@ def is_ordered_route(route):
     dec = all(route[i] > route[i+1] for i in range(len(route)-1))
     return inc or dec
 
+#From Chatgpt
 def find_same_height_outside(points: np.ndarray, route_ids: list[int]) -> list[int]:
     """
     Given:
@@ -886,6 +802,7 @@ def find_same_height_outside(points: np.ndarray, route_ids: list[int]) -> list[i
     # convert back to 1-based IDs
     return (outside_idxs + 1).tolist()
 
+#From Chatgpt
 def equalize_x_spacing(points: np.ndarray, spacing: float = 1.0) -> np.ndarray:
     """
     Return a new (N×2) array where the x-coords have been remapped so that
@@ -919,7 +836,7 @@ def equalize_x_spacing(points: np.ndarray, spacing: float = 1.0) -> np.ndarray:
     new_pts[:,0] = new_x
     return new_pts
 
-def reposition_diagram (points, in_out_path, paths, typeofproc, print_=False):
+def reposition_diagram (points, in_out_path, paths, typeofproc, print_=False, spacing_=1.0):
     minx_point = np.min(points[:, 0])
     maxx_point = np.max(points[:, 0])
 
@@ -972,8 +889,56 @@ def reposition_diagram (points, in_out_path, paths, typeofproc, print_=False):
                 points[i-1, 1] = 1
             for i in find_same_height_outside (points, path4[1]):
                 points[i-1, 1] = (maxy_point-1)/2
+    elif typeofproc == [2, 1]:
+        maxy_point = 5
+        path1 = find_shortest_undirected_path(paths, in_out_path[0, 0][0], in_out_path[0, 1][0])
+        path2 = find_shortest_undirected_path(paths, in_out_path[0, 0][0], in_out_path[0, 1][1])
+        if path1[0] < path2[0]:
+            for i in path1[1]:
+                points[i-1, 1] = maxy_point
+            if is_ordered_route(path1[1]) == False:
+                for i in range(1, len(path1[1])-1):
+                    points[path1[1][i]-1, 1] = (maxy_point-1)/2
+            for i in path2[1]:
+                points[i-1, 1] = 1
+            for i in find_same_height_outside (points, path2[1]):
+                points[i-1, 1] = (maxy_point-1)/2
+        else:
+            for i in path2[1]:
+                points[i-1, 1] = maxy_point
+            if is_ordered_route(path2[1]) == False:
+                for i in range(1, len(path2[1])-1):
+                    points[path2[1][i]-1, 1] = (maxy_point-1)/2
+            for i in path1[1]:
+                points[i-1, 1] = 1
+            for i in find_same_height_outside (points, path1[1]):
+                points[i-1, 1] = (maxy_point-1)/2
+    elif typeofproc == [1, 2]:
+        maxy_point = 3
+        path1 = find_shortest_undirected_path(paths, in_out_path[0, 0][0], in_out_path[0, 1][0])
+        path2 = find_shortest_undirected_path(paths, in_out_path[0, 0][1], in_out_path[0, 1][0])
+        if path1[0] < path2[0]:
+            for i in path1[1]:
+                points[i-1, 1] = maxy_point
+            if is_ordered_route(path1[1]) == False:
+                for i in range(1, len(path1[1])-1):
+                    points[path1[1][i]-1, 1] = (maxy_point-1)/2
+            for i in path2[1]:
+                points[i-1, 1] = 1
+            for i in find_same_height_outside (points, path2[1]):
+                points[i-1, 1] = (maxy_point-1)/2
+        else:
+            for i in path2[1]:
+                points[i-1, 1] = maxy_point
+            if is_ordered_route(path2[1]) == False:
+                for i in range(1, len(path2[1])-1):
+                    points[path2[1][i]-1, 1] = (maxy_point-1)/2
+            for i in path1[1]:
+                points[i-1, 1] = 1
+            for i in find_same_height_outside (points, path1[1]):
+                points[i-1, 1] = (maxy_point-1)/2
         
-    points = equalize_x_spacing(points, spacing=1.0)
+    points = equalize_x_spacing(points, spacing=spacing_)
     """
         
         if in_out_path[0, 0][0] > in_out_path[0, 0][1]:
@@ -1069,81 +1034,85 @@ def detect_superposition(points, paths):
         return points, paths
 
 #From Chatgpt
-def find_loops_with_io(paths: np.ndarray):
+def find_loops_with_global_neighbors(paths: np.ndarray):
     """
-    For each layer t in paths[t,p] = [u,v]:
-      • loops2: any undirected edge {u,v} repeated ≥2× in layer t.
-      • loops3: any triangle {u,v,w} in layer t.
+    Scans each layer t of paths[t,p] = [u,v] (1-based IDs, skip [0,0]/self-loops)
+    and returns two lists:
 
-    Returns (loops2, loops3), where each entry in loops2 is a dict:
+    loops2: [
       {
         "layer": t,
         "nodes": (u,v),
-        "positions": [p1,p2,…],     # where the 2-loop appears
-        "other": {                   # external node → [p-positions]
-          x: [q1,q2,…], … 
+        "positions": [p1,p2,…],            # where {u,v} repeats in layer t
+        "other": {
+          x: { layer1: [p…], layer2: [p…], … },
+          …
         },
-        "input_output": {            # external node → [slot-positions]
-          x: [s1,s2,…], … 
+        "input_output": {
+          x: { layer1: [s…], layer2: [s…], … },
+          …
         }
-      }
-    and each entry in loops3 is:
-      {
-        "layer": t,
-        "nodes": (u,v,w),
-        "positions": (p_uv,p_vw,p_uw),
-        "other": { x: [q…], … },
-        "input_output": { x: [s…], … }
-      }
-    where each slot s is 0 if x was in paths[t,p,0], or 1 if in paths[t,p,1].
+      },
+      …
+    ]
+
+    loops3: same structure but for triangles (u,v,w) with first-occurrence positions.
     """
+    T, P, _ = paths.shape
+
+    # 1) Build a global undirected edge→list of (layer, u, v, p)
+    global_edge_map = {}
+    global_adj      = {}
+    for t in range(T):
+        for p in range(P):
+            u, v = int(paths[t,p,0]), int(paths[t,p,1])
+            if (u,v) == (0,0) or u == v:
+                continue
+            key = tuple(sorted((u,v)))
+            global_edge_map.setdefault(key, []).append((t, u, v, p))
+            # global adjacency
+            global_adj.setdefault(u, set()).add(v)
+            global_adj.setdefault(v, set()).add(u)
+
     loops2 = []
     loops3 = []
 
-    T, P, _ = paths.shape
     for t in range(T):
-        # build undirected edge→[(u,v,p),…]
-        edge_map = {}
+        # 2) layer-local edge→occurrences
+        local_map = {}
         for p in range(P):
             u, v = int(paths[t,p,0]), int(paths[t,p,1])
             if (u,v)==(0,0) or u==v:
                 continue
             key = tuple(sorted((u,v)))
-            edge_map.setdefault(key, []).append((u,v,p))
-        # build adjacency for neighbor lookups
-        adj = {}
-        for (u,v), lst in edge_map.items():
-            adj.setdefault(u,set()).add(v)
-            adj.setdefault(v,set()).add(u)
+            local_map.setdefault(key, []).append((u, v, p))
 
-        # —— 2-loops ——  
-        for (u,v), occ in edge_map.items():
+        # 3) find 2-loops
+        for (u,v), occ in local_map.items():
             if len(occ) >= 2:
+                # where it loops in this layer:
                 loop_ps = [p for (_,_,p) in occ]
-                # external nodes = neighbors of u or v not in {u,v}
-                ext_nodes = sorted((adj[u]|adj[v]) - {u,v})
-                # build maps for positions and slot-indices
+                # external nodes across any layer:
+                ext_nodes = sorted((global_adj.get(u,()) | global_adj.get(v,())) - {u,v})
+
                 ext_pos = {}
                 ext_io  = {}
                 for x in ext_nodes:
-                    # collect all p where edge {x,u} or {x,v} appears
-                    ps = []
-                    for nbr in (u,v):
-                        key_xn = tuple(sorted((x,nbr)))
-                        if key_xn in edge_map:
-                            ps += [p for (_,_,p) in edge_map[key_xn]]
-                    ext_pos[x] = sorted(ps)
-                    # for each p, check slot
-                    slots = []
-                    for p in ext_pos[x]:
-                        if paths[t,p,0] == x:
-                            slots.append(0)
-                        elif paths[t,p,1] == x:
-                            slots.append(1)
-                        else:
-                            # should not happen
-                            raise RuntimeError(f"Edge mismatch at layer {t}, p={p}")
-                    ext_io[x] = slots
+                    # find all (layer, u',v',p) for edges {x,u} or {x,v}
+                    hits = []
+                    for nbr in (u, v):
+                        key_xn = tuple(sorted((x, nbr)))
+                        hits += global_edge_map.get(key_xn, [])
+                    # group by layer
+                    by_layer = {}
+                    io_by_layer = {}
+                    for layer, u2, v2, p2 in hits:
+                        by_layer.setdefault(layer, []).append(p2)
+                        # determine slot of x in paths[layer,p2]
+                        slot = 0 if paths[layer,p2,0] == x else 1
+                        io_by_layer.setdefault(layer, []).append(slot)
+                    ext_pos[x] = by_layer
+                    ext_io[x]  = io_by_layer
 
                 loops2.append({
                     "layer": t,
@@ -1153,41 +1122,48 @@ def find_loops_with_io(paths: np.ndarray):
                     "input_output": ext_io
                 })
 
-        # —— 3-loops ——  
-        for u in sorted(adj):
-            for v in sorted(adj[u]):
+        # 4) find 3-loops (triangles) in this layer
+        #    first build local adjacency
+        local_adj = {}
+        for (a,b) in local_map:
+            local_adj.setdefault(a, set()).add(b)
+            local_adj.setdefault(b, set()).add(a)
+
+        for u in sorted(local_adj):
+            for v in sorted(local_adj[u]):
                 if v <= u: continue
-                for w in sorted(adj[v]):
+                for w in sorted(local_adj[v]):
                     if w <= v: continue
-                    if u not in adj[w]:
+                    if u not in local_adj[w]:
                         continue
-                    # first-occurrence positions
-                    p_uv = edge_map[(u,v)][0][2]
-                    p_vw = edge_map[(v,w)][0][2]
-                    p_uw = edge_map[(u,w)][0][2]
+                    # first-occurrence positions in this layer
+                    p_uv = local_map[(u,v)][0][2]
+                    p_vw = local_map[(v,w)][0][2]
+                    p_uw = local_map[(u,w)][0][2]
                     tri_ps = (p_uv, p_vw, p_uw)
-                    # external nodes = neighbors of u,v,w outside the triangle
-                    ext = set(adj[u]|adj[v]|adj[w]) - {u,v,w}
+
+                    # external nodes across any layer
+                    ext_nodes = sorted(
+                        (global_adj.get(u,()) |
+                         global_adj.get(v,()) |
+                         global_adj.get(w,())) - {u,v,w}
+                    )
+
                     ext_pos = {}
                     ext_io  = {}
-                    for x in sorted(ext):
-                        # gather all p where x attaches to any loop node
-                        ps = []
-                        for node in (u,v,w):
-                            key_xn = tuple(sorted((x,node)))
-                            if key_xn in edge_map:
-                                ps += [p for (_,_,p) in edge_map[key_xn]]
-                        ext_pos[x] = sorted(ps)
-                        # determine slot for each p
-                        slots = []
-                        for p in ext_pos[x]:
-                            if paths[t,p,0] == x:
-                                slots.append(0)
-                            elif paths[t,p,1] == x:
-                                slots.append(1)
-                            else:
-                                raise RuntimeError(f"Edge mismatch at layer {t}, p={p}")
-                        ext_io[x] = slots
+                    for x in ext_nodes:
+                        hits = []
+                        for node in (u, v, w):
+                            key_xn = tuple(sorted((x, node)))
+                            hits += global_edge_map.get(key_xn, [])
+                        by_layer = {}
+                        io_by_layer = {}
+                        for layer, u2, v2, p2 in hits:
+                            by_layer.setdefault(layer, []).append(p2)
+                            slot = 0 if paths[layer,p2,0] == x else 1
+                            io_by_layer.setdefault(layer, []).append(slot)
+                        ext_pos[x] = by_layer
+                        ext_io[x]  = io_by_layer
 
                     loops3.append({
                         "layer": t,
@@ -1209,7 +1185,7 @@ def counterterms (points, paths, number):
     n_deleted = 0
 
     for i in tqdm(range(n_diagrams)):
-        loops2, loops3 = find_loops_with_io(paths[i])
+        loops2, loops3 = find_loops_with_global_neighbors(paths[i])
         if len(loops2) == 0 and len(loops3) == 0:
             new_points = np.delete(new_points, i-n_deleted, 0)
             new_paths = np.delete(new_paths, i-n_deleted, 0)
@@ -1223,21 +1199,22 @@ def counterterms (points, paths, number):
                 greater_node = max(loops2[j]["nodes"])
                 new_paths[i-n_deleted,loops2[j]["layer"], loops2[j]["positions"][0]] = np.array([greater_node, greater_node])
                 new_paths[i-n_deleted,loops2[j]["layer"], loops2[j]["positions"][1]] = np.array([0, 0])
-                for (node_id, other_positions), (node_id2, io_ps) in zip(loops2[j]["other"].items(), loops2[j]["input_output"].items()):
-                    if len(other_positions) == 1:
-                        if io_ps[0] == 0:
-                            new_paths[i-n_deleted,loops2[j]["layer"], other_positions[0]] = np.array([node_id, greater_node])
+                for node_id, other_positions in loops2[j]["other"].items():
+                    for layer, positions in other_positions.items():
+                        if len(positions) == 1:
+                            if positions[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
                         else:
-                            new_paths[i-n_deleted,loops2[j]["layer"], other_positions[0]] = np.array([greater_node, node_id])
-                    else :
-                        if io_ps[0] == 0:
-                            new_paths[i-n_deleted,loops2[j]["layer"], other_positions[0]] = np.array([node_id, greater_node])
-                        else: 
-                            new_paths[i-n_deleted,loops2[j]["layer"], other_positions[0]] = np.array([greater_node, node_id])
-                        if io_ps[1] == 0:
-                            new_paths[i-n_deleted,loops2[j]["layer"], other_positions[1]] = np.array([node_id, greater_node])
-                        else:
-                            new_paths[i-n_deleted,loops2[j]["layer"], other_positions[1]] = np.array([greater_node, node_id])
+                            if positions[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else: 
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                            if positions[1] == 0:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([greater_node, node_id])
                 for k in loops2[j]["nodes"]:
                     if k != greater_node:
                         new_points[i-n_deleted, k-1] = np.array([0, 0])
@@ -1247,98 +1224,41 @@ def counterterms (points, paths, number):
                 new_paths[i-n_deleted,loops3[j]["layer"], loops3[j]["positions"][0]] = np.array([greater_node, greater_node])
                 new_paths[i-n_deleted,loops3[j]["layer"], loops3[j]["positions"][1]] = np.array([0, 0])
                 new_paths[i-n_deleted,loops3[j]["layer"], loops3[j]["positions"][2]] = np.array([0, 0])
-                for (node_id, other_positions), (node_id2, io_ps) in zip(loops3[j]["other"].items(), loops3[j]["input_output"].items()):
-                    if len(other_positions) == 1:
-                        if io_ps[0] == 0:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[0]] = np.array([node_id, greater_node])
+                for node_id, other_positions in loops3[j]["other"].items():
+                    for layer, positions in other_positions.items():
+                        if len(positions) == 1:
+                            if positions[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                        elif len(positions) == 2:
+                            if positions[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else: 
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                            if positions[1] == 0:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([greater_node, node_id])
                         else:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[0]] = np.array([greater_node, node_id])
-                    elif len(other_positions) == 2:
-                        if io_ps[0] == 0:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[0]] = np.array([node_id, greater_node])
-                        else: 
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[0]] = np.array([greater_node, node_id])
-                        if io_ps[1] == 0:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[1]] = np.array([node_id, greater_node])
-                        else:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[1]] = np.array([greater_node, node_id])
-                    else:
-                        if io_ps[0] == 0:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[0]] = np.array([node_id, greater_node])
-                        else: 
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[0]] = np.array([greater_node, node_id])
-                        if io_ps[1] == 0:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[1]] = np.array([node_id, greater_node])
-                        else:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[1]] = np.array([greater_node, node_id])
-                        if io_ps[2] == 0:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[2]] = np.array([node_id, greater_node])
-                        else:
-                            new_paths[i-n_deleted,loops3[j]["layer"], other_positions[2]] = np.array([greater_node, node_id])
+                            if positions[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else: 
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                            if positions[1] == 0:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([greater_node, node_id])
+                            if positions[2] == 0:
+                                new_paths[i-n_deleted,layer, positions[2]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[2]] = np.array([greater_node, node_id])
                 for k in loops3[j]["nodes"]:
                     if k != greater_node:
                         new_points[i-n_deleted, k-1] = np.array([0, 0])
     return new_points, new_paths, new_number
-    
-
-    
-def add_counterterm (points, paths, number):
-    new_points = np.zeros((len(points), len(points[0]), 2))
-    new_paths = np.zeros((len(points), len(paths[0]), len(paths[0, 0]), 2), dtype=int)
-    new_number = np.zeros((len(points), 1), dtype=int)
-    n = 0
-    n_deleted = 0
-
-    for i in tqdm(range(len(paths))):
-        new_diagram = False
-        #Copy the points and paths to the new arrays
-        loops_2D = np.zeros((len(paths[i]), 5, 2), dtype=int)
-        loops_3D = np.zeros((len(paths[i]), 5, 3), dtype=int)
-        m = 0
-        #type of particles
-        for j in range(len(paths[i])):
-            loop_2D = find_equal_subarrays(trim_zeros_2D(paths[i, j]))
-            if len(loop_2D) == 0:
-                continue
-            if len(loop_2D[0]) < len(paths[i, j])/2:
-                for k in range(len(loop_2D)):
-                    loops_2D[j, m] = loop_2D[j][k]
-                    m += 1
-                new_diagram = True
-        m = 0
-        loop_3D = detect_3p_loops(points[i], paths[i])
-        for j in range(len(loop_3D)):
-            if np.count_nonzero(loop_3D[j]) == 0:
-                continue
-            for k in range(len(loop_3D[j])):
-                loops_3D[j, m] = loop_3D[j, k]
-                m += 1
-            new_diagram = True
-                
-        loops_2D = trim_zeros_3D(loops_2D, axis=1)
-        loops_3D = trim_zeros_3D(loops_3D, axis=1)
-        if new_diagram == False:
-            new_points = np.delete(new_points, i-n_deleted, 0)
-            new_paths = np.delete(new_paths, i-n_deleted, 0)
-            new_number = np.delete(new_number, i-n_deleted, 0)
-            n_deleted +=1
-        else:
-            n += 1
-            new_number[n] = number[i]
-            new_points[n] = points[i]
-            new_paths[n, j] = paths[i, j]
-            for j in range(len(paths[i])):
-                for k in range(len(new_paths[i-n_deleted, j])):
-                    if np.isin(k, loops_2D[j]):
-                        new_paths[n, j, k] = np.array([paths[i, j, k, 0], paths[i, j, k, 0]])
-                    elif np.isin(k, loops_3D[j]):
-                        new_paths[n, j, k] = np.array([paths[i, j, k, 0], paths[i, j, k, 0]])
-                    else:
-                        new_paths[n, j] = paths[i, j]
-    new_points, new_paths, new_number = group_diagrams(new_points, new_paths, new_number)
-    return new_points, new_paths, new_number
  
-def represent_order(points, paths, count, typeofproc, index_ = True,  lines_ = ["solid", "dotted"], colors_ = ["black", "black"], directory_ = "", docount = True):
+def represent_order(points, paths, count, typeofproc, index_ = True,  lines_ = ["solid", "dotted"], colors_ = ["black", "black"], directory_ = "", docount = True, spacing = 1.0):
     
     for i in range(len(points)):
         in_out_paths_ = in_out_paths(paths[i])
@@ -1349,7 +1269,7 @@ def represent_order(points, paths, count, typeofproc, index_ = True,  lines_ = [
             out += len(np.trim_zeros(in_out_paths_[j, 1]))
         if inp == typeofproc[0][1] and out == typeofproc[0][0]:
             points[i], paths[i] = detect_superposition(points[i], paths[i])
-            points[i] = reposition_diagram(points[i], in_out_paths_, paths[i], typeofproc[0])
+            points[i] = reposition_diagram(points[i], in_out_paths_, paths[i], typeofproc[0], spacing_=spacing)
             if docount:
                 represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, number=count[i], directory=directory_)
             else:

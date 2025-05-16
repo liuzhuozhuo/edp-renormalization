@@ -126,4 +126,4 @@ can_number_2nd = np.array([[1], [1], [1], [1], [1], [1], [1], [1], [1], [1], [1]
 
 can_points = [can_points_1st, can_points_2nd]
 can_paths = [can_paths_1st, can_paths_2nd]
-can_number = [can_number_1st, can_number_2nd]
+can_count = [can_number_1st, can_number_2nd]

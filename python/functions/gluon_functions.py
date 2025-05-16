@@ -141,7 +141,7 @@ def prune_points_and_reindex(points: np.ndarray,
     
     return new_points, new_paths
 
-def represent_diagram (points, all_paths, index = False, directory = "", colors = ["tab:blue", "tab:red", "black"], line = ["solid", "solid", "photon"], number = 0):
+def represent_diagram (points, all_paths, index = False, directory = "", colors = ["tab:blue", "tab:red", "black"], line = ["solid", "solid", "photon"], count = 0):
     """
     Represent a diagram with points and paths.
     Args:
@@ -194,8 +194,8 @@ def represent_diagram (points, all_paths, index = False, directory = "", colors 
     if index:
         for i in range(len(points)):
             ax.text(points[i, 0], points[i, 1], str(i+1), fontsize=12, color="black", ha="right", va="top")
-    if number !=0:
-        ax.text(0.5, 0.5, f"N = {number}", fontsize=12, color="black", ha="center", va="center")
+    if count !=0:
+        ax.text(0.5, 0.5, f"N = {count}", fontsize=12, color="black", ha="center", va="center")
     if directory != "":
         plt.savefig(directory, bbox_inches='tight')
         plt.close() #Added to not show in the notebook 
@@ -470,7 +470,7 @@ def partitions_limited(n, allowed=(1,2), min_part=None):
             for tail in partitions_limited(n - part, allowed, part):
                 yield [part] + tail
 
-def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset = 0):
+def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset = 0):
     curr_order = len(points)
     n_types = len(paths[0][0])
     max_points = np.zeros((n_types, 2), dtype=int)
@@ -516,7 +516,7 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
 
     new_points = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), len(points[0][0]) + len(points[-1][0]), 2))
     new_paths = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+5, 2), dtype=int)
-    new_number = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), 1), dtype=int)
+    new_count = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), 1), dtype=int)
 
     for i in tqdm(range(len(paths[0]))):
         for j in range(len(paths[-1])):
@@ -532,7 +532,7 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
                 for l in range(n_types):
                     for m in range(len(simp_paths[0])):
                         new_paths[n, l, m] = simp_paths[l, m]
-                new_number[n] = number[0][i] * number[-1][j]
+                new_count[n] = count[0][i] * count[-1][j]
                 n += 1
             if (curr_order-1 < len(can_paths)):
                 dummy_points, dummy_paths = connection(trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1),trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1), offset=offset)
@@ -547,7 +547,7 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
                     for l in range(n_types):
                         for m in range(len(simp_paths[0])):
                             new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
+                    new_count[n] = count[0][i] * count[-1][j]
                     n += 1
     for i in tqdm(range(1, 2)):
         for j in range(i-1, len(paths)):
@@ -566,7 +566,7 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
                             for o in range(n_types):
                                 for p in range(len(simp_paths[0])):
                                     new_paths[n, o, p] = simp_paths[o, p]
-                            new_number[n] = can_number[i][k] * number[j][l]        
+                            new_count[n] = can_count[i][k] * count[j][l]        
                             n += 1
                 for k in range(len(can_paths[i])):
                     for l in range(len(paths[j])):
@@ -582,7 +582,7 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
                             for o in range(n_types):
                                 for p in range(len(simp_paths[0])):
                                     new_paths[n, o, p] = simp_paths[o, p]
-                            new_number[n] = can_number[i][k] * number[j][l] 
+                            new_count[n] = can_count[i][k] * count[j][l] 
                             n += 1
                 
     #In the case of the gluon diagrams, there is only it second order diagrams, so this will only be used for curr_order = 1, but it should be general, for the cases where 
@@ -594,11 +594,11 @@ def combine_diagrams_order (points, paths, number, typeofproc, max_order, offset
             for j in range(n_types):
                 for k in range(len(can_paths[curr_order][i][j])):
                     new_paths[n, j, k] = can_paths[curr_order][i][j][k]
-            new_number[n] = can_number[curr_order][i][0]
+            new_count[n] = can_count[curr_order][i][0]
             n += 1
 
     
-    return new_points, new_paths, new_number
+    return new_points, new_paths, new_count
 
 def all_components_in_other(array1, array2):
     for row1 in array1:
@@ -1258,8 +1258,8 @@ def counterterms (points, paths, number):
                         new_points[i-n_deleted, k-1] = np.array([0, 0])
     return new_points, new_paths, new_number
  
-def represent_order(points, paths, count, typeofproc, index_ = True,  lines_ = ["solid", "dotted"], colors_ = ["black", "black"], directory_ = "", docount = True, spacing = 1.0):
-    
+def represent_order(points, paths, count_, typeofproc, index_ = True,  lines_ = ["solid", "dotted"], colors_ = ["black", "black"], directory_ = "", docount = True, spacing = 1.0):
+    n=1
     for i in range(len(points)):
         in_out_paths_ = in_out_paths(paths[i])
         inp = 0
@@ -1271,7 +1271,17 @@ def represent_order(points, paths, count, typeofproc, index_ = True,  lines_ = [
             points[i], paths[i] = detect_superposition(points[i], paths[i])
             points[i] = reposition_diagram(points[i], in_out_paths_, paths[i], typeofproc[0], spacing_=spacing)
             if docount:
-                represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, number=count[i], directory=directory_)
+                if directory_ != "":
+                    represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=count_[i], directory=directory_+str(n))
+                else:
+                    represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=count_[i])
             else:
-                represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, number=0, directory=directory_)
-            
+                if directory_ != "":
+                    represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=0, directory=directory_+str(n))
+                else:
+                    represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=0)
+            n += 1
+
+def next_order (points, paths, count, typeofproc, max_order):
+    next_points, next_paths, next_count = combine_diagrams_order(points, paths, count, typeofproc, max_order, offset = 0)
+    return group_diagrams(next_points, next_paths, next_count)

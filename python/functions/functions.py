@@ -1,3 +1,7 @@
+"""
+OUTDATED, NEED TO INCLUDE MANY FUNCTIONS FROM THE GLUON FUNCTIONS TO BE FUNCIONAL
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl

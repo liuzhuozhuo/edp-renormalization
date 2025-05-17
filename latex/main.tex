@@ -25,6 +25,7 @@
 \usepackage{bbding} % for \XSolidBrush
 \usepackage{pifont} % for \ding{55} (a check mark)
 \usepackage{macro}
+\usepackage{slashed}
 
 
 \usepackage{latexsym}
@@ -332,10 +333,6 @@ $M^{\mu\nu}$, which satisfy the following commutation relations,
 
 \end{comment}
 
-\subsubsection{Scalar fields}
-
-\subsubsection{Gluon fields}
-
 The Lagrangian density for the gluon fields is given by,
 \begin{equation}
     \mathcal{L} = -\frac{1}{2}\text{tr}F^{\mu\nu}F_{\mu\nu},
@@ -368,8 +365,37 @@ As for the associated energy-momentum tensor,
     \frac{1}{4}g^{\mu\nu}F^{\alpha\beta} F_{\alpha\beta}.
 \end{equation}
 
-The Hamiltonian density in FF quantization is obtained from integrating the component
-$\mathcal{T}^{+-}$ of the energy-momentum tensor, over the hyperplane $x^+=0$.
+The Hamiltonian in FF quantization is obtained from integrating the component
+$\mathcal{T}^{+-}$ of the energy-momentum tensor, over the hyperplane $x^+=0$. 
+
+By working in the gauge $A^+=0$, the Hamiltonian density can be expressed as the sum of 
+4 terms, as denoted in \cite{glazek_dynamics_2001}
+
+\begin{equation}
+    \mathcal{T}^{+-} = \mathcal{H}_{A^2} + \mathcal{H}_{A^3} +
+    \mathcal{H}_{A^4} + \mathcal{H}_{[\partial AA]^2},
+\end{equation}
+with each of the terms, 
+
+\begin{align}
+    \mathcal{H}_{A^2} &= -\frac{1}{2} A^{\perp a} (\partial^\perp)^2 A^{\perp a}, \\
+    \mathcal{H}_{A^3} &= g i \partial_\alpha A^a_\beta \sbrackets{A^\alpha, A^\beta}^a, \\
+    \mathcal{H}_{A^4} &= -\frac{1}{4} g^2 \sbrackets{A_\alpha, A_\beta}^a
+    \sbrackets{A^\alpha, A^\beta}^a, \\
+    \mathcal{H}_{[\partial AA]^2} &= -\frac{1}{2} g^2 \sbrackets{i \partial^+ A^\perp,
+    A^\perp}^a  \frac{1}{(i\partial^+)^2} \sbrackets{i\partial^+ A^\perp, A^\perp}^a.
+\end{align}
+
+Replacing $A^\mu$ with the operator $\hat{A}^\mu(x)$, defined by its Fourier composition
+on the plane $x^+=0$,
+\begin{equation}
+    \hat{A}^\mu(x) = \sum _{\sigma c} \int [k] \sbrackets{t^c \epsilon^\mu_{k \sigma} 
+    a_{k\sigma c}  e^{-ikx} + t^c \epsilon^{\mu*}_{k \sigma} 
+    a^\dagger_{k\sigma c}  e^{ikx}}_{x^+=0},
+\end{equation}
+where $[k] = \theta(k^+) dk^+ d^2k^\perp / (16\pi^3k^+)$, $\epsilon^\mu_{k \sigma}$ 
+are the polarization vectors, $t^c$ are the generators of the gauge group, and $a^\dagger_{k\sigma c}$, $a_{k\sigma c}$ are the 
+creation and annihilation operators (particle operators), respectively. 
 
 
 \subsection{Fock space}
@@ -462,24 +488,111 @@ We will consider the generator from Ref. \cite{PEP}
     \mathcal{G}_t = \sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}},
 \end{equation}
 where $\mathcal{H}_f$, the free part of $\mathcal{H}_t$, and $\mathcal{H}_{Pt}$ is 
-defined as function of the interacting term.
+defined as function of the interacting term. 
 
+This way, the RGPEP equation have the form,
 \begin{equation}
-    =  \sbrackets{\sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}}, \mathcal{H}_t}
+    \mathcal{H}_t^\prime =  \sbrackets{\sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}}, \mathcal{H}_t},
 \end{equation}
-
 where $\mathcal{H}_t$ is the Hamiltonian interested in solving.
 
 The free Hamiltonian $\mathcal{H}_f$ is the part of $\mathcal{H}_0(a_0)$ that does 
 not depend on the coupling constants, 
 
 
-\subsection{Counterterms}
+The Hamiltonian $\mathcal{H}_t$ can be expressed as a series of powers of the coupling 
+constant $g$,
+\begin{equation}
+    \mathcal{H}_t = \sum_{n=0}^{\infty} g^n \mathcal{H}_{t n} = 
+    \mathcal{H}_{0} + g \mathcal{H}_{t 1} + g^2 \mathcal{H}_{t 2} + g^3 \mathcal{H}_{t 3} +
+    g^4 \mathcal{H}_{t 4} + \cdots.
+\end{equation}
+
+Plugging this expression into the RGPEP equation, we obtain,
+\begin{align}
+    \begin{split}
+    \mathcal{H}_{0}^\prime & + g \mathcal{H}_{t 1}^\prime  + g^2 \mathcal{H}_{t 2}^\prime
+     + \cdots =  \\
+     &= \sbrackets{\sbrackets{\mathcal{H}_0, \mathcal{H}_{0} + g \mathcal{H}_{Pt 1} 
+     + g^2 \mathcal{H}_{Pt 2} + \cdots}, \mathcal{H}_{0} + g \mathcal{H}_{t 1} + g^2 \mathcal{H}_{t 2} + \cdots}. 
+    \end{split}
+\end{align}
+
+Order by order in $g$, the following differential equations are obtained,
+\begin{align}
+        \mathcal{H}_{0}^\prime &= 0, \\
+        g\mathcal{H}_{t 1}^\prime &= \sbrackets{\sbrackets{\mathcal{H}_0, g\mathcal{H}_{Pt 1}}, 
+        \mathcal{H}_{0}}, \\
+        g^2\mathcal{H}_{t 2}^\prime &= \sbrackets{\sbrackets{\mathcal{H}_0, g^2\mathcal{H}_{Pt 2}}, 
+        \mathcal{H}_{0}} + \sbrackets{\sbrackets{\mathcal{H}_0, g\mathcal{H}_{Pt 1}}, 
+        g\mathcal{H}_{t 1}}, \\
+        g^3\mathcal{H}_{t 3}^\prime &= \sbrackets{\sbrackets{\mathcal{H}_0, g^3\mathcal{H}_{Pt 3}}, 
+        \mathcal{H}_{0}} + \sbrackets{\sbrackets{\mathcal{H}_0, g^2\mathcal{H}_{Pt 2}}, 
+        g\mathcal{H}_{t 1}} + \sbrackets{\sbrackets{\mathcal{H}_0, g\mathcal{H}_{Pt 1}}, 
+        g^2\mathcal{H}_{t 2}}.\\
+        &\vdots \nonumber
+\end{align}
+
+The order 0 term is solvable from a initial condition, and the solution will be a 
+exponetial of the parameter $t$. The 1th order solution can be obtained from 0th 
+order, and the 2nd order from the previous orders, and so on. 
+
+\subsection{Regularization and Counterterms}
+
+In QCD, the bare Hamiltonian is ill-defined due to the presence of elements 
+that contain divergences, ultraviolet (UV) divergences and infrared (IR) divergences.
+Th UV divergences are produced in processes where the large momentum transferes, 
+or the high invariant mass difference between Fock states. While the IR divergences
+are produced in procceses where the particles are "soft", carring small longitudinal
+momentum fractions, $x_{p/P} = p^+/P^+$.
+
+To deal with these divergences a regulating factor $r$ is 
+introduced in the interacting terms. These factors make the interacting terms rapidly 
+tend to zero, if the change in the transverse momentum of any gluon exceeds a certain
+cutoff parameter $\Delta$, or if the change in longitudinal momentum of any gluon is
+greater than a cutoff parameter $\delta$. 
+
+The particle operators is multiplied by the regulating factor, 
+\begin{equation}
+    r_{\Delta \delta} (k^\perp, x) = r_\Delta (k^\perp) r_\delta(x) \theta(x).
+\end{equation}
+
+The transverse regulator factor will be of the form, 
+\begin{equation}
+    r_\Delta (\mathcal{M}) = \text{exp} \left( -\frac{\mathcal{M}^2}{\Delta^2} \right),
+\end{equation}
+with $\mathcal{M}$ the invariant mass of the system, ensuring that UV processes are
+suppressed.
+
+The longitudinal regulator factor must verify a similar condition, preventing terms
+of the form $1/x$ or $1/x^2$ to blow up as x approaches 0. The exact form of the 
+longitudinal regulator factor is not important, as long as it verifies the condition, 
+since it will be removed using the RGPEP.
+
+Both cutoff parameters 
+
+
+
+
+
 
 The counterterms is an additional term added to the initial or bare Hamiltonian 
 $\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
 process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
 finite at all values of $t$.
+
+Substituting this expression into each term of the Hamiltonian densities, integrating
+over space coordinates and taking into account the completeness and orthonormality 
+of the polarization vectors, we obtain the following expression for the different
+terms of the Hamiltonian
+
+\begin{align}
+    H_{A^2} &= \sum_{\sigma c} \int [k] \frac{k^{\perp 2}}{k^+}a^\dagger_{k\sigma c}
+    a_{k\sigma c}\\
+    H_{A^3} &= \sum_{123} \int [123] \slashed{\delta}(p^\dagger - p) \tilde{r}_{\Delta \delta}
+    (3, 1) \sbrackets{gY_{123}a_1^\dagger a_2^\dagger a_3 + gY_{123}^*a_3^\dagger a_2 a_1}\\
+\end{align}
+
 
 
 \subsection{Diagram representation}
@@ -490,19 +603,17 @@ to a diagram representation of the process, similar to the Feynman diagrams.
 
 
 
+
 \section{Cases} \label{sec:cases}
-\subsection{Scalar case}
 
 
 \section{Code implementation} \label{sec:code}
 
+
+
 \section{Diagrams obtained} \label{sec:diagrams}
 
-\subsection{Scalar}
-
-\subsection{QED}
-
-\subsection{QCD}
+\subsection{Order 3}
 
 \section{Conclusions and future work} \label{sec:conclusions}
 

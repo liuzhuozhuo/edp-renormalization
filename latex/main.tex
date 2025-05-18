@@ -15,7 +15,7 @@
 % Packages for specific capabilities
 \usepackage{rotating} % for text rotation in tables
 \usepackage{multirow} % for multirow in tables
-\usepackage{subfigure} % Place subfigures in figure environment
+\usepackage{subcaption} % Modern package for subfigures
 % Packages for specific symbols
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -26,7 +26,7 @@
 \usepackage{pifont} % for \ding{55} (a check mark)
 \usepackage{macro}
 \usepackage{slashed}
-
+\usepackage{cite}
 
 \usepackage{latexsym}
 \usepackage{comment}
@@ -143,7 +143,10 @@ bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
 % Indice %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\newpage
 
+\pagestyle{empty}       % no header (and no footer) on this page
 \tableofcontents
+\setcounter{page}{0}
+\cleardoublepage        % finish the ToC
 
 % Texto %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\newpage
@@ -208,7 +211,7 @@ given order.
 This thesis is organized as follows. Section \ref{sec:theoretical_background} describes
 the theoretical background needed to understand the renormalization group procedure
 for effective particles, and the Hamiltonian dynamics. Section \ref{sec:cases}
-describes the different cases studied in this thesis, mainly the gluon case, where
+describes the case studied in this thesis, gluon self interactions, where
 holding the simplicity of the scalar case, some peculiarities of the QCD theory are 
 present. The section \ref{sec:code} describes the connection between the diagrams 
 and the objects are defined in the code, as well as the steps taken to obtain higher 
@@ -224,39 +227,14 @@ To understand the basis of the RGPEP, we need to understand the different
 concepts involved in the process, as well as the theories that the process is
 applied to.  
 
-To describe the relativistic interactions of effective particles in the framework of 
-the renormalization group procedure for effective particles, and making use of 
-quantum theory in the front form of Hamiltonian dynamics. It's important to 
-understand each of the concepts involved in the process.
+\subsection{Hamiltonian dynamics}
 
-\subsection{Front form of Hamiltonian Dynamics}
+In quantum field theory, 2 equivalent formulations of the dynamics can be used, 
+the Lagrangian and the Hamiltonian formulations. Though the modeling of dynamics 
+tends to start in the Lagrangian formulation, and then using the Legendre transformation
+to obtain the Hamiltonian formulation. 
 
-The front form (FF) or light front of dynamics introduced by Dirac (1949) 
-\cite{dirac_front_forms_1949} offers a couple advantages to the instant form of 
-dynamics typically considered in quantum field theory. 
-
-The quantization hypersurface considered is,
-
-\begin{equation}
-    x^+ = t+z = x^0 + x^3 = 0,
-\end{equation}
-then the rest of coordinates will be defined as
-
-\begin{equation}
-    x^- = x^0-x^3, \quad x^\perp = (x^1, x^2),
-\end{equation}
-
-In the FF quantization, the space-time coordinate $x^+$ is treated as the evolution 
-parameter, similar to the time parameter in the instant form, and the rest of 
-coordinates, $x^-$ and $x^\perp$, are treated as spatial coordinates.
-
-In this set of coordinates, the fundamental quantities 
-
-The Hamiltonian in FF quantization is obtained from the Lagrangian density using 
-the Legendre transformation, similar to the procedure explained in the section
-\ref{sec:canonical_hamiltonian}, but with respect to the new coordinates.
-
-\subsection{Canonical Hamiltonian}\label{sec:canonical_hamiltonian}
+\subsubsection{Canonical Hamiltonian}\label{sec:canonical_hamiltonian}
 
 \begin{comment}
 \subsubsection{Classical mechanics}
@@ -333,72 +311,69 @@ $M^{\mu\nu}$, which satisfy the following commutation relations,
 
 \end{comment}
 
-The Lagrangian density for the gluon fields is given by,
-\begin{equation}
-    \mathcal{L} = -\frac{1}{2}\text{tr}F^{\mu\nu}F_{\mu\nu},
-\end{equation}
-where $F^{\mu\nu}$ is the field strength tensor, defined as,
-\begin{equation}
-    F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu + ig [A^\mu, A^\nu],
-\end{equation}
-and $A^\mu = A^{a\mu}t^a$, $t^a$ are the generators of the gauge group, and $g$ is the
-coupling constant. Verifying the following relations,
+Consider a general field theory and a Lagrangian density 
+$\mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x))$\footnote{where $x$ indicate a 
+4-vector, with $x^\mu$ its components, and $\partial_\mu = \frac{\partial}
+{\partial x^\mu}$}, where $\phi_a (x)$ is a particular field of the system.
+To obtain the Hamiltonian formulation, we need to define the 
+canonical momenta,
 
 \begin{equation}
-    [t^a, t^b] = i f^{abc} t^c, \quad \text{tr}(t^a t^b) = \frac{1}{2} \delta^{ab}.
+    \pi_a (x) = \frac{\partial \mathcal{L}}{\partial (\partial_0 \phi_a (x))}.
 \end{equation}
 
-We will be working in the gauge $A^+=0$, where the Lagrange equations constrain
-the component $A^-$ to become 
+The Hamiltonian density, using the Legendre transformation,
 
 \begin{equation}
-    A^- = \frac{1}{\partial^+}2 \partial^\perp A^\perp - \frac{2}{\partial^{+2}} ig 
-    \sbrackets{\partial^+ A^\perp, A^\perp}.
+    \mathcal{H} = \sum_a \pi_a (x) \partial_0 \phi_a (x) - 
+    \mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x)).
 \end{equation}
 
-In this way, the only degree of freedom left is the transverse component $A^\perp$.
-
-As for the associated energy-momentum tensor,
+In quantum mechanics, or quantum field theory, the Hamiltonian becomes an operator 
+acting on a Hilbert space. This promotion of the Hamiltonian to an operator is done by
+replacing the canonical coordinates and momenta with the corresponding operators, 
+and impose the canonical commutation relations,
 
 \begin{equation}
-    \mathcal{T}^{\mu\nu} = -F^{a\mu\alpha}\partial^\nu A^a_\alpha + 
-    \frac{1}{4}g^{\mu\nu}F^{\alpha\beta} F_{\alpha\beta}.
+    \sbrackets{\phi_a (x), \pi_b (y)} = i \delta_{ab} \delta^3(x-y),
+    \quad \sbrackets{\phi_a (x), \phi_b (y)} = 0, \quad
+    \sbrackets{\pi_a (x), \pi_b (y)} = 0.
 \end{equation}
 
-The Hamiltonian in FF quantization is obtained from integrating the component
-$\mathcal{T}^{+-}$ of the energy-momentum tensor, over the hyperplane $x^+=0$. 
+The field operators tend to be expressed in terms of creation and annihilation operators,
+that act on the Fock space (see section \ref{sec:fock_space}).
 
-By working in the gauge $A^+=0$, the Hamiltonian density can be expressed as the sum of 
-4 terms, as denoted in \cite{glazek_dynamics_2001}
+The quantization of the system is usually performed in the instant form of the 
+dynamics, where the time is treated as the evolution parameter, and the rest of
+coordinates are treated as spatial coordinates. 
+
+\subsubsection{Front form of Hamiltonian Dynamics}
+
+The front form (FF) or light front of dynamics introduced by Dirac (1949) 
+\cite{dirac_front_forms_1949} offers a couple advantages to the instant form of 
+dynamics typically considered in quantum field theory. 
+
+Considering a quantization hypersurface defined by the equation,
 
 \begin{equation}
-    \mathcal{T}^{+-} = \mathcal{H}_{A^2} + \mathcal{H}_{A^3} +
-    \mathcal{H}_{A^4} + \mathcal{H}_{[\partial AA]^2},
+    x^+ = \frac{1}{\sqrt{2}} (t+z) = \frac{1}{\sqrt{2}} (x^0 + x^3) = 0,
 \end{equation}
-with each of the terms, 
+then the rest of coordinates will be defined as
 
-\begin{align}
-    \mathcal{H}_{A^2} &= -\frac{1}{2} A^{\perp a} (\partial^\perp)^2 A^{\perp a}, \\
-    \mathcal{H}_{A^3} &= g i \partial_\alpha A^a_\beta \sbrackets{A^\alpha, A^\beta}^a, \\
-    \mathcal{H}_{A^4} &= -\frac{1}{4} g^2 \sbrackets{A_\alpha, A_\beta}^a
-    \sbrackets{A^\alpha, A^\beta}^a, \\
-    \mathcal{H}_{[\partial AA]^2} &= -\frac{1}{2} g^2 \sbrackets{i \partial^+ A^\perp,
-    A^\perp}^a  \frac{1}{(i\partial^+)^2} \sbrackets{i\partial^+ A^\perp, A^\perp}^a.
-\end{align}
-
-Replacing $A^\mu$ with the operator $\hat{A}^\mu(x)$, defined by its Fourier composition
-on the plane $x^+=0$,
 \begin{equation}
-    \hat{A}^\mu(x) = \sum _{\sigma c} \int [k] \sbrackets{t^c \epsilon^\mu_{k \sigma} 
-    a_{k\sigma c}  e^{-ikx} + t^c \epsilon^{\mu*}_{k \sigma} 
-    a^\dagger_{k\sigma c}  e^{ikx}}_{x^+=0},
+    x^- = \frac{1}{\sqrt{2}} (x^0-x^3), \quad x^\perp = (x^1, x^2),
 \end{equation}
-where $[k] = \theta(k^+) dk^+ d^2k^\perp / (16\pi^3k^+)$, $\epsilon^\mu_{k \sigma}$ 
-are the polarization vectors, $t^c$ are the generators of the gauge group, and $a^\dagger_{k\sigma c}$, $a_{k\sigma c}$ are the 
-creation and annihilation operators (particle operators), respectively. 
+
+In the FF quantization, the space-time coordinate $x^+$ is treated as the evolution 
+parameter, similar to the time parameter in the instant form, and the rest of 
+coordinates, $x^-$ and $x^\perp$, are treated as spatial coordinates.
+
+The Hamiltonian in FF quantization is obtained from the Lagrangian density using 
+the Legendre transformation, similar to the procedure explained in the section
+\ref{sec:canonical_hamiltonian}, but with respect to the new coordinates.
 
 
-\subsection{Fock space}
+\subsection{Fock space} \label{sec:fock_space}
 
 Intoduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock space is a sum 
 of a set of Hilbert spaces, each one corresponding to a different number of 
@@ -408,27 +383,37 @@ system, the use of the Fock space is needed.
 The Fock space is defined as the direct sum of tensor products of the single 
 particle Hilbert space $\mathbb{H}$,
 
-\begin{equation}
+\begin{comment}
+    \begin{equation}
     \mathbb{F}_\nu = \bigoplus_{n=0}^{\infty} S_\nu \mathbb{H}^{\otimes n} = 
     \mathbb{C} \oplus \mathbb{H} \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}) 
     \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
 \end{equation}
 where $S_\nu$ is the symmetrization operator depending on whether the particles described
 are bosonic or fermionic, it symmetrizes or antisymmetrizes the tensors, and 
-$\mathbb{C}$ is the complex scalar, corresponding to the states with no particles. 
+$\mathbb{C}$ is the complex scalar, corresponding to the states with no particles.
+\end{comment}
+
+\begin{equation}
+    \mathbb{F} = \bigoplus_{n=0}^{\infty}  \mathbb{H}^{\otimes n} = 
+    \mathbb{C} \oplus \mathbb{H} \oplus (\mathbb{H} \otimes \mathbb{H}) 
+    \oplus (\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
+\end{equation}
+where $\mathbb{C}$ is the complex scalar, corresponding to the states with no particles.
 
 This way a general state in the Fock space can be expressed as,
 
 \begin{equation}
-    \ket{\Psi}_\nu = \ket{\Psi_0}_\nu \oplus \ket{\Psi_1}_\nu \oplus
-    \ket{\Psi_2}_\nu \oplus \cdots = a \ket{0}_\nu + \sum_{i=1}a_i \ket{\psi_i}_\nu +
-    \sum_{i,j=1}a_{ij} \ket{\psi_i \psi_j}_\nu + \cdots,
+    \ket{\Psi} = \ket{\Psi_0} \oplus \ket{\Psi_1} \oplus
+    \ket{\Psi_2} \oplus \cdots = a \ket{0} + \sum_{i=1}a_i \ket{\psi_i} +
+    \sum_{i,j=1}a_{ij} \ket{\psi_i \psi_j} + \cdots,
 \end{equation}
-where $\ket{\Psi_0}_\nu$ is the vacuum state, $\ket{\Psi_1}_\nu$ is the one particle
-state, $\ket{\Psi_2}_\nu$ is the two particle state, and so on. The coefficients $a_i$
+
+where $\ket{\Psi_0}$ is the vacuum state, $\ket{\Psi_1}$ is the one particle
+state, $\ket{\Psi_2}$ is the two particle state, and so on. The coefficients $a_i$
 are the amplitudes of the states, in general complex numbers. 
 
-In the case of QCD, a geneal state in the Fock space involves a superposition of all 
+In the case of QCD, a general state in the Fock space involves a superposition of all 
 possible multiparticle states, build from quarks, antiquarks, and gluons, with the
 correct quantum numbers. For instance, a quarkonium state in QCD is given by:
 
@@ -437,6 +422,8 @@ correct quantum numbers. For instance, a quarkonium state in QCD is given by:
     + c_4 \ket{gg} + \cdots,
 \end{equation}
 
+Describing the system in the FF quantization, the vacuum state is "empty", since 
+no particle creation are possible from $P^+ = 0$
 
 
 \subsection{RGPEP}
@@ -581,39 +568,264 @@ $\mathcal{H}_0$ to deal with the divergences due to loops, produced during the
 process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
 finite at all values of $t$.
 
-Substituting this expression into each term of the Hamiltonian densities, integrating
-over space coordinates and taking into account the completeness and orthonormality 
-of the polarization vectors, we obtain the following expression for the different
-terms of the Hamiltonian
-
-\begin{align}
-    H_{A^2} &= \sum_{\sigma c} \int [k] \frac{k^{\perp 2}}{k^+}a^\dagger_{k\sigma c}
-    a_{k\sigma c}\\
-    H_{A^3} &= \sum_{123} \int [123] \slashed{\delta}(p^\dagger - p) \tilde{r}_{\Delta \delta}
-    (3, 1) \sbrackets{gY_{123}a_1^\dagger a_2^\dagger a_3 + gY_{123}^*a_3^\dagger a_2 a_1}\\
-\end{align}
-
-
-
 \subsection{Diagram representation}
 
 From the expression of the Hamiltonian, different terms can be separated and correlate
 to a diagram representation of the process, similar to the Feynman diagrams.
 
 
+\section{Case study: Gluons self interactions} \label{sec:cases}
+
+\subsection{Canonical diagrams}
+
+The Lagrangian density for the gluon fields is given by,
+\begin{equation}
+    \mathcal{L} = -\frac{1}{2}\text{tr}F^{\mu\nu}F_{\mu\nu},
+\end{equation}
+where $F^{\mu\nu}$ is the field strength tensor, defined as,
+\begin{equation}
+    F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu + ig [A^\mu, A^\nu],
+\end{equation}
+and $A^\mu = A^{a\mu}t^a$, $t^a$ are the generators of the gauge group, and $g$ is the
+coupling constant. Verifying the following relations,
+
+\begin{equation}
+    [t^a, t^b] = i f^{abc} t^c, \quad \text{tr}(t^a t^b) = \frac{1}{2} \delta^{ab}.
+\end{equation}
+
+We will be working in the gauge $A^+=0$, where the Lagrange equations constrain
+the component $A^-$ to become 
+
+\begin{equation}
+    A^- = \frac{1}{\partial^+}2 \partial^\perp A^\perp - \frac{2}{\partial^{+2}} ig 
+    \sbrackets{\partial^+ A^\perp, A^\perp}.
+\end{equation}
+
+In this way, the only degree of freedom left is the transverse component $A^\perp$.
+
+As for the associated energy-momentum tensor,
+
+\begin{equation}
+    \mathcal{T}^{\mu\nu} = -F^{a\mu\alpha}\partial^\nu A^a_\alpha + 
+    \frac{1}{4}g^{\mu\nu}F^{\alpha\beta} F_{\alpha\beta}.
+\end{equation}
+
+The Hamiltonian in FF quantization is obtained from integrating the component
+$\mathcal{T}^{+-}$ of the energy-momentum tensor, over the hyperplane $x^+=0$. 
+
+By working in the gauge $A^+=0$, the Hamiltonian density can be expressed as the sum of 
+4 terms, as denoted in \cite{glazek_dynamics_2001}
+
+\begin{equation}
+    \mathcal{T}^{+-} = \mathcal{H}_{A^2} + \mathcal{H}_{A^3} +
+    \mathcal{H}_{A^4} + \mathcal{H}_{[\partial AA]^2},
+\end{equation}
+with each of the terms, 
+
+\begin{align}
+    \mathcal{H}_{A^2} &= -\frac{1}{2} A^{\perp a} (\partial^\perp)^2 A^{\perp a}, \\
+    \mathcal{H}_{A^3} &= g i \partial_\alpha A^a_\beta \sbrackets{A^\alpha, A^\beta}^a, \\
+    \mathcal{H}_{A^4} &= -\frac{1}{4} g^2 \sbrackets{A_\alpha, A_\beta}^a
+    \sbrackets{A^\alpha, A^\beta}^a, \\
+    \mathcal{H}_{[\partial AA]^2} &= -\frac{1}{2} g^2 \sbrackets{i \partial^+ A^\perp,
+    A^\perp}^a  \frac{1}{(i\partial^+)^2} \sbrackets{i\partial^+ A^\perp, A^\perp}^a.
+\end{align}
+
+Replacing $A^\mu$ with the operator $\hat{A}^\mu(x)$, defined by its Fourier composition
+on the plane $x^+=0$,
+\begin{equation}
+    \hat{A}^\mu(x) = \sum _{\sigma c} \int [k] \sbrackets{t^c \epsilon^\mu_{k \sigma} 
+    a_{k\sigma c}  e^{-ikx} + t^c \epsilon^{\mu*}_{k \sigma} 
+    a^\dagger_{k\sigma c}  e^{ikx}}_{x^+=0},
+\end{equation}
+where $[k] = \theta(k^+) dk^+ d^2k^\perp / (16\pi^3k^+)$, $\epsilon^\mu_{k \sigma}$ 
+are the polarization vectors, $t^c$ are the generators of the gauge group, and $a^\dagger_{k\sigma c}$, $a_{k\sigma c}$ are the 
+creation and annihilation operators (particle operators), respectively. 
 
 
+Substituting this expression into each term of the Hamiltonian densities, integrating
+over space coordinates and taking into account the completeness and orthonormality 
+of the polarization vectors, we obtain the following expression for the different
+terms of the Hamiltonian \cite{QCDG}, 
 
-\section{Cases} \label{sec:cases}
-
+\begin{align}
+    H_{A^2} &= \sum_{\sigma c} \int [k] \frac{k^{\perp 2}}{k^+}a^\dagger_{k\sigma c}
+    a_{k\sigma c},\\
+    H_{A^3} &= \sum_{123} \int [123] \slashed{\delta}(p^\dagger - p) \tilde{r}_{\Delta \delta}
+    (3, 1) \sbrackets{gY_{123}a_1^\dagger a_2^\dagger a_3 + gY_{123}^*a_3^\dagger a_2 a_1},\\
+    H_{A^4} &= \sum_{1234} \int [1234] \slashed{\delta}(p^\dagger - p) \frac{g^2}{4}
+    \sbrackets{\parenthesis{\Xi_{A^4 1234} a_1^\dagger a_2^\dagger a_3^\dagger a_4 + h.c.}+ X_{A^4 1234} 
+    a_1^\dagger a_2^\dagger a_3 a_4 },\\
+    H_{\sbrackets{\partial A A}^2} &= \sum_{1234} \int [1234] \slashed{\delta}
+    (p^\dagger - p) g^2 \sbrackets{\parenthesis{\Xi_{\sbrackets{\partial A A}^2 1234}
+    a_1^\dagger a_2^\dagger a_3^\dagger a_4 + h.c.} + X_{\sbrackets{\partial A A}^2 
+    1234} a_1^\dagger a_2^\dagger a_3 a_4 }.
+\end{align}
 
 \section{Code implementation} \label{sec:code}
+
+The code is implemented in Python, but the general method can be applied to any 
+programming language. The program is designed to be modular, and applicable to
+other theories, by considering some minor modifications and changing the canonical
+diagrams. These modifications are not implemented yet, and remain to be tested.
+
+\subsection{Diagrams definition}
+
+The diagrams are defined by 2 arrays, 
+\begin{itemize}
+    \item Points: arrays of dimension $N \times 2$, where $N$ is the number of 
+    points in the diagram, each point is defined by its coordinates $(x,y)$.
+    \item Paths: arrays of dimension $M \times N^\prime \times 2$, where $M$ is the
+    number of different types of particles to consider in the theory, $N^\prime$ 
+    is the number of paths for each types of particle in the diagram, and $2$ indicate
+    the points to connect.
+\end{itemize}
+
+This way of defining the diagrams is analogous to the way of defining the undirected 
+graphs in the graph theory, where the points are the vertices and the paths are the 
+edges. 
+
+In the case of gluon interactions, although only 1 type of particle is present, the
+instantaneous interactions have to be considered. This is done by defining this 
+interaction as a new type of virtual particle in the program.
+
+
+\subsection{Order by order procedure}
+
+To calculate the diagrams of higher order, the code follows the order by order 
+procedure described in the section \ref{sec:theoretical_background}. Having only the
+canonical diagrams, the program aims to obtain all the possible diagrams of an order
+that contribute to a certain process, discarding the other diagrams.
+
+This process produces a huge amount of diagrams, many of them equivalent. The 
+program detects these repeated diagrams, and adds their contribution, thus reducing 
+the number of diagrams that needs to be used to calculate the next order. This procedure
+is fundamental to reduce the computational time.
+
+Other important aspect of the RGPEP are the counterterms, that are added to cancel 
+the divergences produced in the process. The program is able to detect the 2 loops
+and 3 loops in the diagrams of a certain order, and add new diagrams to cancel the 
+divergences. 
+
 
 
 
 \section{Diagrams obtained} \label{sec:diagrams}
 
+
 \subsection{Order 3}
+
+Considering the 3 gluon vertex.
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/1.png}
+        \caption{ }
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/2.png}
+        \caption{ }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/3.png}
+        \caption{ }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/4.png}
+        \caption{ }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/5.png}
+        \caption{ }
+        \label{fig:order3_1to2/5}
+    \end{subfigure}
+    \hfill  
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/6.png}
+        \caption{ }
+        \label{fig:order3_1to2/6}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/7.png}
+        \caption{ }
+    \end{subfigure}
+    \hfill 
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/8.png}
+        \caption{ }
+    \end{subfigure}
+    \caption{Diagrams of third order, contributing to the 3 gluon vertex.}
+    \label{fig:order3_1to2}
+\end{figure*}
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/counterterms/1.png}
+        \caption{ }
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/counterterms/2.png}
+        \caption{ }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/counterterms/3.png}
+        \caption{ }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/counterterms/4.png}
+        \caption{ }
+    \end{subfigure}
+    \caption{Counterterms to the diagrams of third order in figure \ref{fig:order3_1to2}}
+    \label{fig:order3_1to2/counterterms}
+\end{figure*}
+
+
+In the figure \ref{fig:order3_1to2} we can see the diagrams obtained for the process
+of 1 gluon going to 2 gluons, with the corresponding counterterms in figure
+\ref{fig:order3_1to2/counterterms}. 
+
+The diagrams \ref{fig:order3_1to2/5} and \ref{fig:order3_1to2/6} are really the same 
+diagram, due to instant process being instantaneous. For any other particle, these 
+2 diagrams would be different, due to the importance of the order in the interactions
+so the program is kept to consider them as different, to not lose generality.
+
+Comparing with the 3rd order contribution diagrams in \cite{QCDG}, the same diagrams
+for the 3 gluon vertex are obtained, proving the validity of the program to reproduce the same results.
+
+
+
+\subsection{Order 4}
+
+Starting at order 4, the distinct non-abelian nature of the QCD is present, since 
+the gluons interact with themselves, creating diagrams not possible in abelian theories, 
+such as QED.
+
+\subsection{Higher orders}
+
+At higher orders, the diagrams become more complex, and the number of diagrams scale 
+exponentially. Is here where the power of the program is shown. 
 
 \section{Conclusions and future work} \label{sec:conclusions}
 
@@ -623,8 +835,6 @@ to a diagram representation of the process, similar to the Feynman diagrams.
 \newpage
 
 \bibliography{references} % Entries are in the references.bib file
-\nocite{QFT}
-\nocite{QCDG}
 
 \end{document}
 

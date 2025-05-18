@@ -12,8 +12,7 @@ V.~{Fock}.
 
 \bibitem{PEP}
 S.~D. Glazek.
-\newblock Perturbative formulae for relativistic interactions of effective
-  particles.
+\newblock Perturbative formulae for relativistic interactions of effective particles.
 \newblock {\em Acta Phys.Polon.B 43}, 2012.
 
 \bibitem{glazek_dynamics_2001}
@@ -21,15 +20,9 @@ Stanisław~D. Głazek.
 \newblock Dynamics of effective gluons.
 \newblock {\em Physical Review D}, 63(11):116006, May 2001.
 
-\bibitem{QFT}
-C.~Itzykson J.-B.~Zuber.
-\newblock Quantum field theory.
-\newblock {\em New York McGraw-Hill International Book Co}.
-
 \bibitem{QCDG}
 S.~D.~Głazek M.~Gómez-Rocha.
-\newblock Asymptotic freedom in the front-form hamiltonian for quantum
-  chromodynamics of gluons.
+\newblock Asymptotic freedom in the front-form hamiltonian for quantum chromodynamics of gluons.
 \newblock {\em Phys.Rev.D 92}, 2015.
 
 \end{thebibliography}

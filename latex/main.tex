@@ -227,6 +227,55 @@ To understand the basis of the RGPEP, we need to understand the different
 concepts involved in the process, as well as the theories that the process is
 applied to.  
 
+\subsection{Fock space} \label{sec:fock_space}
+
+Intoduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock space is a sum 
+of a set of Hilbert spaces, each one corresponding to a different number of 
+particles in the system. So in order to describe a variable number of particles in our 
+system, the use of the Fock space is needed.
+
+The Fock space is defined as the direct sum of tensor products of the single 
+particle Hilbert space $\mathbb{H}$,
+
+\begin{comment}
+    \begin{equation}
+    \mathbb{F}_\nu = \bigoplus_{n=0}^{\infty} S_\nu \mathbb{H}^{\otimes n} = 
+    \mathbb{C} \oplus \mathbb{H} \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}) 
+    \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
+\end{equation}
+where $S_\nu$ is the symmetrization operator depending on whether the particles described
+are bosonic or fermionic, it symmetrizes or antisymmetrizes the tensors, and 
+$\mathbb{C}$ is the complex scalar, corresponding to the states with no particles.
+\end{comment}
+
+\begin{equation}
+    \mathbb{F} = \bigoplus_{n=0}^{\infty}  \mathbb{H}^{\otimes n} = 
+    \mathbb{C} \oplus \mathbb{H} \oplus (\mathbb{H} \otimes \mathbb{H}) 
+    \oplus (\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
+\end{equation}
+where $\mathbb{C}$ is the complex scalar, corresponding to the states with no particles.
+
+This way a general state in the Fock space can be expressed as,
+
+\begin{equation}
+    \ket{\Psi} = \ket{\Psi_0} \oplus \ket{\Psi_1} \oplus
+    \ket{\Psi_2} \oplus \cdots = c \ket{0} + \sum_{i=1}c_i \ket{\psi_i} +
+    \sum_{i,j=1}c_{ij} \ket{\psi_i \psi_j} + \cdots,
+\end{equation}
+
+where $\ket{\Psi_0}$ is the vacuum state, $\ket{\Psi_1}$ is the one particle
+state, $\ket{\Psi_2}$ is the two particle state, and so on. The coefficients $a_i$
+are the amplitudes of the states, in general complex numbers. 
+
+In the case of QCD, a general state in the Fock space involves a superposition of all 
+possible multiparticle states, build from quarks, antiquarks, and gluons, with the
+correct quantum numbers. For instance, a quarkonium state in QCD is given by:
+
+\begin{equation}
+    \ket{\Psi} = c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{qqq} 
+    + c_4 \ket{gg} + \cdots,
+\end{equation}
+
 \subsection{Hamiltonian dynamics}
 
 In quantum field theory, 2 equivalent formulations of the dynamics can be used, 
@@ -340,14 +389,70 @@ and impose the canonical commutation relations,
     \sbrackets{\pi_a (x), \pi_b (y)} = 0.
 \end{equation}
 
-The field operators tend to be expressed in terms of creation and annihilation operators,
-that act on the Fock space (see section \ref{sec:fock_space}).
+The field operators tend to be expressed in terms of creation, $a_i$ and annihilation 
+$a^\dagger_i$ operators, that act on the Fock space, creating and annihilating the mode 
+$i$ of the field. Mathematically, the creation and annihilation operators are the 
+Fourier components of the field.
+
+Any state component in the Fock space can be expressed as the action of a series of 
+creation operators on the vacuum state, $\ket{0}$,
+
+\begin{equation}
+    \ket{\Psi_n} = \sum_{i_1,i_2,\cdots,i_n} \frac{c_{i_1 i_2 \cdots i_n}}{\sqrt{n!}}
+    a^\dagger_{i_1} a^\dagger_{i_2} \cdots a^\dagger_{i_n} \ket{0},
+\end{equation}
+making the full state, 
+
+\begin{equation}
+    \ket{\Psi} = \sum_{n=0}^{\infty} \frac{1}{\sqrt{n!}} \sum_{i_1,i_2,\cdots,i_n} 
+    c_{i_1 i_2 \cdots i_n} a^\dagger_{i_1} a^\dagger_{i_2} \cdots a^\dagger_{i_n} \ket{0}.
+\end{equation}
+
+The creation and annihilation operators satisfy some commutation or anticommutation 
+relations, depending on the nature of the particles, bosons or fermions. 
+
+For bosons, the creation and annihilation operators satisfy the following commutation 
+relations,
+
+\begin{equation}
+    \sbrackets{a_i, a_j^\dagger} = \delta_{ij}, \quad
+    \sbrackets{a_i, a_j} = 0, \quad
+    \sbrackets{a_i^\dagger, a_j^\dagger} = 0.
+\end{equation}
+
+For fermions, the creation and annihilation operators satisfy the following anticommutation
+relations,
+
+\begin{equation}
+    \{a_i, a_j^\dagger\} = \delta_{ij}, \quad
+    \{a_i, a_j\} = 0, \quad
+    \{a_i^\dagger, a_j^\dagger\} = 0.
+\end{equation}
+
+This way, the creation and annihilation operators are the fundamental objects of the
+Fock space, and the Hamiltonian and the fields are expressed in terms of these operators.
+
+
+When a combination of creation and annihilation operators is considered, normal-ordering is
+used when defining operators that contain both creation and annihilation operators
+and avoid the infinite vacuum contribution. The normal-ordering is defined as the 
+process of rearranging the creation and annihilation operators in such a way that 
+all the creation operators are to the left of all the annihilation operators.
+
+The normal-ordering is denoted by the symbol $:\cdots:$, then for a fermionic case, 
+
+\begin{equation}
+    a_i a_j^\dagger =  \{a_i, a_j^\dagger\} -  a_j^\dagger a_i = 
+    \delta_{ij} - :a_j^\dagger a_i: = \delta_{ij} - a_j^\dagger a_i.
+\end{equation}
+
+\subsubsection{Front form of Hamiltonian Dynamics}
+
 
 The quantization of the system is usually performed in the instant form of the 
 dynamics, where the time is treated as the evolution parameter, and the rest of
-coordinates are treated as spatial coordinates. 
-
-\subsubsection{Front form of Hamiltonian Dynamics}
+coordinates are treated as spatial coordinates. But other forms of dynamics 
+can be considered.
 
 The front form (FF) or light front of dynamics introduced by Dirac (1949) 
 \cite{dirac_front_forms_1949} offers a couple advantages to the instant form of 
@@ -372,59 +477,8 @@ The Hamiltonian in FF quantization is obtained from the Lagrangian density using
 the Legendre transformation, similar to the procedure explained in the section
 \ref{sec:canonical_hamiltonian}, but with respect to the new coordinates.
 
-
-\subsection{Fock space} \label{sec:fock_space}
-
-Intoduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock space is a sum 
-of a set of Hilbert spaces, each one corresponding to a different number of 
-particles in the system. So in order to describe a variable number of particles in our 
-system, the use of the Fock space is needed.
-
-The Fock space is defined as the direct sum of tensor products of the single 
-particle Hilbert space $\mathbb{H}$,
-
-\begin{comment}
-    \begin{equation}
-    \mathbb{F}_\nu = \bigoplus_{n=0}^{\infty} S_\nu \mathbb{H}^{\otimes n} = 
-    \mathbb{C} \oplus \mathbb{H} \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}) 
-    \oplus S_\nu(\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
-\end{equation}
-where $S_\nu$ is the symmetrization operator depending on whether the particles described
-are bosonic or fermionic, it symmetrizes or antisymmetrizes the tensors, and 
-$\mathbb{C}$ is the complex scalar, corresponding to the states with no particles.
-\end{comment}
-
-\begin{equation}
-    \mathbb{F} = \bigoplus_{n=0}^{\infty}  \mathbb{H}^{\otimes n} = 
-    \mathbb{C} \oplus \mathbb{H} \oplus (\mathbb{H} \otimes \mathbb{H}) 
-    \oplus (\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
-\end{equation}
-where $\mathbb{C}$ is the complex scalar, corresponding to the states with no particles.
-
-This way a general state in the Fock space can be expressed as,
-
-\begin{equation}
-    \ket{\Psi} = \ket{\Psi_0} \oplus \ket{\Psi_1} \oplus
-    \ket{\Psi_2} \oplus \cdots = a \ket{0} + \sum_{i=1}a_i \ket{\psi_i} +
-    \sum_{i,j=1}a_{ij} \ket{\psi_i \psi_j} + \cdots,
-\end{equation}
-
-where $\ket{\Psi_0}$ is the vacuum state, $\ket{\Psi_1}$ is the one particle
-state, $\ket{\Psi_2}$ is the two particle state, and so on. The coefficients $a_i$
-are the amplitudes of the states, in general complex numbers. 
-
-In the case of QCD, a general state in the Fock space involves a superposition of all 
-possible multiparticle states, build from quarks, antiquarks, and gluons, with the
-correct quantum numbers. For instance, a quarkonium state in QCD is given by:
-
-\begin{equation}
-    \ket{\Psi} = c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{qqq} 
-    + c_4 \ket{gg} + \cdots,
-\end{equation}
-
 Describing the system in the FF quantization, the vacuum state is "empty", since 
 no particle creation are possible from $P^+ = 0$
-
 
 \subsection{RGPEP}
 The RGPEP, is a renormalization group procedure applied to the Hamiltonian 

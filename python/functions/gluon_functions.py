@@ -1226,30 +1226,31 @@ def counterterms (points, paths, number):
                 new_paths[i-n_deleted,loops3[j]["layer"], loops3[j]["positions"][2]] = np.array([0, 0])
                 for node_id, other_positions in loops3[j]["other"].items():
                     for layer, positions in other_positions.items():
+                        positions_ = loops3[j]["input_output"].get(node_id).get(layer)
                         if len(positions) == 1:
-                            if positions[0] == 0:
+                            if positions_[0] == 0:
                                 new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
                             else:
                                 new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
                         elif len(positions) == 2:
-                            if positions[0] == 0:
+                            if positions_[0] == 0:
                                 new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
                             else: 
                                 new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
-                            if positions[1] == 0:
+                            if positions_[1] == 0:
                                 new_paths[i-n_deleted,layer, positions[1]] = np.array([node_id, greater_node])
                             else:
                                 new_paths[i-n_deleted,layer, positions[1]] = np.array([greater_node, node_id])
                         else:
-                            if positions[0] == 0:
+                            if positions_[0] == 0:
                                 new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
                             else: 
                                 new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
-                            if positions[1] == 0:
+                            if positions_[1] == 0:
                                 new_paths[i-n_deleted,layer, positions[1]] = np.array([node_id, greater_node])
                             else:
                                 new_paths[i-n_deleted,layer, positions[1]] = np.array([greater_node, node_id])
-                            if positions[2] == 0:
+                            if positions_[2] == 0:
                                 new_paths[i-n_deleted,layer, positions[2]] = np.array([node_id, greater_node])
                             else:
                                 new_paths[i-n_deleted,layer, positions[2]] = np.array([greater_node, node_id])

@@ -710,7 +710,8 @@ associated with it.
         \caption{Counterterm of the diagram}
     \end{subfigure}
     \caption{A example of a possible diagram, a third order contribution to the 
-    process of 3 gluon vertex, 1 gluon incoming and 2 gluons outgoing. }
+    process of 3 gluon vertex, 1 gluon incoming and 2 gluons outgoing. (Outputs of 
+    the programs.)}
     \label{fig:example_diagram}
 \end{figure*}
 
@@ -921,12 +922,23 @@ that contribute to a certain process, discarding the other diagrams.
 This process produces a huge amount of diagrams, many of them equivalent. The 
 program detects these repeated diagrams, and adds their contribution, thus reducing 
 the number of diagrams that needs to be used to calculate the next order. This procedure
-is fundamental to reduce the computational time.
+is the most time-consuming process of the program, needing a search algorithm to find
+the equivalent diagrams, meaning that as the order increases, the number of diagrams
+increases exponentially, and the time to find the equivalent diagrams increases
+exponentially too. 
+
+Although the process of finding the equivalent diagrams is time-consuming, it is
+fundamental to reduce the global computational time. Since the number of diagrams 
+tend to decrease by 1 to 2 orders of magnitude, depending on the order and the number of
+particles in the process. This way reduces the time needed to calculate the
+diagrams of the next order, so at the grand scale, the time needed to calculate
+the diagrams of till a certain order is reduced by performing the search algorithm 
+inbetewen the orders.
 
 Other important aspect of the RGPEP are the counterterms, that are added to cancel 
 the divergences produced in the process. The program is able to detect the 2 loops
 and 3 loops in the diagrams of a certain order, and add new diagrams to cancel the 
-divergences. 
+divergences. As shown in figure \ref{fig:example_diagram}.
 
 
 
@@ -1082,6 +1094,25 @@ such as QED. One of such processes is shown in the figure \ref{fig:order4/1}, wh
 
 At higher orders, the diagrams become more complex, and the number of diagrams scale 
 exponentially. Is here where the power of the program is shown. 
+
+\begin{table} [h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Order & Unique diagrams & Computational time (s)\\
+        \hline
+        2  & 16 & 0.150\\
+        3  & 76 & 0.198\\
+        4  & 612 & 1.166\\
+        5  & 5871  & 10.935\\
+        6  & 65000  & 157.121\\
+        \hline
+    \end{tabular}
+    \caption{Number of diagrams obtained by the program at each order, and the Computational
+    time taken to calculate the diagrams.}
+    \label{tab:diagrams}
+\end{table}
+
 
 \section{Conclusions and future work} \label{sec:conclusions}
 

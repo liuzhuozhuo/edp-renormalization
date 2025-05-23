@@ -1283,6 +1283,8 @@ def represent_order(points, paths, count_, typeofproc, index_ = True,  lines_ = 
                     represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=0)
             n += 1
 
-def next_order (points, paths, count, typeofproc, max_order):
+def next_order (points, paths, count, typeofproc, max_order, print_reduction = False):
     next_points, next_paths, next_count = combine_diagrams_order(points, paths, count, typeofproc, max_order, offset = 0)
+    if print_reduction:
+        print("Number of diagrams in order", print(len(points)), ":", len(next_points))
     return group_diagrams(next_points, next_paths, next_count)

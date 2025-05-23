@@ -464,6 +464,9 @@ INPUT ./plots/order4/counterterms/1.png
 INPUT ./plots/order4/counterterms/1.png
 INPUT ./plots/order4/counterterms/1.png
 INPUT ./plots/order4/counterterms/1.png
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/mathpazo/fplmbb.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/mathpazo/fplmbb.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/mathpazo/fplmbb.tfm
 INPUT output/main.bbl
 INPUT output/main.bbl
 INPUT output/main.bbl

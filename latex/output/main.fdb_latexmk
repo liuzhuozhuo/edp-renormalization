@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex output/main"] 1748006473.25704 "output/main.aux" "output/main.bbl" "output/main" 1748006475.1103 0
+["bibtex output/main"] 1748028122.38715 "output/main.aux" "output/main.bbl" "output/main" 1748028124.56429 0
   "./references.bib" 1747933672.64509 2068 e1d24cc09bb09fa2ae6bcba3d8454ca4 ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "output/main.aux" 1748006474.81817 6505 c3069a1ee35517ddfea25594b211bba5 "pdflatex"
+  "output/main.aux" 1748028124.09079 6964 c89b05b99db3d6c3f4a020ea9de99ef2 "pdflatex"
   (generated)
   "output/main.bbl"
   "output/main.blg"
   (rewritten before read)
-["pdflatex"] 1748006473.39128 "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" "output/main.pdf" "main" 1748006475.11048 0
-  "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" 1748006470.683 46412 b287bfaf007362784423f2cecbdd617e ""
+["pdflatex"] 1748028122.54942 "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" "output/main.pdf" "main" 1748028124.56447 0
+  "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" 1748028120.00283 47727 3c1cbba95368beb71cd34f5feb682a2f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/palatino/pplb8r.tfm" 1136768653 2532 9ad73cf4dd2173a847f2a5f5608e0b9a ""
@@ -160,11 +160,11 @@
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "escudoUGRmonocromo.png" 1746294072.03916 160809 de7617aa95455ecd794fe6065fc4748a ""
   "macro.sty" 1746352763.23593 184 e9b7167b3a3bcef5fa51dcefca54a4c6 ""
-  "main.tex" 1748006470.683 46412 b287bfaf007362784423f2cecbdd617e ""
-  "output/main.aux" 1748006474.81817 6505 c3069a1ee35517ddfea25594b211bba5 "pdflatex"
-  "output/main.bbl" 1748006473.37481 875 9c3b71d4e29c54855e5b21908a0a3151 "bibtex output/main"
-  "output/main.out" 1748006474.81912 3291 3cbd508b765973de0d6e3cbd8ea18fa1 "pdflatex"
-  "output/main.toc" 1748006474.81934 1795 91b7034d05633bfdb8df7a53410ed4ed "pdflatex"
+  "main.tex" 1748028120.00283 47727 3c1cbba95368beb71cd34f5feb682a2f ""
+  "output/main.aux" 1748028124.09079 6964 c89b05b99db3d6c3f4a020ea9de99ef2 "pdflatex"
+  "output/main.bbl" 1748028122.54389 875 9c3b71d4e29c54855e5b21908a0a3151 "bibtex output/main"
+  "output/main.out" 1748028124.09192 3291 3cbd508b765973de0d6e3cbd8ea18fa1 "pdflatex"
+  "output/main.toc" 1748028124.09217 1795 91b7034d05633bfdb8df7a53410ed4ed "pdflatex"
   "plots/canonical/order1/1.png" 1747994245.94565 3001 9a2776473cfb080909c1ccb74e6a03f2 ""
   "plots/canonical/order1/2.png" 1747994245.94601 2766 ce576a16fe42d29fa1dfb28bda4a1e84 ""
   "plots/order3/order3_1to2/1.png" 1747583220.00465 4101 ebbf8878d4be3002d7e80c28fa684ea6 ""

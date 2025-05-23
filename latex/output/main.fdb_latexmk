@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex output/main"] 1747731224.61163 "output/main.aux" "output/main.bbl" "output/main" 1747731473.45422 0
-  "./references.bib" 1747503354.9617 2075 c83f6f0ce1723c84818859a4794e28f5 ""
+["bibtex output/main"] 1747994808.93706 "output/main.aux" "output/main.bbl" "output/main" 1747994884.10838 0
+  "./references.bib" 1747933672.64509 2068 e1d24cc09bb09fa2ae6bcba3d8454ca4 ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "output/main.aux" 1747731473.20227 4485 2d17916d17466773630afbddb33001c9 "pdflatex"
+  "output/main.aux" 1747994883.83279 6190 2b96d165398a0d033d6f97aa9d1ae35a "pdflatex"
   (generated)
   "output/main.bbl"
   "output/main.blg"
   (rewritten before read)
-["pdflatex"] 1747731471.69153 "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" "output/main.pdf" "main" 1747731473.45436 0
-  "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" 1747731471.478 35198 fab55aedeb57607156b9567926504667 ""
+["pdflatex"] 1747994882.48362 "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" "output/main.pdf" "main" 1747994884.10853 0
+  "/Users/zhuozhuoliu/Documents/Uni/TFG/edp-renormalization/latex/main.tex" 1747994878.76735 44944 a5a5f878029796cba924055ff92f9242 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/palatino/pplb8r.tfm" 1136768653 2532 9ad73cf4dd2173a847f2a5f5608e0b9a ""
@@ -160,11 +160,13 @@
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "escudoUGRmonocromo.png" 1746294072.03916 160809 de7617aa95455ecd794fe6065fc4748a ""
   "macro.sty" 1746352763.23593 184 e9b7167b3a3bcef5fa51dcefca54a4c6 ""
-  "main.tex" 1747731471.478 35198 fab55aedeb57607156b9567926504667 ""
-  "output/main.aux" 1747731473.20227 4485 2d17916d17466773630afbddb33001c9 "pdflatex"
-  "output/main.bbl" 1747731224.70754 882 786d836836a0a18059411a1d5372f7af "bibtex output/main"
-  "output/main.out" 1747731473.20306 2933 a0a3090907e760bf4d25c9e478bb78a5 "pdflatex"
-  "output/main.toc" 1747731473.20326 1613 79cf66b0928bef8252ba44f0d2be3bfd "pdflatex"
+  "main.tex" 1747994878.76735 44944 a5a5f878029796cba924055ff92f9242 ""
+  "output/main.aux" 1747994883.83279 6190 2b96d165398a0d033d6f97aa9d1ae35a "pdflatex"
+  "output/main.bbl" 1747994809.05006 875 9c3b71d4e29c54855e5b21908a0a3151 "bibtex output/main"
+  "output/main.out" 1747994883.83456 3099 682111e95a049a5ec4743eb96e8c9435 "pdflatex"
+  "output/main.toc" 1747994883.83476 1704 b5fd08c2642d4cbda35d23603a43afc4 "pdflatex"
+  "plots/canonical/order1/1.png" 1747994245.94565 3001 9a2776473cfb080909c1ccb74e6a03f2 ""
+  "plots/canonical/order1/2.png" 1747994245.94601 2766 ce576a16fe42d29fa1dfb28bda4a1e84 ""
   "plots/order3/order3_1to2/1.png" 1747583220.00465 4101 ebbf8878d4be3002d7e80c28fa684ea6 ""
   "plots/order3/order3_1to2/2.png" 1747583220.00531 6682 dce1bf861c1e13a5fcb87ab9e61b8398 ""
   "plots/order3/order3_1to2/3.png" 1747583220.00584 6702 1bd439e7ba618d2efc7efb1144ffafe1 ""
@@ -173,10 +175,13 @@
   "plots/order3/order3_1to2/6.png" 1747583220.00761 5469 6872a1ec731bb93335c06894b2171199 ""
   "plots/order3/order3_1to2/7.png" 1747583220.00804 5749 adbf3fb69e017a0a802042960a1e40b3 ""
   "plots/order3/order3_1to2/8.png" 1747583220.00879 6995 780f9888ed697d6d7a66795d739e0076 ""
-  "plots/order3/order3_1to2/counterterms/1.png" 1747583220.00959 3443 3c9e3c91a4e01b9b032df3396c330555 ""
-  "plots/order3/order3_1to2/counterterms/2.png" 1747583220.01012 3598 830d52ad125f968ba2b141f9f7d62354 ""
-  "plots/order3/order3_1to2/counterterms/3.png" 1747583220.01106 4018 f7723fef88331ba92b58779b4dd7c1c8 ""
-  "plots/order3/order3_1to2/counterterms/4.png" 1747583220.01152 3908 005421ce01959e96f3cebeac9b86320d ""
+  "plots/order3/order3_1to2/counterterms/1.png" 1747907788.74481 3142 41c2cf3c8caec12ebcbcc4d79aadb505 ""
+  "plots/order3/order3_1to2/counterterms/2.png" 1747907788.74827 3443 3c9e3c91a4e01b9b032df3396c330555 ""
+  "plots/order3/order3_1to2/counterterms/3.png" 1747907788.75352 3598 830d52ad125f968ba2b141f9f7d62354 ""
+  "plots/order3/order3_1to2/counterterms/4.png" 1747907788.75675 4018 f7723fef88331ba92b58779b4dd7c1c8 ""
+  "plots/order3/order3_1to2/counterterms/5.png" 1747907788.75911 3908 005421ce01959e96f3cebeac9b86320d ""
+  "plots/order4/1.png" 1747908945.95562 4307 2d72ecf5c493ad277905a682618d7a8e ""
+  "plots/order4/counterterms/1.png" 1747908966.9749 3846 5090c6b6ab6806edbca1e0daaf5e493f ""
   (generated)
   "output/main.aux"
   "output/main.log"

@@ -10,15 +10,15 @@ V.~{Fock}.
 \newblock {Konfigurationsraum und zweite Quantelung}.
 \newblock {\em Zeitschrift fur Physik}, 75(9-10):622--647, September 1932.
 
-\bibitem{PEP}
-S.~D. Glazek.
-\newblock Perturbative formulae for relativistic interactions of effective particles.
-\newblock {\em Acta Phys.Polon.B 43}, 2012.
-
 \bibitem{glazek_dynamics_2001}
-Stanisław~D. Głazek.
+S.~D. Głazek.
 \newblock Dynamics of effective gluons.
 \newblock {\em Physical Review D}, 63(11):116006, May 2001.
+
+\bibitem{PEP}
+S.~D. Głazek.
+\newblock Perturbative formulae for relativistic interactions of effective particles.
+\newblock {\em Acta Phys.Polon.B 43}, 2012.
 
 \bibitem{QCDG}
 S.~D.~Głazek M.~Gómez-Rocha.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.17)  23 MAY 2025 12:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.5.17)  23 MAY 2025 13:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -573,7 +573,7 @@ LaTeX Font Info:    Trying to load font information for U+lasy on input line 75.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-<escudoUGRmonocromo.png, id=84, 647.17786pt x 180.31364pt>
+<escudoUGRmonocromo.png, id=88, 647.17786pt x 180.31364pt>
 File: escudoUGRmonocromo.png Graphic file (type png)
 <use escudoUGRmonocromo.png>
 Package pdftex.def Info: escudoUGRmonocromo.png  used on input line 76.
@@ -723,12 +723,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [7]
-<plots/order3/order3_1to2/1.png, id=205, 294.1389pt x 181.3977pt>
+<plots/order3/order3_1to2/1.png, id=210, 294.1389pt x 181.3977pt>
 File: plots/order3/order3_1to2/1.png Graphic file (type png)
 <use plots/order3/order3_1to2/1.png>
 Package pdftex.def Info: plots/order3/order3_1to2/1.png  used on input line 704.
 (pdftex.def)             Requested size: 141.78093pt x 87.4408pt.
-<plots/order3/order3_1to2/counterterms/1.png, id=206, 294.1389pt x 184.2885pt>
+<plots/order3/order3_1to2/counterterms/1.png, id=211, 294.1389pt x 184.2885pt>
 File: plots/order3/order3_1to2/counterterms/1.png Graphic file (type png)
 <use plots/order3/order3_1to2/counterterms/1.png>
 Package pdftex.def Info: plots/order3/order3_1to2/counterterms/1.png  used on input line 709.
@@ -750,28 +750,29 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [9]
-Overfull \hbox (31.66405pt too wide) detected at line 812
+Overfull \hbox (31.66405pt too wide) detected at line 836
 []
  []
 
-<plots/canonical/order1/1.png, id=236, 294.1389pt x 184.2885pt>
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[10]
+<plots/canonical/order1/1.png, id=256, 294.1389pt x 184.2885pt>
 File: plots/canonical/order1/1.png Graphic file (type png)
 <use plots/canonical/order1/1.png>
-Package pdftex.def Info: plots/canonical/order1/1.png  used on input line 838.
+Package pdftex.def Info: plots/canonical/order1/1.png  used on input line 862.
 (pdftex.def)             Requested size: 141.78093pt x 88.83427pt.
-<plots/canonical/order1/2.png, id=237, 294.1389pt x 181.3977pt>
+<plots/canonical/order1/2.png, id=257, 294.1389pt x 181.3977pt>
 File: plots/canonical/order1/2.png Graphic file (type png)
 <use plots/canonical/order1/2.png>
-Package pdftex.def Info: plots/canonical/order1/2.png  used on input line 843.
+Package pdftex.def Info: plots/canonical/order1/2.png  used on input line 867.
 (pdftex.def)             Requested size: 141.78093pt x 87.4408pt.
 
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[10 <./plots/canonical/order1/1.png> <./plots/canonical/order1/2.png>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -779,70 +780,73 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[11]
+[11 <./plots/canonical/order1/1.png> <./plots/canonical/order1/2.png>]
 File: plots/order3/order3_1to2/1.png Graphic file (type png)
 <use plots/order3/order3_1to2/1.png>
-Package pdftex.def Info: plots/order3/order3_1to2/1.png  used on input line 920.
+Package pdftex.def Info: plots/order3/order3_1to2/1.png  used on input line 944.
 (pdftex.def)             Requested size: 103.11519pt x 63.59254pt.
-<plots/order3/order3_1to2/2.png, id=259, 294.1389pt x 181.3977pt>
+<plots/order3/order3_1to2/2.png, id=270, 294.1389pt x 181.3977pt>
 File: plots/order3/order3_1to2/2.png Graphic file (type png)
 <use plots/order3/order3_1to2/2.png>
-Package pdftex.def Info: plots/order3/order3_1to2/2.png  used on input line 926.
+Package pdftex.def Info: plots/order3/order3_1to2/2.png  used on input line 950.
 (pdftex.def)             Requested size: 103.11519pt x 63.59254pt.
-<plots/order3/order3_1to2/3.png, id=260, 294.1389pt x 181.3977pt>
+<plots/order3/order3_1to2/3.png, id=271, 294.1389pt x 181.3977pt>
 File: plots/order3/order3_1to2/3.png Graphic file (type png)
 <use plots/order3/order3_1to2/3.png>
-Package pdftex.def Info: plots/order3/order3_1to2/3.png  used on input line 932.
+Package pdftex.def Info: plots/order3/order3_1to2/3.png  used on input line 956.
 (pdftex.def)             Requested size: 103.11519pt x 63.59254pt.
-<plots/order3/order3_1to2/4.png, id=261, 294.1389pt x 181.3977pt>
+<plots/order3/order3_1to2/4.png, id=272, 294.1389pt x 181.3977pt>
 File: plots/order3/order3_1to2/4.png Graphic file (type png)
 <use plots/order3/order3_1to2/4.png>
-Package pdftex.def Info: plots/order3/order3_1to2/4.png  used on input line 938.
+Package pdftex.def Info: plots/order3/order3_1to2/4.png  used on input line 962.
 (pdftex.def)             Requested size: 103.11519pt x 63.59254pt.
-<plots/order3/order3_1to2/5.png, id=262, 294.1389pt x 181.3977pt>
+<plots/order3/order3_1to2/5.png, id=273, 294.1389pt x 181.3977pt>
 File: plots/order3/order3_1to2/5.png Graphic file (type png)
 <use plots/order3/order3_1to2/5.png>
-Package pdftex.def Info: plots/order3/order3_1to2/5.png  used on input line 944.
+Package pdftex.def Info: plots/order3/order3_1to2/5.png  used on input line 968.
 (pdftex.def)             Requested size: 103.11519pt x 63.59254pt.
-<plots/order3/order3_1to2/6.png, id=263, 294.1389pt x 181.3977pt>
+<plots/order3/order3_1to2/6.png, id=274, 294.1389pt x 181.3977pt>
 File: plots/order3/order3_1to2/6.png Graphic file (type png)
 <use plots/order3/order3_1to2/6.png>
-Package pdftex.def Info: plots/order3/order3_1to2/6.png  used on input line 951.
+Package pdftex.def Info: plots/order3/order3_1to2/6.png  used on input line 975.
 (pdftex.def)             Requested size: 103.11519pt x 63.59254pt.
-<plots/order3/order3_1to2/7.png, id=264, 294.1389pt x 181.3977pt>
+<plots/order3/order3_1to2/7.png, id=275, 294.1389pt x 181.3977pt>
 File: plots/order3/order3_1to2/7.png Graphic file (type png)
 <use plots/order3/order3_1to2/7.png>
-Package pdftex.def Info: plots/order3/order3_1to2/7.png  used on input line 958.
+Package pdftex.def Info: plots/order3/order3_1to2/7.png  used on input line 982.
 (pdftex.def)             Requested size: 103.11519pt x 63.59254pt.
-<plots/order3/order3_1to2/8.png, id=265, 294.1389pt x 181.3977pt>
+<plots/order3/order3_1to2/8.png, id=276, 294.1389pt x 181.3977pt>
 File: plots/order3/order3_1to2/8.png Graphic file (type png)
 <use plots/order3/order3_1to2/8.png>
-Package pdftex.def Info: plots/order3/order3_1to2/8.png  used on input line 964.
+Package pdftex.def Info: plots/order3/order3_1to2/8.png  used on input line 988.
 (pdftex.def)             Requested size: 103.11519pt x 63.59254pt.
 File: plots/order3/order3_1to2/counterterms/1.png Graphic file (type png)
 <use plots/order3/order3_1to2/counterterms/1.png>
-Package pdftex.def Info: plots/order3/order3_1to2/counterterms/1.png  used on input line 975.
+Package pdftex.def Info: plots/order3/order3_1to2/counterterms/1.png  used on input line 999.
 (pdftex.def)             Requested size: 103.11519pt x 64.60597pt.
-<plots/order3/order3_1to2/counterterms/2.png, id=266, 294.1389pt x 184.2885pt>
+<plots/order3/order3_1to2/counterterms/2.png, id=277, 294.1389pt x 184.2885pt>
 File: plots/order3/order3_1to2/counterterms/2.png Graphic file (type png)
 <use plots/order3/order3_1to2/counterterms/2.png>
-Package pdftex.def Info: plots/order3/order3_1to2/counterterms/2.png  used on input line 981.
+Package pdftex.def Info: plots/order3/order3_1to2/counterterms/2.png  used on input line 1005.
 (pdftex.def)             Requested size: 103.11519pt x 64.60597pt.
-<plots/order3/order3_1to2/counterterms/3.png, id=267, 294.1389pt x 184.2885pt>
+<plots/order3/order3_1to2/counterterms/3.png, id=278, 294.1389pt x 184.2885pt>
 File: plots/order3/order3_1to2/counterterms/3.png Graphic file (type png)
 <use plots/order3/order3_1to2/counterterms/3.png>
-Package pdftex.def Info: plots/order3/order3_1to2/counterterms/3.png  used on input line 987.
+Package pdftex.def Info: plots/order3/order3_1to2/counterterms/3.png  used on input line 1011.
 (pdftex.def)             Requested size: 103.11519pt x 64.60597pt.
-<plots/order3/order3_1to2/counterterms/4.png, id=268, 294.1389pt x 184.2885pt>
+<plots/order3/order3_1to2/counterterms/4.png, id=279, 294.1389pt x 184.2885pt>
 File: plots/order3/order3_1to2/counterterms/4.png Graphic file (type png)
 <use plots/order3/order3_1to2/counterterms/4.png>
-Package pdftex.def Info: plots/order3/order3_1to2/counterterms/4.png  used on input line 993.
+Package pdftex.def Info: plots/order3/order3_1to2/counterterms/4.png  used on input line 1017.
 (pdftex.def)             Requested size: 103.11519pt x 64.60597pt.
-<plots/order3/order3_1to2/counterterms/5.png, id=269, 294.1389pt x 184.2885pt>
+<plots/order3/order3_1to2/counterterms/5.png, id=280, 294.1389pt x 184.2885pt>
 File: plots/order3/order3_1to2/counterterms/5.png Graphic file (type png)
 <use plots/order3/order3_1to2/counterterms/5.png>
-Package pdftex.def Info: plots/order3/order3_1to2/counterterms/5.png  used on input line 1000.
+Package pdftex.def Info: plots/order3/order3_1to2/counterterms/5.png  used on input line 1024.
 (pdftex.def)             Requested size: 103.11519pt x 64.60597pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -851,16 +855,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[12 <./plots/order3/order3_1to2/2.png> <./plots/order3/order3_1to2/3.png> <./plots/order3/order3_1to2/4.png> <./plots/order3/order3_1to2/5.png> <./plots/order3/order3_1to2/6.png> <./plots/order3/order3_1to2/7.png> <./plots/order3/order3_1to2/8.png> <./plots/order3/order3_1to2/counterterms/2.png> <./plots/order3/order3_1to2/counterterms/3.png> <./plots/order3/order3_1to2/counterterms/4.png> <./plots/order3/order3_1to2/counterterms/5.png>]
-<plots/order4/1.png, id=297, 294.1389pt x 181.3977pt>
+[12 <./plots/order3/order3_1to2/2.png> <./plots/order3/order3_1to2/3.png> <./plots/order3/order3_1to2/4.png> <./plots/order3/order3_1to2/5.png> <./plots/order3/order3_1to2/6.png> <./plots/order3/order3_1to2/7.png> <./plots/order3/order3_1to2/8.png>]
+<plots/order4/1.png, id=304, 294.1389pt x 181.3977pt>
 File: plots/order4/1.png Graphic file (type png)
 <use plots/order4/1.png>
-Package pdftex.def Info: plots/order4/1.png  used on input line 1038.
+Package pdftex.def Info: plots/order4/1.png  used on input line 1062.
 (pdftex.def)             Requested size: 141.78093pt x 87.4408pt.
-<plots/order4/counterterms/1.png, id=298, 294.1389pt x 184.2885pt>
+<plots/order4/counterterms/1.png, id=305, 294.1389pt x 184.2885pt>
 File: plots/order4/counterterms/1.png Graphic file (type png)
 <use plots/order4/counterterms/1.png>
-Package pdftex.def Info: plots/order4/counterterms/1.png  used on input line 1043.
+Package pdftex.def Info: plots/order4/counterterms/1.png  used on input line 1067.
 (pdftex.def)             Requested size: 141.78093pt x 88.83427pt.
 
 
@@ -870,7 +874,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[13 <./plots/order4/1.png> <./plots/order4/counterterms/1.png>] (output/main.bbl)
+[13 <./plots/order3/order3_1to2/counterterms/2.png> <./plots/order3/order3_1to2/counterterms/3.png> <./plots/order3/order3_1to2/counterterms/4.png> <./plots/order3/order3_1to2/counterterms/5.png> <./plots/order4/1.png> <./plots/order4/counterterms/1.png>]
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -878,27 +882,35 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[14] (output/main.aux)
+[14] (output/main.bbl)
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[15] (output/main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 682111E95A049A5EC4743EB96E8C9435;3099.
+(rerunfilecheck)             Checksum: 3CBD508B765973DE0D6E3CBD8EA18FA1;3291.
  ) 
 Here is how much of TeX's memory you used:
- 14887 strings out of 474116
- 239360 string characters out of 5743682
- 1942187 words of memory out of 5000000
- 36859 multiletter control sequences out of 15000+600000
+ 14897 strings out of 474116
+ 239497 string characters out of 5743682
+ 1945187 words of memory out of 5000000
+ 36863 multiletter control sequences out of 15000+600000
  603200 words of font info for 148 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,16n,79p,363b,555s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathpazo/fplmbb.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on output/main.pdf (18 pages, 338243 bytes).
+Output written on output/main.pdf (19 pages, 339467 bytes).
 PDF statistics:
- 374 PDF objects out of 1000 (max. 8388607)
- 296 compressed objects within 3 object streams
- 92 named destinations out of 1000 (max. 500000)
- 251 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 392 PDF objects out of 1000 (max. 8388607)
+ 312 compressed objects within 4 object streams
+ 98 named destinations out of 1000 (max. 500000)
+ 259 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -591,16 +591,16 @@ Plugging this expansion into the RGPEP equation, we obtain,
 
 Order by order in $g$, the following differential equations are obtained,
 \begin{align}
-        \mathcal{H}_{0}^\prime &= 0, \\
+        \mathcal{H}_{0}^\prime &= 0, \label{eq:diff_order0}\\
         g\mathcal{H}_{t 1}^\prime &= \sbrackets{\sbrackets{\mathcal{H}_0, g\mathcal{H}_{Pt 1}}, 
-        \mathcal{H}_{0}}, \\
+        \mathcal{H}_{0}}, \label{eq:diff_order1}\\
         g^2\mathcal{H}_{t 2}^\prime &= \sbrackets{\sbrackets{\mathcal{H}_0, g^2\mathcal{H}_{Pt 2}}, 
         \mathcal{H}_{0}} + \sbrackets{\sbrackets{\mathcal{H}_0, g\mathcal{H}_{Pt 1}}, 
         g\mathcal{H}_{t 1}}, \\
         g^3\mathcal{H}_{t 3}^\prime &= \sbrackets{\sbrackets{\mathcal{H}_0, g^3\mathcal{H}_{Pt 3}}, 
         \mathcal{H}_{0}} + \sbrackets{\sbrackets{\mathcal{H}_0, g^2\mathcal{H}_{Pt 2}}, 
         g\mathcal{H}_{t 1}} + \sbrackets{\sbrackets{\mathcal{H}_0, g\mathcal{H}_{Pt 1}}, 
-        g^2\mathcal{H}_{t 2}}.\\
+        g^2\mathcal{H}_{t 2}}. \label{eq:diff_order3}\\
         &\vdots \nonumber
 \end{align}
 
@@ -721,6 +721,30 @@ divergent, and a counterterm diagram is needed to deal with the divergence. This
 diagram is represented with a dot at the position of the loop, with the same 
 external legs as the original diagram. 
 
+\subsection{Order by order solutions.}
+
+The solution of the differential equations \eqref{eq:diff_order1} to \eqref{eq:diff_order3} 
+and so on, without considering the multiplicative factors, and relative phases between
+the terms, can be expressed as,
+
+\begin{align}
+    \mathcal{H}_{t1} & = \mathcal{H}_{01} \\
+    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{01} 
+    \mathcal{H}_{01}\\
+    \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{01} \mathcal{H}_{01}
+    \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} \mathcal{H}_{01} + \mathcal{G}_{02}
+    \mathcal{H}_{01} }\\
+    \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{01} \mathcal{H}_{01}
+    \mathcal{H}_{01} \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} 
+    \mathcal{H}_{01} \mathcal{H}_{01} +  \mathcal{H}_{01} \mathcal{G}_{02}
+    \mathcal{H}_{01} + \mathcal{H}_{01} \mathcal{H}_{01} \mathcal{G}_{02}} \nonumber\\
+    & + \parenthesis{\mathcal{G}_{03} \mathcal{H}_{01} + \mathcal{H}_{01} 
+    \mathcal{G}_{03} + \mathcal{G}_{02}\mathcal{G}_{02}}. \\
+    &\vdots  \nonumber
+\end{align}
+
+This is an oversimplification of the solution, but it gives an idea of how the 
+different solutions for each order are obtained. 
 
 \section{Case study: Gluons self interactions} \label{sec:cases}
 

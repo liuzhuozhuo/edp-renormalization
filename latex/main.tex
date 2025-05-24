@@ -881,8 +881,103 @@ created from the diagrams of order 1.
 The really interesting term is the term $H_{\sbrackets{\partial A A}^2}$ in
 equation \eqref{eq:H_partial}, similar to the term $H_{A^4}$, this term is a 4 gluon
 vertex, but the concept of instantaneous interaction is introduced. This allows to 
-consider processes where a gluon is annihilated and 3 gluons are created, to a 
-combination of 3 gluon vertices.
+consider processes where a gluon is annihilated, and 3 gluons are created, to a 
+pair of 3 gluon vertices. This process is usually represented in by a perpendicular
+bar in the line of the gluon, indicating that the interaction is instantaneous, 
+but due to program limitations, dotted lines are used in this work.
+
+The different sum terms in the equation \eqref{eq:H_partial} indicate the different 
+processes that can be considered, the first term $\Xi_{\sbrackets{\partial A A}^2 1234}$
+indicate the process where 1 gluon is annihilated, and 3 gluons are created, as shown in
+figure \ref{fig:cannonical2_1to3}. The second term $\Xi_{\sbrackets{\partial A A}^2 1234}^*$
+indicate the hermitian conjugate of the first term, where 3 gluons are annihilated, and
+1 gluon is created, as shown in figure \ref{fig:cannonical2_3to1}. The third term
+$X_{\sbrackets{\partial A A}^2 1234}$ indicate the process where 2 gluons are annihilated,
+and 2 gluons are created, as shown in figure \ref{fig:cannonical2_2to2}.
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/1.png}
+        \caption{ }
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/2.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/3.png}
+        \caption{ }
+    \end{subfigure}
+    \caption{Canonical diagrams of order 2, for the term $\Xi_{\sbrackets{\partial AA}^2}$, 
+    where one gluon is annihilated, and 3 gluons are created.}
+    \label{fig:cannonical2_1to3}
+\end{figure*}
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/9.png}
+        \caption{ }
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/10.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/11.png}
+        \caption{ }
+    \end{subfigure}
+    \caption{Canonical diagrams of order 2, for the term hermitian conjugate of 
+    $\Xi_{\sbrackets{\partial AA}^2}$, where 3 gluons are annihilated, and
+    1 gluon is created.}
+    \label{fig:cannonical2_3to1}
+\end{figure*}
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/4.png}
+        \caption{ }
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/5.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/6.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/7.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/8.png}
+        \caption{ }
+    \end{subfigure}
+    \caption{Canonical diagrams of order 2, for the term $X_{\sbrackets{\partial AA}^2}$, 
+    where 2 gluons are annihilated, and 2 gluons are created.}
+    \label{fig:cannonical2_2to2}
+\end{figure*}
+
+The combination of all these diagrams, are the canonical diagrams of order 2.
+Together with the diagrams of order 1, figure \ref{fig:cannonical1},
+they form the basis of the perturbative expansion of the Hamiltonian, and the
+starting point to obtain the diagrams of higher order.
+
+\newpage
 
 \section{Code implementation} \label{sec:code}
 
@@ -1089,6 +1184,7 @@ discuss some of the most interesting diagrams.
 Starting at order 4, the distinct non-abelian nature of the QCD is present, since 
 the gluons interact with themselves, creating diagrams not possible in abelian theories, 
 such as QED. One of such processes is shown in the figure \ref{fig:order4/1}, where the
+
 
 \subsection{Higher orders}
 

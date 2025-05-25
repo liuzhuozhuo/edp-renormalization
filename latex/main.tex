@@ -259,10 +259,12 @@ applied to.
 
 \subsection{Fock space} \label{sec:fock_space}
 
-Intoduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock space is a sum 
-of a set of Hilbert spaces, each one corresponding to a different number of 
-particles in the system. So in order to describe a variable number of particles in our 
-system, the use of the Fock space is needed.
+Introduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock space is a sum 
+of different Hilbert spaces, each one corresponding to a different number of 
+particles in the system. Allowing the description of quantum systems with a 
+variable number of particles. It is essential in quantum field theory, 
+where the number of particles is not conserved and processes such as particle 
+creation and annihilation occur.
 
 The Fock space is defined as the direct sum of tensor products of the single 
 particle Hilbert space $\mathbb{H}$,
@@ -283,7 +285,9 @@ $\mathbb{C}$ is the complex scalar, corresponding to the states with no particle
     \mathbb{C} \oplus \mathbb{H} \oplus (\mathbb{H} \otimes \mathbb{H}) 
     \oplus (\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
 \end{equation}
-where $\mathbb{C}$ is the complex scalar, corresponding to the states with no particles.
+where $\mathbb{C}$ is the complex scalar, corresponding to the states with no particles,
+and the terms \( \mathbb{H}^{\otimes n} \) represents the Hilbert space for 
+\( n \)-particle states.
 
 This way a general state in the Fock space can be expressed as,
 
@@ -294,12 +298,14 @@ This way a general state in the Fock space can be expressed as,
 \end{equation}
 
 where $\ket{\Psi_0}$ is the vacuum state, $\ket{\Psi_1}$ is the one particle
-state, $\ket{\Psi_2}$ is the two particle state, and so on. The coefficients $a_i$
+state, $\ket{\Psi_2}$ is the two particle state, and so on. The coefficients $c_i$
 are the amplitudes of the states, in general complex numbers. 
 
-In the case of QCD, a general state in the Fock space involves a superposition of all 
-possible multiparticle states, build from quarks, antiquarks, and gluons, with the
-correct quantum numbers. For instance, a quarkonium state in QCD is given by:
+Fock space provides a natural framework for quantum field theories QCD, where, 
+physical states are expressed as superposition of all allowable multiparticle 
+configurations consistent with color confinement and other quantum numbers. 
+For instance, a quarkonium state (a bound state of quark and antiquark) in QCD is 
+given by:
 
 \begin{equation}
     \ket{\Psi} = c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{qqq} 
@@ -394,24 +400,25 @@ Consider a general field theory and a Lagrangian density
 $\mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x))$\footnote{where $x$ indicate a 
 4-vector, with $x^\mu$ its components, and $\partial_\mu = \frac{\partial}
 {\partial x^\mu}$}, where $\phi_a (x)$ is a particular field of the system.
-To obtain the Hamiltonian formulation, we need to define the 
-canonical momenta,
+
+To formulate the theory in the Hamiltonian framework, we begin by 
+defining the canonical conjugate momenta,
 
 \begin{equation}
     \pi_a (x) = \frac{\partial \mathcal{L}}{\partial (\partial_0 \phi_a (x))}.
 \end{equation}
 
-The Hamiltonian density, using the Legendre transformation,
+The Hamiltonian density, via the Legendre transformation,
 
 \begin{equation}
     \mathcal{H} = \sum_a \pi_a (x) \partial_0 \phi_a (x) - 
     \mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x)).
 \end{equation}
 
-In quantum mechanics, or quantum field theory, the Hamiltonian becomes an operator 
-acting on a Hilbert space. This promotion of the Hamiltonian to an operator is done by
-replacing the canonical coordinates and momenta with the corresponding operators, 
-and impose the canonical commutation relations,
+In quantum mechanics, or quantum field theory, the canonical variables 
+\( \phi_a(x) \) and \( \pi_a(x) \) are promoted to operators acting on 
+a Hilbert space. Quantization is achieved by imposing equal-time canonical 
+commutation relations
 
 \begin{equation}
     \sbrackets{\phi_a (x), \pi_b (y)} = i \delta_{ab} \delta^3(x-y),
@@ -477,7 +484,53 @@ The normal-ordering is denoted by the symbol $:\cdots:$, then for a fermionic ca
 \end{equation}
 
 \subsubsection{Front form of Hamiltonian Dynamics}
+The quantization of relativistic systems is most commonly performed in the instant form 
+(IF) of dynamics, where the ordinary time coordinate \( x^0 = t \) serves as the evolution 
+parameter, and spatial coordinates \( \vec{x} \) define the hypersurface of equal time. 
+However, alternative forms of dynamics are possible and were classified by Dirac in 
+1949 \cite{dirac_front_forms_1949}.
 
+One such alternative is the front form (FF) of dynamics, also known as light-front 
+quantization. It is defined by choosing a new set of coordinates where the evolution 
+parameter is,
+
+\begin{equation}
+    x^+ = \frac{1}{\sqrt{2}} (x^0 + x^3),
+\end{equation}
+and the remaining coordinates are,
+
+\begin{equation}
+    x^- = \frac{1}{\sqrt{2}} (x^0 - x^3), \quad x^\perp = (x^1, x^2).
+\end{equation}
+
+In this framework, quantization is performed on surfaces of constant \( x^+ \), 
+treating it as the "light-front time", while \( x^-, x^\perp \) play the role 
+of spatial coordinates. The corresponding momenta are defined as,
+\begin{equation}
+    p^+ = \frac{1}{\sqrt{2}} (p^0 + p^3), \quad
+    p^- = \frac{1}{\sqrt{2}} (p^0 - p^3), \quad
+    p^\perp = (p^1, p^2).
+\end{equation}
+
+The light-front Hamiltonian \( P^- \) is derived from the Lagrangian using 
+a Legendre transformation with respect to \( x^+ \). It governs the evolution 
+in \( x^+ \), analogous to the role of \( H = P^0 \) in instant-form quantization.
+
+A key feature of FF quantization is the positivity condition \( p^+ > 0 \) 
+for all physical particles. This kinematic constraint ensures that particle 
+creation from the vacuum, which has total \( P^+ = 0 \), is forbidden due to 
+momentum conservation. As a result, the vacuum in FF is trivial or "empty": 
+it contains no virtual particles and cannot mix with multi-particle states.
+
+This property simplifies the structure of the theory, particularly in the 
+context of the RGPEP, where a clean separation between the vacuum and 
+the particle spectrum is advantageous. FF quantization avoids the 
+complexities associated with vacuum fluctuations that are typical in 
+instant form dynamics.
+
+
+\begin{comment}
+    
 
 The quantization of the system is usually performed in the instant form of the 
 dynamics, where the time is treated as the evolution parameter, and the rest of
@@ -505,66 +558,85 @@ coordinates, $x^-$ and $x^\perp$, are treated as spatial coordinates.
 
 The Hamiltonian in FF quantization is obtained from the Lagrangian density using 
 the Legendre transformation, similar to the procedure explained in the section
-\ref{sec:canonical_hamiltonian}, but with respect to the new coordinates.
+\ref{sec:canonical_hamiltonian}, but with respect to the new coordinates. Making
+the Hamiltonian density the negative component of the generator of the Poincaré 
+group, $P^-$.
 
-Describing the system in the FF quantization, the vacuum state is "empty", since 
-no particle creation are possible from $P^+ = 0$
-
-\subsection{RGPEP}
-The RGPEP, is a renormalization group procedure applied to the Hamiltonian 
-formulation. By considering a series of unitary transformations, the RGPEP is able to construct a 
-series of effective Hamiltonians $\mathcal{H}_s$, and the corresponding effective 
-particles, by the use of effective particle operators (namely creation and 
-annihilation operators) that differs from the canonical ones by the unitary 
-transformation $\mathcal{U}_s$,
+In this set of coordinates, the momenta is defined as,
 
 \begin{equation}
-    a_s = \mathcal{U}_sa_0\mathcal{U}_s^\dagger,
+    p^\mu = (p^+, p^-, p^\perp) = \left( \frac{1}{\sqrt{2}} (p^0+p^3), 
+    \frac{1}{\sqrt{2}} (p^0-p^3), p^1, p^2 \right),
+\end{equation}
+and all physical particles must satisfy $p^+ > 0$. This is a kinematic
+restriction that arises from the definition of the front form of dynamics.
+Therefore, the vacuum state in the FF quantization, one with no particles,
+is defined as the state with $P^+ = 0$.
+
+This way describing the system in the FF quantization, the vacuum state is 
+"empty", since no particle creation of momenta $p^+ > 0$ are possible from 
+$P^+ = 0$, without violating the momentum conservation. Hereafter, working 
+in FF, proves to be convenient, eliminating interactions that would normally 
+mix the vacuum with multi-particle states in IF.
+
+\end{comment}
+
+\subsection{RGPEP}
+The RGPEP, is a renormalization scheme applied within the Hamiltonian formalism 
+of quantum field theory. By considering a series of unitary transformations applied to the
+canonical or bare Hamiltonian, the RGPEP is able to construct a series of effective 
+Hamiltonians $\mathcal{H}_s$, each describing dynamics in terms of effective particles 
+at a resolution scale set by the parameter \( s \). This is associated with the 
+renormalization group scale $\lambda = 1/s$, has dimension of length, and physically 
+has the interpretation of the characteristic scale of the theory.
+
+The corresponding effective particles, by the use of effective particle 
+operators (namely creation and annihilation operators) that differs from 
+the canonical ones by the same unitary transformation $\mathcal{U}_s$,
+
+\begin{equation}
+    a_s = \mathcal{U}_sa_0\mathcal{U}_s^\dagger.
     \label{eq:effective_particle_operator}
 \end{equation}
-labeled by the parameter $s$, and is associated with the renormalization group scale
-$\lambda = 1/s$. This parameter which has dimension of length, physically has the 
-interpretation of the characteristic size of the effective particles.
 
 Due to dimensional and notational reasons, it's convenient to consider the scale 
-parameter $t = s^4$.
+parameter $t = s^4$ instead.
 
-Then $s=0$ correspond to the point-like or bare particles, and recovering the 
-original Hamiltonian $\mathcal{H}_0(a_0)$.
+Then $s=0$ or equivalently $t=0$, the theory describes  point-like or bare particles, 
+and recovering the original Hamiltonian $\mathcal{H}_0(a_0)$.
 
-The effective Hamiltonian is related to the regulated canonical one with counter-terms 
-by the condition,
+The effective Hamiltonian $\mathcal{H}_t$, written in terms of the effective particles
+operator $a_s$, is related to the regulated canonical Hamiltonian with counter-terms 
+by the condition (section \ref{sec:regulatrization_countertems}),
 
 \begin{equation}
     \mathcal{H}_t(a_t) = \mathcal{H}_0(a_0)
 \end{equation}
 
-Combining with the equation \eqref{eq:effective_particle_operator}, and considering 
-the parameter $t$ instead of $s$, the condition becomes,
+Using Eq.~\eqref{eq:effective_particle_operator} and expressing all operators in 
+terms of the original \( a_0 \), the Hamiltonian becomes,
 
 \begin{equation}
     \mathcal{H}_t(a_0) = \mathcal{U}_t^\dagger\mathcal{H}_0(a_0) \mathcal{U}_t,
 \end{equation}
-differentiating with respect of $t$, 
+differentiating with respect of $t$, one obtains the RGPEP differential equation,
 
 \begin{equation}
     \mathcal{H}_t^\prime (a_0) \equiv \frac{d}{dt}\mathcal{H}_t(a_0) = 
     \sbrackets{-\mathcal{U}_t^\dagger \mathcal{U}_t^\prime, \mathcal{H}_t(a_0)} 
     = \sbrackets{\mathcal{G}_t(a_0), \mathcal{H}_t(a_0)},
 \end{equation}
-where $\mathcal{G}_t$ is the RGPEP generator. We will consider the generator 
-from Ref. \cite{PEP}
+where $\mathcal{G}_t$ is the generator of the RGPEP transformation. 
 
+Considering the generator from Ref. \cite{PEP},
 \begin{equation}
     \mathcal{G}_t = \sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}},
 \end{equation}
-where $\mathcal{H}_f$, the free part of $\mathcal{H}_t$, and $\mathcal{H}_{Pt}$ is 
-defined as function of the interacting term. 
+where $\mathcal{H}_f$, the free part of $\mathcal{H}_t$ and the part of 
+$\mathcal{H}_0(a_0)$ that does not depend on the coupling constants, 
+while $\mathcal{H}_{Pt}$ is defined as function of the interacting term. 
 
-The free Hamiltonian $\mathcal{H}_f$ is the part of $\mathcal{H}_0(a_0)$ that does 
-not depend on the coupling constants, 
-
-This way, the RGPEP equation have the form,
+The resulting RGPEP equation have the form,
 \begin{equation}
     \mathcal{H}_t^\prime =  \sbrackets{\sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}}, \mathcal{H}_t},
 \end{equation}
@@ -579,17 +651,8 @@ $\mathcal{H}_t$ as a power series of the coupling constant $g$,
     g^4 \mathcal{H}_{t 4} + \cdots.
 \end{equation}
 
-Plugging this expansion into the RGPEP equation, we obtain,
-\begin{align}
-    \begin{split}
-    \mathcal{H}_{0}^\prime & + g \mathcal{H}_{t 1}^\prime  + g^2 \mathcal{H}_{t 2}^\prime
-     + \cdots =  \\
-     &= \sbrackets{\sbrackets{\mathcal{H}_0, \mathcal{H}_{0} + g \mathcal{H}_{Pt 1} 
-     + g^2 \mathcal{H}_{Pt 2} + \cdots}, \mathcal{H}_{0} + g \mathcal{H}_{t 1} + g^2 \mathcal{H}_{t 2} + \cdots}. 
-    \end{split}
-\end{align}
-
-Order by order in $g$, the following differential equations are obtained,
+Substituting into the RGPEP equation, and collecting terms order by order in \( g \),
+the following differential equations are obtained,
 \begin{align}
         \mathcal{H}_{0}^\prime &= 0, \label{eq:diff_order0}\\
         g\mathcal{H}_{t 1}^\prime &= \sbrackets{\sbrackets{\mathcal{H}_0, g\mathcal{H}_{Pt 1}}, 
@@ -604,11 +667,13 @@ Order by order in $g$, the following differential equations are obtained,
         &\vdots \nonumber
 \end{align}
 
-The order 0 term is solvable from a initial condition, and the solution will be a 
-exponetial of the parameter $t$. The 1th order solution can be obtained from 0th 
+The order 0 term is solvable from an initial condition, and the solution will be an 
+exponential of the parameter $t$. The 1st order solution can be obtained from 0th 
 order, and the 2nd order from the previous orders, and so on. 
 
-\subsection{Regularization and Counterterms}
+\newpage
+
+\subsection{Regularization and Counterterms}\label{sec:regulatrization_countertems}
 
 In QCD, the bare Hamiltonian is ill-defined due to the presence of elements 
 that contain divergences, ultraviolet (UV) divergences and infrared (IR) divergences.
@@ -722,7 +787,7 @@ divergent, and a counterterm diagram is needed to deal with the divergence. This
 diagram is represented with a dot at the position of the loop, with the same 
 external legs as the original diagram. 
 
-\subsection{Order by order solutions.}
+\subsection{Order by order solutions.} \label{sec:orderbyorder_solutions}
 
 The solution of the differential equations \eqref{eq:diff_order1} to \eqref{eq:diff_order3} 
 and so on, without considering the multiplicative factors, and relative phases between
@@ -733,8 +798,8 @@ the terms, can be expressed as,
     \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{01} 
     \mathcal{H}_{01}\\
     \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{01} \mathcal{H}_{01}
-    \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} \mathcal{H}_{01} + \mathcal{G}_{02}
-    \mathcal{H}_{01} }\\
+    \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} \mathcal{H}_{01} + 
+    \mathcal{H}_{01} \mathcal{G}_{02}}\\
     \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{01} \mathcal{H}_{01}
     \mathcal{H}_{01} \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} 
     \mathcal{H}_{01} \mathcal{H}_{01} +  \mathcal{H}_{01} \mathcal{G}_{02}
@@ -746,6 +811,28 @@ the terms, can be expressed as,
 
 This is an oversimplification of the solution, but it gives an idea of how the 
 different solutions for each order are obtained. 
+
+For instance, the diagrams for the first order is simply the canonical diagrams from
+$\mathcal{H}_{01}$. As for the second order, it contains the canonical diagrams from 
+the second order $\mathcal{G}_{02}$, and the product of the first order diagrams. The 
+third order contains the canonical diagrams from the third order $\mathcal{G}_{03}$,
+and the product of the first order, and second order canonical diagrams, as well as the 
+product of exclusive first order diagrams. This way, we could rewrite the solution for 
+each order in terms of the solution to the previous order,
+
+\begin{align}
+    \mathcal{H}_{t1} & = \mathcal{H}_{01} = \mathcal{G}_{01}, \\
+    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{t1} \mathcal{G}_{01}, \\
+    \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{t1} \mathcal{G}_{02} + 
+    \mathcal{H}_{t2} \mathcal{G}_{01}, \\
+    \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{t2} \mathcal{G}_{02} + 
+    \mathcal{H}_{t1} \mathcal{G}_{03} + \mathcal{H}_{t3} \mathcal{G}_{01} \label{eq:sol_order4}\\
+    \vdots & \nonumber
+\end{align}
+
+This way of writing the solution is useful to understand how the different
+orders are related to each other, and how an iterative process can be used to
+obtain the solution for each order.
 
 \section{Case study: Gluons self interactions} \label{sec:cases}
 
@@ -853,7 +940,7 @@ term that will not contribute to the perturbative expansion.
 The term $H_{A^3}$ in equation \eqref{eq:H_A^3} is a 3 gluon vertex, where either
 1 gluon is annihilated and 2 gluons are created, or 2 gluons are annihilated, and
 1 gluon is created. This process can be represented by a diagram with 3 external
-legs, and 1 vertex. Being a order 1 term, with the corresponding diagrams shown in
+legs, and 1 vertex. Being an order 1 term, with the corresponding diagrams shown in
 figure \ref{fig:cannonical1}.
 
 \begin{figure*}[h!]
@@ -872,17 +959,30 @@ figure \ref{fig:cannonical1}.
     \label{fig:cannonical1}
 \end{figure*}
 
+\newpage
+
 The term $H_{A^4}$ in equation \eqref{eq:H_A^4} is a 4 gluon vertex, where either
 1 gluon is annihilated, and 3 gluons are created, 3 gluons are annihilated, and
-1 gluon is created, or 2 gluons are annihilated, and 2 gluons are created. But we 
-will not pay special attention to this term, since all the possible diagrams can be 
-created from the diagrams of order 1.
+1 gluon is created, or 2 gluons are annihilated, and 2 gluons are created. But since 
+we are interested in building the diagrams at each order with diagrams of lower
+order, it's convenient to consider the 4 gluon vertex as a combination of two 3 gluon
+vertices. Meaning that for the process where one gluon goes to 3 gluons, we consider 
+the process as, one gluon being annihilated, and 2 gluons are created, then one of the
+created gluons is annihilated, and 2 gluons are created, producing a total of 3 gluons
+in the final state. The same applies for the process where 3 gluons are annihilated.
+This way, these diagrams have 2 vertices, and thus a second order term, that 
+can be obtained from the product of the canonical first order diagrams, so we 
+will not consider them as a new canonical diagrams, but rather as a result that will
+be obtained during the perturbative expansion.
 
-The really interesting term is the term $H_{\sbrackets{\partial A A}^2}$ in
+The fascinating term is $H_{\sbrackets{\partial A A}^2}$ in
 equation \eqref{eq:H_partial}, similar to the term $H_{A^4}$, this term is a 4 gluon
 vertex, but the concept of instantaneous interaction is introduced. This allows to 
 consider processes where a gluon is annihilated, and 3 gluons are created, to a 
-pair of 3 gluon vertices. This process is usually represented in by a perpendicular
+pair of 3 gluon vertices, similar to $H_{A^4}$. The main difference is that
+the interaction is instantaneous, meaning that the gluon is annihilated, and the
+3 gluons are created at the same time, without any time delay between them.
+This process is usually represented in by a perpendicular
 bar in the line of the gluon, indicating that the interaction is instantaneous, 
 but due to program limitations, dotted lines are used in this work.
 
@@ -972,12 +1072,39 @@ and 2 gluons are created, as shown in figure \ref{fig:cannonical2_2to2}.
     \label{fig:cannonical2_2to2}
 \end{figure*}
 
+\newpage
+
 The combination of all these diagrams, are the canonical diagrams of order 2.
 Together with the diagrams of order 1, figure \ref{fig:cannonical1},
 they form the basis of the perturbative expansion of the Hamiltonian, and the
 starting point to obtain the diagrams of higher order.
 
-\newpage
+As we can see, in the case of QCD, there are only canonical diagrams of order 1 and 2, 
+then referring to the framework laid out in section \ref{sec:orderbyorder_solutions}, 
+from order 3  and onwards, the diagrams only depend explicitly on the diagrams of 
+previous order, as well as the order 1, and the order 2 canonical diagrams.
+
+For example, in Eq. \eqref{eq:sol_order4}, the solution at order $4$, $\mathcal{H}_{t4}$ consists of 
+$\mathcal{H}_{t 3}$ and the canonical diagrams, thus eliminating the term with $\mathcal{G}_{04}$ and
+$\mathcal{H}_{t1}\mathcal{G}_{03}$, since they are not present in the QCD theory.
+This way simplifying the number of diagrams that can be obtained at higher orders,
+and making the diagrams have the form,
+
+\begin{align}
+    \mathcal{H}_{t1} & = \mathcal{H}_{01} = \mathcal{G}_{01}, \\
+    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{t1} \mathcal{G}_{01}, \\
+    \mathcal{H}_{t3} & =  \mathcal{H}_{t1} \mathcal{G}_{02} + 
+    \mathcal{H}_{t2} \mathcal{G}_{01}, \\
+    \mathcal{H}_{t4} & =  \mathcal{H}_{t2} \mathcal{G}_{02} + \mathcal{H}_{t3} \mathcal{G}_{01}\\
+    \mathcal{H}_{t5} & =  \mathcal{H}_{t3} \mathcal{G}_{02} + \mathcal{H}_{t4} \mathcal{G}_{01} \\
+    \vdots & \nonumber\\
+    \mathcal{H}_{tn} &=  \mathcal{H}_{t(n-1)} \mathcal{G}_{02} +
+    \mathcal{H}_{t(n-2)} \mathcal{G}_{01} \quad \text{for } n \geq 3.
+\end{align}
+
+Obtaining a simpler recursive relation to obtain the diagrams of higher order,
+that can be implemented in a program to obtain the diagrams of higher order.
+
 
 \section{Code implementation} \label{sec:code}
 
@@ -1035,10 +1162,35 @@ the divergences produced in the process. The program is able to detect the 2 loo
 and 3 loops in the diagrams of a certain order, and add new diagrams to cancel the 
 divergences. As shown in figure \ref{fig:example_diagram}.
 
+\subsection{Applied to gluons self interactions} \label{sec:applied_gluons}
+Although in this thesis the focus is on the gluons and its self interactions, 
+and considering only one type of particle, there are tests that can be done to 
+check the validity of the program for multiple types of particles. Thanks to
+the instantaneous interactions, the program can be adapted to consider this 
+type of interactions as a new type of particles, and thus check for bugs or other 
+issues that may arise when considering multiple types of particles.
 
+This approach comes with its own problems. By considering an instantaneous 
+process as a new type of particles, this process need to respect the time 
+evolution of the system, meaning that in the eyes of the program, the 
+instantaneous interaction is no longer instantaneous, but rather a process that
+happens in a certain time interval. 
 
+Nonetheless, this is a valid approach to consider the instantaneous interactions, 
+since no possible diagrams will be lost, rather equivalent diagrams will be 
+obtained, without the program being aware of it, and it rests on the user to
+identify these equivalences. 
+
+For lower orders, this approach works well, since the number of diagrams is
+manageable, but at higher orders, this is a problem that needs to be addressed in 
+the future, and a general fix to the problem will be implemented in the program.
+
+\newpage
 
 \section{Diagrams obtained} \label{sec:diagrams}
+
+In this section, we will present the diagrams obtained from the program. At 
+each order, we will consider the types of processes that is the most relevant.
 
 
 \subsection{Order 3}
@@ -1144,14 +1296,25 @@ In the figure \ref{fig:order3_1to2} we can see the diagrams obtained for the pro
 of 1 gluon going to 2 gluons, with the corresponding counterterms in figure
 \ref{fig:order3_1to2/counterterms}. 
 
-The diagrams \ref{fig:order3_1to2/5} and \ref{fig:order3_1to2/6} are really the same 
+Depending on the types of particles in the process, we can deduce the origin of the 
+different diagrams. With the once having dotted lines, and thus coming from the second
+order term canonical diagrams $H_{\sbrackets{\partial A A}^2}$, combined with a first 
+order term canonical diagram $H_{A^3}$. While the diagrams without dotted lines
+come solely from the first order term canonical diagrams $H_{A^3}$
+
+Referring to the problems mentioned in the section \ref{sec:applied_gluons}, the diagrams 
+with dotted lines are instantaneous interactions, but the program considers them
+as a new type of particle, there are some artifacts that arise from this
+approach. For instance, the diagrams \ref{fig:order3_1to2/5} and \ref{fig:order3_1to2/6} are really the same 
 diagram, due to instant process being instantaneous. For any other particle, these 
-2 diagrams would be different, due to the importance of the order in the interactions
+2 diagrams would be different, due to the importance of the order in the interactions,
 so the program is kept to consider them as different, to not lose generality.
 
 Other artifact of the program occur for the diagrams \ref{fig:order3_1to2/counterterms/4} and
 \ref{fig:order3_1to2/counterterms/5}, which are counterterms added to cancel the divergences
-in the canonical diagrams.
+in the canonical diagrams. These counterterms are already considered in the canonical diagrams, 
+and thus not needed to be added again. But due to the way the program is implemented,
+it adds counterterms to all loop divergences in the diagrams.
 
 Comparing with the 3rd order contribution diagrams in \cite{QCDG}, the same diagrams
 for the 3 gluon vertex are obtained, proving the validity of the program to reproduce the same results.
@@ -1160,7 +1323,10 @@ for the 3 gluon vertex are obtained, proving the validity of the program to repr
 
 \subsection{Order 4}
 
-Considering glueball states, the process of 2 gluons going to 2 gluons, the program
+In a non abelian theory such as QCD, the gluons interact with themselves, thus making 
+bound states formed by exclusively gluons, glueballs, possible. 
+
+Considering one of such glueball states, the process of 2 gluons going to 2 gluons, the program
 produces about 100 diagrams, with the corresponding counterterms. All the diagrams are
 not shown here, since they are too many to be included in this document. But let's 
 discuss some of the most interesting diagrams.
@@ -1183,7 +1349,10 @@ discuss some of the most interesting diagrams.
 
 Starting at order 4, the distinct non-abelian nature of the QCD is present, since 
 the gluons interact with themselves, creating diagrams not possible in abelian theories, 
-such as QED. One of such processes is shown in the figure \ref{fig:order4/1}, where the
+such as QED. One of such processes is shown in the figure \ref{fig:order4/1}, where 2 gluons
+interact with each other.
+
+\newpage
 
 
 \subsection{Higher orders}
@@ -1209,10 +1378,41 @@ exponentially. Is here where the power of the program is shown.
     \label{tab:diagrams}
 \end{table}
 
+\newpage
 
 \section{Conclusions and future work} \label{sec:conclusions}
 
 
+In this thesis, we have presented a program that implements the RGPEP to obtain the
+diagrams of the gluons self interactions, and the perturbative expansion of the
+Hamiltonian. The program is able to obtain the diagrams of higher order, starting
+from the canonical diagrams, and using the order by order procedure.
+The program is modular, and can be adapted to other theories, by changing the
+canonical diagrams and the types of particles considered.
+The program has been tested with the gluons self interactions, and has been able to
+obtain the diagrams of higher order, with the corresponding counterterms to cancel
+the divergences produced in the process. The program has been able to reproduce the
+diagrams obtained in the literature, proving its validity to obtain the diagrams of
+higher order in the perturbative expansion of the Hamiltonian.
+
+The program is able to obtain the diagrams of higher order, but there are still
+some issues that need to be addressed, such as the artifacts produced by the
+instantaneous interactions, and the time taken to calculate the diagrams at higher
+orders. 
+
+The program is still in development, and there are many improvements that can
+be made to optimize the process of obtaining the diagrams. Other main issue to 
+address is the counting of the diagrams, as the program is able to obtain the diagrams, 
+but it does not output the symmetry factor correctly, due to the problems with the factors 
+associated to the canonical diagrams, and the counterterms, as well as the method
+used to find the diagrams that prioritize ensuring that no diagrams are lost, rather than
+ensuring that the symmetry factor is correct.
+
+As future work, we plan to fix the issues mentioned above, and to implement and 
+test the program with other theories, and more types of particles, particularly
+considering the quarks and antiquarks, in the general case of QCD. 
+
+\section{Acknowledgements}
 
 % Referencias %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage

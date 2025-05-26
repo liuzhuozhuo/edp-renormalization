@@ -9,16 +9,16 @@
 \contentsline {subsection}{\numberline {2.4}Regularization and Counterterms}{7}{subsection.2.4}%
 \contentsline {subsection}{\numberline {2.5}Diagram representation}{8}{subsection.2.5}%
 \contentsline {subsection}{\numberline {2.6}Order by order solutions.}{9}{subsection.2.6}%
-\contentsline {section}{\numberline {3}Case study: Gluons self interactions}{10}{section.3}%
+\contentsline {section}{\numberline {3}Case study: Gluons self-interactions}{10}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Canonical Hamiltonian}{10}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Canonical diagrams}{11}{subsection.3.2}%
-\contentsline {section}{\numberline {4}Code implementation}{14}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Diagrams definition}{14}{subsection.4.1}%
+\contentsline {section}{\numberline {4}Code implementation}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Diagrams definition}{15}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Order by order procedure}{15}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Applied to gluons self interactions}{15}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Diagrams obtained}{16}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Order 3}{16}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Order 4}{17}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Higher orders}{18}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Conclusions and future work}{19}{section.6}%
-\contentsline {section}{\numberline {7}Acknowledgements}{19}{section.7}%
+\contentsline {subsection}{\numberline {4.3}Applied to gluons self-interactions}{16}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Diagrams obtained}{17}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Order 3}{17}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Order 4}{18}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Higher orders}{19}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Conclusions and future work}{20}{section.6}%
+\contentsline {section}{\numberline {7}Acknowledgements}{20}{section.7}%

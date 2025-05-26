@@ -1,14 +1,40 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{1983RvMP...55..583W}
+Kenneth~G. {Wilson}.
+\newblock {The renormalization group and critical phenomena}.
+\newblock {\em Reviews of Modern Physics}, 55(3):583--600, July 1983.
+
+\bibitem{PhysRevD.48.5863}
+Stanis\l{}aw~D. G\l{}azek and Kenneth~G. Wilson.
+\newblock Renormalization of hamiltonians.
+\newblock {\em Phys. Rev. D}, 48:5863--5872, Dec 1993.
+
+\bibitem{1932ZPhy...75..622F}
+V.~{Fock}.
+\newblock {Konfigurationsraum und zweite Quantelung}.
+\newblock {\em Zeitschrift fur Physik}, 75(9-10):622--647, September 1932.
+
+\bibitem{Peskin:1995ev}
+Michael~Edward Peskin and Daniel~V. Schroeder.
+\newblock {\em {An Introduction to Quantum Field Theory}}.
+\newblock Westview Press, 1995.
+\newblock Reading, USA: Addison-Wesley (1995) 842 p.
+
+\bibitem{Bjorken:100769}
+James~D Bjorken and Sidney~David Drell.
+\newblock {\em {Relativistic quantum mechanics}}.
+\newblock International series in pure and applied physics. McGraw-Hill, New York, NY, 1964.
 
 \bibitem{dirac_front_forms_1949}
 P.~A.~M. Dirac.
 \newblock Forms of {Relativistic} {Dynamics}.
 \newblock {\em Reviews of Modern Physics}, 21(3):392--399, July 1949.
 
-\bibitem{1932ZPhy...75..622F}
-V.~{Fock}.
-\newblock {Konfigurationsraum und zweite Quantelung}.
-\newblock {\em Zeitschrift fur Physik}, 75(9-10):622--647, September 1932.
+\bibitem{Brodsky_1998}
+Stanley~J. Brodsky, Hans-Christian Pauli, and Stephen~S. Pinsky.
+\newblock Quantum chromodynamics and other field theories on the light cone.
+\newblock {\em Physics Reports}, 301(4–6):299–486, August 1998.
 
 \bibitem{glazek_dynamics_2001}
 S.~D. Głazek.
@@ -24,5 +50,16 @@ S.~D. Głazek.
 S.~D.~Głazek M.~Gómez-Rocha.
 \newblock Asymptotic freedom in the front-form hamiltonian for quantum chromodynamics of gluons.
 \newblock {\em Phys.Rev.D 92}, 2015.
+
+\bibitem{glazek_renormalization_1993}
+Stanisław~D. Głazek and Kenneth~G. Wilson.
+\newblock Renormalization of overlapping transverse divergences in a model light-front {Hamiltonian}.
+\newblock {\em Physical Review D}, 47(10):4657--4669, May 1993.
+\newblock Publisher: American Physical Society (APS).
+
+\bibitem{Collins_1984}
+John~C. Collins.
+\newblock {\em Renormalization: An Introduction to Renormalization, the Renormalization Group and the Operator-Product Expansion}.
+\newblock Cambridge Monographs on Mathematical Physics. Cambridge University Press, 1984.
 
 \end{thebibliography}

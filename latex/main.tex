@@ -7,7 +7,7 @@
 
 
 \usepackage[pdftex,final]{graphicx}
-\bibliographystyle{plain} % We choose the "plain" reference style
+\bibliographystyle{unsrt} % We choose the "plain" reference style
 
 % Style package
 % Font Package (Palatino)
@@ -194,22 +194,21 @@ orders, where unique phenomena of non-abelian theories can be observed.
 
 When trying to build a theory that describes the particles and their interactions, 
 it's fundamental that the theory is compatible with the 2 pillars of modern physics,
-the special relativity and quantum mechanics. The special relativity is a theory 
+special relativity and quantum mechanics. Special relativity is a theory 
 that's able to describe the behavior of particles at high energies, and quantum 
 mechanics is a theory that describes the behavior of particles at small scales.
-The combination of these two theories is the basis of the quantum field theory,
-building a formalism that describes the particles as excitations of a field.
+Combining these two pillars gives rise to quantum field theory (QFT) – a formalism 
+in which particles are described as excitations of underlying fields.
 
-Other important aspect of the theory is that it should be able to describe the 
-different phenomena that occur at different scales. In the context of QCD, the 
-experiments performed at low energies, or high length scales, smear the interaction
-between the particles, and does not resolve the details of the structure inside the
-particles, observing strongly bound states. While at high energies, or low length 
-scales, the hadrons are broken into their constituents, quarks and gluons, and the 
-interaction between the particles is weak, forming the so-called asymptotic freedom.
-The theory should be able to describe the transition between these two regimes.
+Another important aspect of the theory is that it should be able to describe the 
+different phenomena that occur at different scales. In the context of QCD, at low 
+energies (long distances), experiments see only bound states (hadrons), with the 
+internal structure smoothed out. At high energies (short distances), one can probe 
+inside hadrons – quarks and gluons behave almost free (the phenomenon of 
+asymptotic freedom). The theory must interpolate between these regimes.
 
-In the context of theoretical physics, the renormalization group procedure is a 
+In the context of theoretical physics, the renormalization group procedure 
+\cite{1983RvMP...55..583W}is a 
 powerful tool to study the behavior of physical systems at different scales. In
 the case of quantum field theories, renormalization allows to study the system
 at different energy scales by introducing a scale parameter, and by changing 
@@ -222,7 +221,7 @@ working in the operator space, where the Hamiltonian operator governs the time
 evolution of the states. 
 
 Many widely used renormalization procedures tend to apply to Lagrangian dynamics. But 
-in the framework of RGPEP, the renormalization group procedure is applied to 
+in the framework of RGPEP\cite{PhysRevD.48.5863}, the renormalization group procedure is applied to 
 Hamiltonian dynamics. The benefit of this approach is the ability obtain directly 
 the solutions of the system (the spectrum of the theory, and the eigenstates of the 
 Hamiltonian). RGPEP introduces an effective Hamiltonian, that describes the system at a
@@ -243,11 +242,11 @@ given order.
 This thesis is organized as follows. Section \ref{sec:theoretical_background} describes
 the theoretical background needed to understand the renormalization group procedure
 for effective particles, and the Hamiltonian dynamics. Section \ref{sec:cases}
-describes the case studied in this thesis, gluon self interactions, where
+describes the case studied in this thesis, gluon self-interactions, where
 holding the simplicity of the scalar case, some peculiarities of the QCD theory are 
-present. The section \ref{sec:code} describes the connection between the diagrams 
+present. Section \ref{sec:code} describes the connection between the diagrams 
 and the objects are defined in the code, as well as the steps taken to obtain higher 
-order diagrams, that are presented in the section \ref{sec:diagrams}. Finally, the 
+order diagrams, that are presented in Section \ref{sec:diagrams}. Finally, the 
 section \ref{sec:conclusions} presents the conclusions, future work and the 
 improvement that can be done to the code.
 
@@ -260,11 +259,10 @@ applied to.
 \subsection{Fock space} \label{sec:fock_space}
 
 Introduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock space is a sum 
-of different Hilbert spaces, each one corresponding to a different number of 
-particles in the system. Allowing the description of quantum systems with a 
-variable number of particles. It is essential in quantum field theory, 
-where the number of particles is not conserved and processes such as particle 
-creation and annihilation occur.
+of different Hilbert spaces, each one corresponding to a different number of particles, 
+thus allowing the description of quantum systems with a variable number of particles. 
+It is essential in quantum field theory, where the number of particles is not conserved 
+and processes such as particle creation and annihilation occur.
 
 The Fock space is defined as the direct sum of tensor products of the single 
 particle Hilbert space $\mathbb{H}$,
@@ -286,7 +284,7 @@ $\mathbb{C}$ is the complex scalar, corresponding to the states with no particle
     \oplus (\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
 \end{equation}
 where $\mathbb{C}$ is the complex scalar, corresponding to the states with no particles,
-and the terms \( \mathbb{H}^{\otimes n} \) represents the Hilbert space for 
+and each terms \( \mathbb{H}^{\otimes n} \) represents the Hilbert space for 
 \( n \)-particle states.
 
 This way a general state in the Fock space can be expressed as,
@@ -315,9 +313,10 @@ given by:
 \subsection{Hamiltonian dynamics}
 
 In quantum field theory, 2 equivalent formulations of the dynamics can be used, 
-the Lagrangian and the Hamiltonian formulations. Though the modeling of dynamics 
-tends to start in the Lagrangian formulation, and then using the Legendre transformation
-to obtain the Hamiltonian formulation. 
+the Lagrangian and the Hamiltonian formulations. Although one often starts with a 
+Lagrangian formulation and then switches to a Hamiltonian via a Legendre transform, 
+here we adopt the Hamiltonian (canonical) formalism because RGPEP is implemented 
+in Hamiltonian dynamics.
 
 \subsubsection{Canonical Hamiltonian}\label{sec:canonical_hamiltonian}
 
@@ -402,7 +401,7 @@ $\mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x))$\footnote{where $x$ indicate a
 {\partial x^\mu}$}, where $\phi_a (x)$ is a particular field of the system.
 
 To formulate the theory in the Hamiltonian framework, we begin by 
-defining the canonical conjugate momenta,
+defining the canonical conjugate momenta \cite{Peskin:1995ev},
 
 \begin{equation}
     \pi_a (x) = \frac{\partial \mathcal{L}}{\partial (\partial_0 \phi_a (x))}.
@@ -418,7 +417,7 @@ The Hamiltonian density, via the Legendre transformation,
 In quantum mechanics, or quantum field theory, the canonical variables 
 \( \phi_a(x) \) and \( \pi_a(x) \) are promoted to operators acting on 
 a Hilbert space. Quantization is achieved by imposing equal-time canonical 
-commutation relations
+commutation relations \cite{Bjorken:100769},
 
 \begin{equation}
     \sbrackets{\phi_a (x), \pi_b (y)} = i \delta_{ab} \delta^3(x-y),
@@ -519,7 +518,7 @@ in \( x^+ \), analogous to the role of \( H = P^0 \) in instant-form quantizatio
 A key feature of FF quantization is the positivity condition \( p^+ > 0 \) 
 for all physical particles. This kinematic constraint ensures that particle 
 creation from the vacuum, which has total \( P^+ = 0 \), is forbidden due to 
-momentum conservation. As a result, the vacuum in FF is trivial or "empty": 
+momentum conservation. As a result, the vacuum in FF is trivial or "empty" \cite{Brodsky_1998}: 
 it contains no virtual particles and cannot mix with multi-particle states.
 
 This property simplifies the structure of the theory, particularly in the 
@@ -583,7 +582,7 @@ mix the vacuum with multi-particle states in IF.
 
 \subsection{RGPEP}
 The RGPEP, is a renormalization scheme applied within the Hamiltonian formalism 
-of quantum field theory. By considering a series of unitary transformations applied to the
+of quantum field theory, developed in Refs.\cite{PhysRevD.48.5863 ,glazek_dynamics_2001, PEP}. By considering a series of unitary transformations applied to the
 canonical or bare Hamiltonian, the RGPEP is able to construct a series of effective 
 Hamiltonians $\mathcal{H}_s$, each describing dynamics in terms of effective particles 
 at a resolution scale set by the parameter \( s \). This is associated with the 
@@ -676,17 +675,16 @@ order, and the 2nd order from the previous orders, and so on.
 \subsection{Regularization and Counterterms}\label{sec:regulatrization_countertems}
 
 In QCD, the bare Hamiltonian is ill-defined due to the presence of elements 
-that contain divergences, ultraviolet (UV) divergences and infrared (IR) divergences.
-Th UV divergences are produced in processes where the large momentum transferes, 
-or the high invariant mass difference between Fock states. While the IR divergences
-are produced in procceses where the particles are "soft", carring small longitudinal
-momentum fractions, $x_{p/P} = p^+/P^+$.
+that contain divergences\cite{QCDG,glazek_renormalization_1993}, ultraviolet (UV) divergences and infrared (IR) divergences.
+The UV divergences are produced in processes involving large momentum transfers, 
+whereas the IR divergences occur in processes with ‘soft’ particles carrying small 
+longitudinal momentum fractions, $x_{p/P} = p^+/P^+$.
 
 To deal with these divergences a regulating factor $r$ is 
 introduced in the interacting terms. These factors make the interacting terms rapidly 
 tend to zero, if the change in the transverse momentum of any gluon exceeds a certain
 cutoff parameter $\Delta$, or if the change in longitudinal momentum of any gluon is
-greater than a cutoff parameter $\delta$. 
+greater than a cutoff parameter $\delta$ \cite{Collins_1984}. 
 
 The particle operators is multiplied by the regulating factor, 
 \begin{equation}
@@ -750,7 +748,7 @@ to a diagram representation of the process. Each diagram will be composed of dif
     produced during the process. These will be represented with a dot in the diagram.
 \end{itemize}
 
-Notice that the diagrams are similar to the Feynman diagrams, except for the presence
+Notice that the diagrams are similar to the Feynman diagrams\cite{Peskin:1995ev}, except for the presence
 of the counterterms. The main difference is the order that the processes occur, altering
 the order of the vertices in the diagram will produce a different process. 
 
@@ -759,7 +757,7 @@ read from the left to the right, meaning that the time evolution is from the lef
 the right.
 
 As an example, consider the diagram in figure \ref{fig:example_diagram}, this pair of 
-diagrams are one of the contributions to the 3 gluon vertex, with the counterterm 
+diagrams are one of the contributions to the three-gluon vertex, with the counterterm 
 associated with it. 
 
 \begin{figure*}[h!]
@@ -767,7 +765,7 @@ associated with it.
     \begin{subfigure}[t]{0.5\textwidth}
         \centering
         \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/1.png}
-        \caption{Diagram with a 3 gluon loop.}
+        \caption{Diagram with a three-gluon loop.}
     \end{subfigure}%
     \begin{subfigure}[t]{0.5\textwidth}
         \centering
@@ -775,13 +773,13 @@ associated with it.
         \caption{Counterterm of the diagram}
     \end{subfigure}
     \caption{A example of a possible diagram, a third order contribution to the 
-    process of 3 gluon vertex, 1 gluon incoming and 2 gluons outgoing. (Outputs of 
+    process of three-gluon vertex, 1 gluon incoming and 2 gluons outgoing. (Outputs of 
     the programs.)}
     \label{fig:example_diagram}
 \end{figure*}
 
 Following the previous definitions, the diagram represent a process where a gluon
-interacts in a third order process, forming a 3 gluon loop, and 2 gluons are 
+interacts in a third order process, forming a three-gluon loop, and 2 gluons are 
 produced in the final state. Due to the presence of a loop, the diagram is
 divergent, and a counterterm diagram is needed to deal with the divergence. This 
 diagram is represented with a dot at the position of the loop, with the same 
@@ -834,7 +832,7 @@ This way of writing the solution is useful to understand how the different
 orders are related to each other, and how an iterative process can be used to
 obtain the solution for each order.
 
-\section{Case study: Gluons self interactions} \label{sec:cases}
+\section{Case study: Gluons self-interactions} \label{sec:cases}
 
 \subsection{Canonical Hamiltonian}
 
@@ -931,17 +929,17 @@ Following the creation and annihilation operators in the different terms of the
 Hamiltonian, we can distinguish the different types of process that are being
 considered. 
 
-Staring from the term $H_{A^2}$ in equation \eqref{eq:H_A^2}, we can see that this 
+Starting from the term $H_{A^2}$ in equation \eqref{eq:H_A^2}, we can see that this 
 a particle of certain momentum $k$ is annihilated and created, producing the same
 particle. This corresponds to the kinetic term of the Hamiltonian, and the diagram 
-will be a line with the same color/type of particle in both ends. Being an order 0
-term that will not contribute to the perturbative expansion.
+will be a line with the same color/type of particle in both ends. Since it is an 
+order 0 term, it will not contribute to the perturbative expansion.
 
-The term $H_{A^3}$ in equation \eqref{eq:H_A^3} is a 3 gluon vertex, where either
-1 gluon is annihilated and 2 gluons are created, or 2 gluons are annihilated, and
-1 gluon is created. This process can be represented by a diagram with 3 external
-legs, and 1 vertex. Being an order 1 term, with the corresponding diagrams shown in
-figure \ref{fig:cannonical1}.
+Figure \ref{fig:cannonical1} shows the two types of first-order diagrams 
+(one gluon splitting into two, and its inverse process of two gluons merging into one),
+corresponding to the term $H_{A^3}$ in equation \eqref{eq:H_A^3}.
+This process is represented by a diagram with 3 external legs, and 1 vertex, thus a 
+first order term.
 
 \begin{figure*}[h!]
     \centering
@@ -961,13 +959,13 @@ figure \ref{fig:cannonical1}.
 
 \newpage
 
-The term $H_{A^4}$ in equation \eqref{eq:H_A^4} is a 4 gluon vertex, where either
+The term $H_{A^4}$ in equation \eqref{eq:H_A^4} is a four-gluon vertex, where either
 1 gluon is annihilated, and 3 gluons are created, 3 gluons are annihilated, and
-1 gluon is created, or 2 gluons are annihilated, and 2 gluons are created. But since 
-we are interested in building the diagrams at each order with diagrams of lower
-order, it's convenient to consider the 4 gluon vertex as a combination of two 3 gluon
-vertices. Meaning that for the process where one gluon goes to 3 gluons, we consider 
-the process as, one gluon being annihilated, and 2 gluons are created, then one of the
+1 gluon is created, or 2 gluons are annihilated, and 2 gluons are created. However, 
+since we are building higher-order diagrams from lower-order ones, it’s convenient 
+to treat the four-gluon vertex as a combination of two three-gluon vertices. Meaning that 
+for the process where one gluon goes to 3 gluons, we consider the process as, 
+one gluon being annihilated, and 2 gluons are created, then one of the
 created gluons is annihilated, and 2 gluons are created, producing a total of 3 gluons
 in the final state. The same applies for the process where 3 gluons are annihilated.
 This way, these diagrams have 2 vertices, and thus a second order term, that 
@@ -975,16 +973,16 @@ can be obtained from the product of the canonical first order diagrams, so we
 will not consider them as a new canonical diagrams, but rather as a result that will
 be obtained during the perturbative expansion.
 
-The fascinating term is $H_{\sbrackets{\partial A A}^2}$ in
-equation \eqref{eq:H_partial}, similar to the term $H_{A^4}$, this term is a 4 gluon
-vertex, but the concept of instantaneous interaction is introduced. This allows to 
-consider processes where a gluon is annihilated, and 3 gluons are created, to a 
-pair of 3 gluon vertices, similar to $H_{A^4}$. The main difference is that
+The $H_{\sbrackets{\partial A A}^2}$ term represents an instantaneous gluon exchange 
+(often drawn as a vertical line in light-front diagrams). This allows to consider processes where a gluon is annihilated, and 3 gluons are created, to a 
+pair of three-gluon vertices, similar to $H_{A^4}$. The main difference is that
 the interaction is instantaneous, meaning that the gluon is annihilated, and the
 3 gluons are created at the same time, without any time delay between them.
-This process is usually represented in by a perpendicular
-bar in the line of the gluon, indicating that the interaction is instantaneous, 
-but due to program limitations, dotted lines are used in this work.
+
+In our program, we treat this as a special kind of ‘virtual particle’ (drawn with 
+a dotted line) to include it in the same diagram framework. Similar to the 
+term $H_{A^4}$, this term is a four-gluon vertex, except for the instantaneous 
+interaction. 
 
 The different sum terms in the equation \eqref{eq:H_partial} indicate the different 
 processes that can be considered, the first term $\Xi_{\sbrackets{\partial A A}^2 1234}$
@@ -1087,7 +1085,7 @@ previous order, as well as the order 1, and the order 2 canonical diagrams.
 For example, in Eq. \eqref{eq:sol_order4}, the solution at order $4$, $\mathcal{H}_{t4}$ consists of 
 $\mathcal{H}_{t 3}$ and the canonical diagrams, thus eliminating the term with $\mathcal{G}_{04}$ and
 $\mathcal{H}_{t1}\mathcal{G}_{03}$, since they are not present in the QCD theory.
-This way simplifying the number of diagrams that can be obtained at higher orders,
+This simplifies the number of diagrams that can be obtained at higher orders,
 and making the diagrams have the form,
 
 \begin{align}
@@ -1105,6 +1103,7 @@ and making the diagrams have the form,
 Obtaining a simpler recursive relation to obtain the diagrams of higher order,
 that can be implemented in a program to obtain the diagrams of higher order.
 
+\newpage
 
 \section{Code implementation} \label{sec:code}
 
@@ -1137,33 +1136,48 @@ interaction as a new type of virtual particle in the program.
 \subsection{Order by order procedure}
 
 To calculate the diagrams of higher order, the code follows the order by order 
-procedure described in the section \ref{sec:theoretical_background}. Having only the
+procedure described in Section \ref{sec:theoretical_background}. Having only the
 canonical diagrams, the program aims to obtain all the possible diagrams of an order
 that contribute to a certain process, discarding the other diagrams.
 
-This process produces a huge amount of diagrams, many of them equivalent. The 
-program detects these repeated diagrams, and adds their contribution, thus reducing 
-the number of diagrams that needs to be used to calculate the next order. This procedure
-is the most time-consuming process of the program, needing a search algorithm to find
-the equivalent diagrams, meaning that as the order increases, the number of diagrams
-increases exponentially, and the time to find the equivalent diagrams increases
-exponentially too. 
+The program would follow a recursive procedure, where the diagrams of order $n$ are
+obtained from the diagrams of order $n-1$ and $n-2$, in a procedure that can be outlines
+as follows,
+
+\begin{enumerate}
+    \item Start with the canonical diagrams of order 1 and 2.
+    \item For each order $n$, starting from 3, do the following,
+    \begin{enumerate}
+        \item Generate all possible combinations of diagrams of order $n-1$ with
+        order 1, and $n-2$ with order 2.
+        \item For each combination, check if it is a valid diagram for the process
+        being considered.
+        \item If it is a valid diagram, add it to the list of diagrams for order $n$.
+    \end{enumerate}
+    \item After generating all the diagrams of order $n$, check for equivalent diagrams,
+    and add their contributions to the list of diagrams.
+    \item If the order is greater than 2, check for loops, and add the counterterms 
+    to the list of diagrams.
+    \item Repeat the process for the next order, until the desired order is reached.
+\end{enumerate}
+
+The step 3 is fundamental in order to reduce the number of diagrams that needs to 
+be used to calculate the next order. This procedure is the most time-consuming process 
+of the program, needing a search algorithm to find the equivalent diagrams, meaning 
+that as the order increases, the number of diagrams increases exponentially, and the 
+time to find the equivalent diagrams increases exponentially too. 
 
 Although the process of finding the equivalent diagrams is time-consuming, it is
 fundamental to reduce the global computational time. Since the number of diagrams 
 tend to decrease by 1 to 2 orders of magnitude, depending on the order and the number of
 particles in the process. This way reduces the time needed to calculate the
 diagrams of the next order, so at the grand scale, the time needed to calculate
-the diagrams of till a certain order is reduced by performing the search algorithm 
-inbetewen the orders.
+the diagrams of till a certain order is reduced by performing the search algorithm in
+between the orders.
 
-Other important aspect of the RGPEP are the counterterms, that are added to cancel 
-the divergences produced in the process. The program is able to detect the 2 loops
-and 3 loops in the diagrams of a certain order, and add new diagrams to cancel the 
-divergences. As shown in figure \ref{fig:example_diagram}.
 
-\subsection{Applied to gluons self interactions} \label{sec:applied_gluons}
-Although in this thesis the focus is on the gluons and its self interactions, 
+\subsection{Applied to gluons self-interactions} \label{sec:applied_gluons}
+Although in this thesis the focus is on the gluons and its self-interactions, 
 and considering only one type of particle, there are tests that can be done to 
 check the validity of the program for multiple types of particles. Thanks to
 the instantaneous interactions, the program can be adapted to consider this 
@@ -1195,7 +1209,7 @@ each order, we will consider the types of processes that is the most relevant.
 
 \subsection{Order 3}
 
-Considering the 3 gluon vertex, the process of 1 gluon going to 2 gluons, up till 
+Considering the three-gluon vertex, the process of 1 gluon going to 2 gluons, up till 
 order 3, the diagrams obtained from the program are shown in the figures 
 \ref{fig:order3_1to2} and \ref{fig:order3_1to2/counterterms}.
 
@@ -1250,7 +1264,7 @@ order 3, the diagrams obtained from the program are shown in the figures
         \includegraphics[width=\textwidth]{plots/order3/order3_1to2/8.png}
         \caption{ }
     \end{subfigure}
-    \caption{Diagrams of third order, contributing to the 3 gluon vertex.}
+    \caption{Diagrams of third order, contributing to the three-gluon vertex.}
     \label{fig:order3_1to2}
 \end{figure*}
 
@@ -1302,7 +1316,7 @@ order term canonical diagrams $H_{\sbrackets{\partial A A}^2}$, combined with a 
 order term canonical diagram $H_{A^3}$. While the diagrams without dotted lines
 come solely from the first order term canonical diagrams $H_{A^3}$
 
-Referring to the problems mentioned in the section \ref{sec:applied_gluons}, the diagrams 
+Referring to the problems mentioned in Section \ref{sec:applied_gluons}, the diagrams 
 with dotted lines are instantaneous interactions, but the program considers them
 as a new type of particle, there are some artifacts that arise from this
 approach. For instance, the diagrams \ref{fig:order3_1to2/5} and \ref{fig:order3_1to2/6} are really the same 
@@ -1317,7 +1331,7 @@ and thus not needed to be added again. But due to the way the program is impleme
 it adds counterterms to all loop divergences in the diagrams.
 
 Comparing with the 3rd order contribution diagrams in \cite{QCDG}, the same diagrams
-for the 3 gluon vertex are obtained, proving the validity of the program to reproduce the same results.
+for the three-gluon vertex are obtained, proving the validity of the program to reproduce the same results.
 
 
 
@@ -1343,7 +1357,7 @@ discuss some of the most interesting diagrams.
         \includegraphics[width=\textwidth]{plots/order4/counterterms/1.png}
         \caption{ }
     \end{subfigure}
-    \caption{Diagrams of fourth order, contributing to the 2 gluon vertex.}
+    \caption{Diagrams of fourth order,}
     \label{fig:order4/1}
 \end{figure*}
 
@@ -1384,12 +1398,12 @@ exponentially. Is here where the power of the program is shown.
 
 
 In this thesis, we have presented a program that implements the RGPEP to obtain the
-diagrams of the gluons self interactions, and the perturbative expansion of the
+diagrams of the gluons self-interactions, and the perturbative expansion of the
 Hamiltonian. The program is able to obtain the diagrams of higher order, starting
 from the canonical diagrams, and using the order by order procedure.
 The program is modular, and can be adapted to other theories, by changing the
 canonical diagrams and the types of particles considered.
-The program has been tested with the gluons self interactions, and has been able to
+The program has been tested with the gluons self-interactions, and has been able to
 obtain the diagrams of higher order, with the corresponding counterterms to cancel
 the divergences produced in the process. The program has been able to reproduce the
 diagrams obtained in the literature, proving its validity to obtain the diagrams of

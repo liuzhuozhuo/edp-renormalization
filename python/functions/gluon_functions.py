@@ -937,6 +937,20 @@ def reposition_diagram (points, in_out_path, paths, typeofproc, print_=False, sp
                 points[i-1, 1] = 1
             for i in find_same_height_outside (points, path1[1]):
                 points[i-1, 1] = (maxy_point-1)/2
+    elif typeofproc == [1, 1]:
+        maxy_point = 3
+        path1 = find_shortest_undirected_path(paths, in_out_path[0, 0][0], in_out_path[0, 1][0])
+        if path1[0] < 2:
+            for i in path1[1]:
+                points[i-1, 1] = maxy_point
+            if is_ordered_route(path1[1]) == False:
+                for i in range(1, len(path1[1])-1):
+                    points[path1[1][i]-1, 1] = maxy_point
+        else:
+            for i in path1[1]:
+                points[i-1, 1] = 1
+            for i in find_same_height_outside (points, path1[1]):
+                points[i-1, 1] = maxy_point
         
     points = equalize_x_spacing(points, spacing=spacing_)
     """

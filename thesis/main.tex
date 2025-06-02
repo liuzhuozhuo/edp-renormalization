@@ -33,6 +33,7 @@
 \usepackage{soul}
 \usepackage{array}
 %\usepackage{marvosym}
+\usepackage{tensor}
 \usepackage{epsfig}
 \usepackage{graphics}
 \usepackage{amsfonts}
@@ -193,47 +194,42 @@ orders, where unique phenomena of non-abelian theories can be observed.
 \section{Introduction}
 
 When trying to build a theory that describes the particles and their interactions, 
-it's fundamental that the theory is compatible with the 2 pillars of modern physics,
+it's fundamental that the theory is compatible with the two pillars of modern physics:
 special relativity and quantum mechanics. Special relativity is a theory 
-that's able to describe the behavior of particles at high energies, and quantum 
+that is able to describe the behavior of particles at high energies, and quantum 
 mechanics is a theory that describes the behavior of particles at small scales.
 Combining these two pillars gives rise to quantum field theory (QFT) – a formalism 
 in which particles are described as excitations of underlying fields.
 
-Another important aspect of the theory is that it should be able to describe the 
-different phenomena that occur at different scales. In the context of QCD, at low 
-energies (long distances), experiments see only bound states (hadrons), with the 
-internal structure smoothed out. At high energies (short distances), one can probe 
-inside hadrons – quarks and gluons behave almost free (the phenomenon of 
-asymptotic freedom). The theory must interpolate between these regimes.
+An important aspect of any theoretical apporach is that it should be able to describe  
+different phenomena that occur at different scales. In the context of Quantum 
+Chromodynamics (QCD), at low energies (long distances), experiments see only bound 
+states (hadrons), with the internal structure smoothed out. In contrast, high energies 
+(short distances), one can probe inside hadrons – quarks and gluons behave almost free 
+(the phenomenon of asymptotic freedom). The theory must interpolate between these regimes.
+
+We will adopt the Hamiltonian formalism to describe the dynamics of the system, 
+working on the operator space, where the Hamiltonian operator governs the time
+evolution of the states. 
 
 In the context of theoretical physics, the renormalization group procedure 
-\cite{1983RvMP...55..583W}is a 
-powerful tool to study the behavior of physical systems at different scales. In
-the case of quantum field theories, renormalization allows to study the system
-at different energy scales by introducing a scale parameter, and by changing 
-this parameter, the "resolution" of the system is changed, allowing to focus from 
+for effective particle is a powerful tool to study the behavior of physical systems 
+at different energy scales. In the case of quantum field theories, the renormalization 
+group procedures introduces a scale parameter, which moderates the "resolution" of the 
+system, allowing one to select the focus on a particular energy scale, from 
 the smallest details (the short distance behavior) to the largest ones (the grand 
 scale behavior). 
 
-We will adopt the Hamiltonian formalism to describe the dynamics of the system, 
-working in the operator space, where the Hamiltonian operator governs the time
-evolution of the states. 
-
-Many widely used renormalization procedures tend to apply to Lagrangian dynamics. But 
-in the framework of RGPEP\cite{PhysRevD.48.5863}, the renormalization group procedure is applied to 
-Hamiltonian dynamics. The benefit of this approach is the ability obtain directly 
-the solutions of the system (the spectrum of the theory, and the eigenstates of the 
-Hamiltonian). RGPEP introduces an effective Hamiltonian, that describes the system at a
+RGPEP introduces an effective Hamiltonian, that describes the system at a
 given scale. This effective Hamiltonian is the solution to a differential equation,
-that describes the evolution of the effective Hamiltonian with respect to the
-scale parameter.
+the RGPEP equation, that describes the evolution of the effective Hamiltonian with 
+respect to the scale parameter.
 
 In general, obtaining the exact solution of the RGPEP equation is a non-trivial task, 
 and a perturbative expansion of the effective Hamiltonian is used to obtain the 
-solution. By identifying each order in the Hamiltonian expansion with a series of 
-products of diagrams, the next order in the expansion can be obtained from the 
-diagrams of previous orders. Typically, these diagrams were analyzed hand, but the 
+solution. Every interaction term in the Hamiltonian can be identifies with a 
+diagram, which, in term, results as a product of diagrams of lower order.
+These diagrams are usually analyzed by hand, but the 
 number of diagrams increases exponentially with each order, making the process 
 tedious and error-prone. The goal of this thesis is to develop a code that automates 
 the process of obtaining the diagrams associated with a certain interaction for a 
@@ -242,27 +238,29 @@ given order.
 This thesis is organized as follows. Section \ref{sec:theoretical_background} describes
 the theoretical background needed to understand the renormalization group procedure
 for effective particles, and the Hamiltonian dynamics. Section \ref{sec:cases}
-describes the case studied in this thesis, gluon self-interactions, where
+describes the case studied in this thesis, gluon interactions, where
 holding the simplicity of the scalar case, some peculiarities of the QCD theory are 
-present. Section \ref{sec:code} describes the connection between the diagrams 
-and the objects are defined in the code, as well as the steps taken to obtain higher 
-order diagrams, that are presented in Section \ref{sec:diagrams}. Finally, the 
-section \ref{sec:conclusions} presents the conclusions, future work and the 
-improvement that can be done to the code.
+present. Section \ref{sec:code} describes how diagrams are defined in the code, 
+and section \ref{sec:diagrams} describes the steps taken to obtain higher 
+order diagrams, as product of elementary ones. Finally, 
+section \ref{sec:conclusions} presents the conclusions, possible future work and 
+further improvement to the code.
 
 \section{Theoretical background} \label{sec:theoretical_background}
 
-To understand the basis of the RGPEP, we need to understand the different
-concepts involved in the process, as well as the theories that the process is
-applied to.  
+To understand the basis of the RGPEP, we need to describe the different
+concepts involved in the framework, as well as the theories that the process is
+applied to.
 
 \subsection{Fock space} \label{sec:fock_space}
 
-Introduced by V.A. Fock in 1932 \cite{1932ZPhy...75..622F}, the Fock space is a sum 
+In quantum field theory, the number of particles is not conserved 
+and processes such as particle creation and annihilation occur. The formal 
+description of such features operates on the Fock space 
+\cite{1932ZPhy...75..622F}. The Fock space is a sum 
 of different Hilbert spaces, each one corresponding to a different number of particles, 
 thus allowing the description of quantum systems with a variable number of particles. 
-It is essential in quantum field theory, where the number of particles is not conserved 
-and processes such as particle creation and annihilation occur.
+
 
 The Fock space is defined as the direct sum of tensor products of the single 
 particle Hilbert space $\mathbb{H}$,
@@ -284,7 +282,7 @@ $\mathbb{C}$ is the complex scalar, corresponding to the states with no particle
     \oplus (\mathbb{H} \otimes \mathbb{H}\otimes \mathbb{H}) \oplus \cdots,
 \end{equation}
 where $\mathbb{C}$ is the complex scalar, corresponding to the states with no particles,
-and each terms \( \mathbb{H}^{\otimes n} \) represents the Hilbert space for 
+and each terms \( \mathbb{H}^{\otimes n} \) represent the Hilbert space for 
 \( n \)-particle states.
 
 This way a general state in the Fock space can be expressed as,
@@ -299,7 +297,7 @@ where $\ket{\Psi_0}$ is the vacuum state, $\ket{\Psi_1}$ is the one particle
 state, $\ket{\Psi_2}$ is the two particle state, and so on. The coefficients $c_i$
 are the amplitudes of the states, in general complex numbers. 
 
-Fock space provides a natural framework for quantum field theories QCD, where, 
+Fock space provides a natural framework for quantum field theories, where, 
 physical states are expressed as superposition of all allowable multiparticle 
 configurations consistent with color confinement and other quantum numbers. 
 For instance, a quarkonium state (a bound state of quark and antiquark) in QCD is 
@@ -317,6 +315,87 @@ the Lagrangian and the Hamiltonian formulations. Although one often starts with 
 Lagrangian formulation and then switches to a Hamiltonian via a Legendre transform, 
 here we adopt the Hamiltonian (canonical) formalism because RGPEP is implemented 
 in Hamiltonian dynamics.
+
+\subsubsection{Noether's theorem}
+
+Noether's theorem \cite{Noether:1918zz} states that every continuous symmetry of the
+Lagrangian of a physical system corresponds to a conserved quantity. In the context
+of quantum field theory, this theorem is fundamental as it relates symmetries of the
+Lagrangian to conservation laws, which are crucial for understanding the dynamics of
+the system.
+
+Considering a general continuous transformation of the fields \(\phi_a(x)\), 
+which in the infinitesimal form can be expressed as,
+
+\begin{equation}
+    \phi_a(x) \to \phi^\prime_a = \phi_a(x) + \delta\phi_a(x) = \phi_a(x) + 
+    \epsilon \mathcal{Q}_a(x),
+\end{equation}
+where \(\epsilon\) is an infinitesimal parameter, and \(\mathcal{Q}_a(x)\) is some 
+deformation of the field. This transformation is a symmetry if it leaves the
+equations of motion invariant, which means that the Lagrangian density
+\(\mathcal{L}(\phi_a, \partial_\mu \phi_a)\) remains unchanged under the transformation,
+up to a 4-divergence term:
+
+\begin{equation}
+    \mathcal{L}(\phi_a^\prime, \partial_\mu \phi_a^\prime) = 
+    \mathcal{L}(\phi_a, \partial_\mu \phi_a) + \epsilon \partial_\mu J^\mu.
+    \label{eq:lagrangian_symmetry}
+\end{equation}
+
+The conserved current \(j^\mu\) is defined as the Noether current associated with the
+symmetry transformation, which is given by,
+
+\begin{equation}
+    j^\mu = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi_a)} \mathcal{Q}_a 
+    - J^\mu, \quad \partial_\mu j^\mu = 0,
+\end{equation}
+where einstein sumation is assumed.
+
+Applying Noether's theorem, the conserved charge \(Q\) associated with the symmetry is 
+defined as the integral of the time component of the current over all space:
+
+\begin{equation}
+    Q = \int d^3x \, j^0(x).
+\end{equation}
+
+Applying Noether's theorem to translations, in infinitesimal form, 
+
+\begin{equation}
+    x^\mu \to x^{\prime\mu} = x^\mu + \epsilon \mathcal{A}^\mu,
+\end{equation}
+where \(\mathcal{A}^\mu\) is a vector that represents the infinitesimal translation, 
+the transformation of the fields is given by,
+
+\begin{equation}
+    \phi_a(x) \to \phi_a^\prime(x^\prime) = \phi_a(x) + \epsilon \mathcal{A}^\mu 
+    \partial_\mu \phi_a(x).
+\end{equation}
+
+The Lagrangian density transforms as,
+\begin{equation}
+    \mathcal{L} \to \mathcal{L} + \epsilon \mathcal{A}^\nu \partial_\mu 
+    \left(\delta_\nu^\mu \mathcal{L}\right),
+\end{equation}
+
+Comparing with equation \eqref{eq:lagrangian_symmetry}, four different conserved
+currents can be identified,
+
+\begin{equation}
+    \tensor{T}{^\mu_\nu} = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi_a)} 
+    \partial_\nu \phi_a - \tensor{\delta}{^\mu_\nu} \mathcal{L},
+\end{equation}
+this is the energy-momentum tensor of the field. The conserved charge associated with
+the time translation symmetry is the Hamiltonian \(H\), 
+\begin{equation}
+    H = \int d^3x \, T^{00}(x) = \int d^3x \mathcal{H},
+    \label{eq:energy_momentum_hamiltonian}
+\end{equation}  
+and the conserved charges associated with the spatial translations,
+\begin{equation}
+    P^i = \int d^3x \, T^{0i}(x),
+\end{equation}
+which it is interpreted as the physical momentum that the fields carry.
 
 \subsubsection{Canonical Hamiltonian}\label{sec:canonical_hamiltonian}
 
@@ -407,11 +486,16 @@ defining the canonical conjugate momenta \cite{Peskin:1995ev},
     \pi_a (x) = \frac{\partial \mathcal{L}}{\partial (\partial_0 \phi_a (x))}.
 \end{equation}
 
-The Hamiltonian density, via the Legendre transformation,
+The Hamiltonian density, from equation \eqref{eq:energy_momentum_hamiltonian},
 
 \begin{equation}
-    \mathcal{H} = \sum_a \pi_a (x) \partial_0 \phi_a (x) - 
-    \mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x)).
+    \mathcal{H} = \pi_a (x) \partial_0 \phi_a (x) - \mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x)),
+\end{equation}
+
+and the momentum, 
+
+\begin{equation}
+    P^i = \int d^3x \, T^{0i}(x) = \int d^3x \, \pi_a (x) \partial^i \phi_a (x).
 \end{equation}
 
 In quantum mechanics, or quantum field theory, the canonical variables 
@@ -423,9 +507,10 @@ commutation relations \cite{Bjorken:100769},
     \sbrackets{\phi_a (x), \pi_b (y)} = i \delta_{ab} \delta^3(x-y),
     \quad \sbrackets{\phi_a (x), \phi_b (y)} = 0, \quad
     \sbrackets{\pi_a (x), \pi_b (y)} = 0.
+    \label{eq:canonical_commutation_relations}
 \end{equation}
 
-The field operators tend to be expressed in terms of creation, $a_i$ and annihilation 
+The field operators are expanded in terms of creation, $a_i$ and annihilation 
 $a^\dagger_i$ operators, that act on the Fock space, creating and annihilating the mode 
 $i$ of the field. Mathematically, the creation and annihilation operators are the 
 Fourier components of the field.
@@ -445,7 +530,8 @@ making the full state,
 \end{equation}
 
 The creation and annihilation operators satisfy some commutation or anticommutation 
-relations, depending on the nature of the particles, bosons or fermions. 
+relations, depending on the nature of the particles, bosons or fermions, acording
+to \eqref{eq:canonical_commutation_relations}.
 
 For bosons, the creation and annihilation operators satisfy the following commutation 
 relations,
@@ -460,14 +546,14 @@ For fermions, the creation and annihilation operators satisfy the following anti
 relations,
 
 \begin{equation}
-    \{a_i, a_j^\dagger\} = \delta_{ij}, \quad
-    \{a_i, a_j\} = 0, \quad
-    \{a_i^\dagger, a_j^\dagger\} = 0.
+    \{q_i, q_j^\dagger\} = \delta_{ij}, \quad
+    \{q_i, q_j\} = 0, \quad
+    \{q_i^\dagger, q_j^\dagger\} = 0.
 \end{equation}
 
-This way, the creation and annihilation operators are the fundamental objects of the
-Fock space, and the Hamiltonian and the fields are expressed in terms of these operators.
-
+This way, the creation and annihilation operators are the fundamental objects acting
+on the Fock space, and the Hamiltonian and the fields are expressed in terms of 
+these operators.
 
 When a combination of creation and annihilation operators is considered, normal-ordering is
 used when defining operators that contain both creation and annihilation operators
@@ -475,11 +561,10 @@ and avoid the infinite vacuum contribution. The normal-ordering is defined as th
 process of rearranging the creation and annihilation operators in such a way that 
 all the creation operators are to the left of all the annihilation operators.
 
-The normal-ordering is denoted by the symbol $:\cdots:$, then for a fermionic case, 
+The normal-ordering is denoted by the symbol $:\,\,\,:$, and it is defined as follows:
 
 \begin{equation}
-    a_i a_j^\dagger =  \{a_i, a_j^\dagger\} -  a_j^\dagger a_i = 
-    \delta_{ij} - :a_j^\dagger a_i: = \delta_{ij} - a_j^\dagger a_i.
+    :a_i a_j^\dagger: =  a_j^\dagger a_i.
 \end{equation}
 
 \subsubsection{Front form of Hamiltonian Dynamics}
@@ -511,21 +596,25 @@ of spatial coordinates. The corresponding momenta are defined as,
     p^\perp = (p^1, p^2).
 \end{equation}
 
-The light-front Hamiltonian \( P^- \) is derived from the Lagrangian using 
-a Legendre transformation with respect to \( x^+ \). It governs the evolution 
-in \( x^+ \), analogous to the role of \( H = P^0 \) in instant-form quantization.
+The light-front Hamiltonian \( P^- \) is derived from the conserved charge related 
+to the component \( x^+ \), following a similar procedure as before. It governs 
+the evolution in \( x^+ \), analogous to the role of \( H = P^0 \) in instant-form 
+quantization.
 
 A key feature of FF quantization is the positivity condition \( p^+ > 0 \) 
 for all physical particles. This kinematic constraint ensures that particle 
 creation from the vacuum, which has total \( P^+ = 0 \), is forbidden due to 
 momentum conservation. As a result, the vacuum in FF is trivial or "empty" \cite{Brodsky_1998}: 
-it contains no virtual particles and cannot mix with multi-particle states.
+it contains no virtual particles and cannot mix with multi-particle states
+\footnote{Although gluons are supposed to be massless and therefore this condition
+does not hold for them, in practice, it is often assumed to have infinitesimally 
+small mass (which is taken to zero at the end of the calculation).}.
 
 This property simplifies the structure of the theory, particularly in the 
 context of the RGPEP, where a clean separation between the vacuum and 
 the particle spectrum is advantageous. FF quantization avoids the 
 complexities associated with vacuum fluctuations that are typical in 
-instant form dynamics.
+instant-form dynamics.
 
 
 \begin{comment}
@@ -582,16 +671,19 @@ mix the vacuum with multi-particle states in IF.
 
 \subsection{RGPEP}
 The RGPEP, is a renormalization scheme applied within the Hamiltonian formalism 
-of quantum field theory, developed in Refs.\cite{PhysRevD.48.5863 ,glazek_dynamics_2001, PEP}. By considering a series of unitary transformations applied to the
-canonical or bare Hamiltonian, the RGPEP is able to construct a series of effective 
+of quantum field theory, developed in Refs.\cite{PhysRevD.48.5863 ,glazek_dynamics_2001, PEP}. 
+By considering a series of unitary transformations applied to the
+canonical or bare Hamiltonian, the RGPEP is able to construct a sucession of effective 
 Hamiltonians $\mathcal{H}_s$, each describing dynamics in terms of effective particles 
 at a resolution scale set by the parameter \( s \). This is associated with the 
-renormalization group scale $\lambda = 1/s$, has dimension of length, and physically 
+renormalization group scale $\lambda = 1/s$, where  $\lambda$ have dimension of energy,
+and physically has the interpretation of the characteristic energy scale of the theory, 
+while \( s \) has dimension of length, and physically 
 has the interpretation of the characteristic scale of the theory.
 
-The corresponding effective particles, by the use of effective particle 
-operators (namely creation and annihilation operators) that differs from 
-the canonical ones by the same unitary transformation $\mathcal{U}_s$,
+Effective particles, are defined by the use of effective particle 
+operators that differs from the canonical ones by the unitary transformation 
+$\mathcal{U}_s$,
 
 \begin{equation}
     a_s = \mathcal{U}_sa_0\mathcal{U}_s^\dagger.
@@ -609,11 +701,11 @@ operator $a_s$, is related to the regulated canonical Hamiltonian with counter-t
 by the condition (section \ref{sec:regulatrization_countertems}),
 
 \begin{equation}
-    \mathcal{H}_t(a_t) = \mathcal{H}_0(a_0)
+    \mathcal{H}_t(a_t) = \mathcal{H}_0(a_0),
 \end{equation}
 
 Using Eq.~\eqref{eq:effective_particle_operator} and expressing all operators in 
-terms of the original \( a_0 \), the Hamiltonian becomes,
+terms of the original \( a_0 \), the effective Hamiltonian becomes,
 
 \begin{equation}
     \mathcal{H}_t(a_0) = \mathcal{U}_t^\dagger\mathcal{H}_0(a_0) \mathcal{U}_t,
@@ -632,16 +724,16 @@ Considering the generator from Ref. \cite{PEP},
     \mathcal{G}_t = \sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}},
 \end{equation}
 where $\mathcal{H}_f$, the free part of $\mathcal{H}_t$ and the part of 
-$\mathcal{H}_0(a_0)$ that does not depend on the coupling constants, 
+$\mathcal{H}_0(a_0)$ that does not depend on the coupling constant \( g \), 
 while $\mathcal{H}_{Pt}$ is defined as function of the interacting term. 
 
 The resulting RGPEP equation have the form,
 \begin{equation}
-    \mathcal{H}_t^\prime =  \sbrackets{\sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}}, \mathcal{H}_t},
+    \mathcal{H}_t^\prime =  \sbrackets{\sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}}, \mathcal{H}_t}.
 \end{equation}
 
 In general, the solution of the RGPEP equation is a non-trivial task, and a perturbative
-expansion of the effective Hamiltonian is used to obtain the solution. Expressing  
+expansion of the effective Hamiltonian is used to obtain them. Expressing  
 $\mathcal{H}_t$ as a power series of the coupling constant $g$,
 
 \begin{equation}
@@ -666,124 +758,11 @@ the following differential equations are obtained,
         &\vdots \nonumber
 \end{align}
 
-The order 0 term is solvable from an initial condition, and the solution will be an 
-exponential of the parameter $t$. The 1st order solution can be obtained from 0th 
-order, and the 2nd order from the previous orders, and so on. 
+The order 0 term is solvable from an initial condition, and the solution of the 
+equation of order 1 will be an exponential of the parameter $t$. The 2nd order 
+solution can be obtained from 1th order, and the 3rd order from the previous orders, 
+and so on. At this point, the use of diagrams becomes crucial.
 
-\newpage
-
-\subsection{Regularization and Counterterms}\label{sec:regulatrization_countertems}
-
-In QCD, the bare Hamiltonian is ill-defined due to the presence of elements 
-that contain divergences\cite{QCDG,glazek_renormalization_1993}, ultraviolet (UV) divergences and infrared (IR) divergences.
-The UV divergences are produced in processes involving large momentum transfers, 
-whereas the IR divergences occur in processes with ‘soft’ particles carrying small 
-longitudinal momentum fractions, $x_{p/P} = p^+/P^+$.
-
-To deal with these divergences a regulating factor $r$ is 
-introduced in the interacting terms. These factors make the interacting terms rapidly 
-tend to zero, if the change in the transverse momentum of any gluon exceeds a certain
-cutoff parameter $\Delta$, or if the change in longitudinal momentum of any gluon is
-greater than a cutoff parameter $\delta$ \cite{Collins_1984}. 
-
-The particle operators is multiplied by the regulating factor, 
-\begin{equation}
-    r_{\Delta \delta} (k^\perp, x) = r_\Delta (k^\perp) r_\delta(x) \theta(x).
-\end{equation}
-
-The transverse regulator factor will be of the form, 
-\begin{equation}
-    r_\Delta (\mathcal{M}) = \text{exp} \left( -\frac{\mathcal{M}^2}{\Delta^2} \right),
-\end{equation}
-with $\mathcal{M}$ the invariant mass of the system, ensuring that UV processes are
-suppressed.
-
-The longitudinal regulator factor must verify a similar condition, preventing terms
-of the form $1/x$ or $1/x^2$ to blow up as x approaches 0. The exact form of the 
-longitudinal regulator factor is not important, as long as it verifies the condition, 
-since it will be removed using the RGPEP.
-
-Both cutoff parameters will disappear in the final result, since the theory can't
-depend on the cutoff parameters taken arbitrarily. This is done by taking the
-limit $\Delta \to \infty$ and $\delta \to 0$, recovering the original values
-taken by the momenta.
-
-It's convenient to consider an abbreviated notation for the regulating factor, 
-using the symbol $\tilde{r}_{P, p} = \tilde{r}_{\Delta \delta} (P,p)$, with,
-\begin{equation}
-    \tilde{r}_{\Delta \delta} (P,p) = r_{\Delta \delta} (p^\perp - x_{p/P}P^\perp) 
-    r_{\Delta \delta}\sbrackets{P^\perp-p^\perp-\parenthesis{1-x_{p/P}}P^\perp, 1-x_{p/P}}.
-\end{equation}
-
-The counterterms is an additional term added to the initial or bare Hamiltonian 
-$\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
-process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
-finite at all values of $t$.
-
-The counterterms are defined in a way, such that the coefficients of products 
-of creation and annihilation operators in the effective theory for gluons of size $s$
-become independent of the regularization parameter $\Delta$ when the regularization
-in dynamics of gluons of size zero is being removed. The rest of the unknown parts 
-of the counterterms are adjusted to respect the symmetries of the theory, and must 
-match the predictions of the theory with the experimental results.
-
-\subsection{Diagram representation}
-
-From the expression of the Hamiltonian, different terms can be separated and correlate
-to a diagram representation of the process. Each diagram will be composed of different elements, 
-
-\begin{itemize}
-    \item External legs, representation of the incoming and outgoing particles, it 
-    indicates the type of process that is being considered. Will have different colors/
-    types of lines depending on the type of particle.
-    \item Internal legs, represent the virtual particles that are exchanged during the
-    process, these particles are not observed in the final state. Similar to the
-    external legs, will have different colors/types of lines depending on the type of
-    particle.
-    \item Vertices, points where interactions between particles occur, the number of
-    vertices in a diagram indicates the order at which the diagram is contributing.
-    \item Loops, closed paths in the diagrams, formed by the internal legs. It will
-    indicate the presence of divergences in the process.
-    \item Counterterms, additional terms added to the Hamiltonian to deal with the divergences
-    produced during the process. These will be represented with a dot in the diagram.
-\end{itemize}
-
-Notice that the diagrams are similar to the Feynman diagrams\cite{Peskin:1995ev}, except for the presence
-of the counterterms. The main difference is the order that the processes occur, altering
-the order of the vertices in the diagram will produce a different process. 
-
-Other difference how the diagrams are read, in the context of RGPEP, the diagrams are
-read from the left to the right, meaning that the time evolution is from the left to 
-the right.
-
-As an example, consider the diagram in figure \ref{fig:example_diagram}, this pair of 
-diagrams are one of the contributions to the three-gluon vertex, with the counterterm 
-associated with it. 
-
-\begin{figure*}[h!]
-    \centering
-    \begin{subfigure}[t]{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/1.png}
-        \caption{Diagram with a three-gluon loop.}
-    \end{subfigure}%
-    \begin{subfigure}[t]{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/counterterms/1.png}
-        \caption{Counterterm of the diagram}
-    \end{subfigure}
-    \caption{A example of a possible diagram, a third order contribution to the 
-    process of three-gluon vertex, 1 gluon incoming and 2 gluons outgoing. (Outputs of 
-    the programs.)}
-    \label{fig:example_diagram}
-\end{figure*}
-
-Following the previous definitions, the diagram represent a process where a gluon
-interacts in a third order process, forming a three-gluon loop, and 2 gluons are 
-produced in the final state. Due to the presence of a loop, the diagram is
-divergent, and a counterterm diagram is needed to deal with the divergence. This 
-diagram is represented with a dot at the position of the loop, with the same 
-external legs as the original diagram. 
 
 \subsection{Order by order solutions.} \label{sec:orderbyorder_solutions}
 
@@ -807,8 +786,7 @@ the terms, can be expressed as,
     &\vdots  \nonumber
 \end{align}
 
-This is an oversimplification of the solution, but it gives an idea of how the 
-different solutions for each order are obtained. 
+This is shows how the different solutions for each order are obtained. 
 
 For instance, the diagrams for the first order is simply the canonical diagrams from
 $\mathcal{H}_{01}$. As for the second order, it contains the canonical diagrams from 
@@ -828,9 +806,69 @@ each order in terms of the solution to the previous order,
     \vdots & \nonumber
 \end{align}
 
-This way of writing the solution is useful to understand how the different
-orders are related to each other, and how an iterative process can be used to
-obtain the solution for each order.
+This is how different orders are related to each other, and how an iterative 
+process can be used to obtain the solution for each order.
+
+\subsection{Regularization and Counterterms}\label{sec:regulatrization_countertems}
+
+In QCD, the bare Hamiltonian is ill-defined due to the presence of elements 
+that contain ultraviolet (UV) divergences and infrared (IR) divergences
+\cite{QCDG,glazek_renormalization_1993}.
+The UV divergences are produced in processes involving large momentum transfers, 
+whereas the IR divergences occur in processes with ‘soft’ particles carrying small 
+longitudinal momentum fractions, $x_{p/P} = p^+/P^+$, yielding zeros in the 
+denominator.
+
+To deal with these divergences a regulating factor $r$ is 
+introduced in every interacting term. These factors make the interacting terms rapidly 
+tend to zero, if the change in the transverse momentum of any gluon exceeds a certain
+cutoff parameter $\Delta$, or if the change in longitudinal momentum of any gluon is
+greater than a cutoff parameter $\delta$ \cite{Collins_1984}. 
+
+The particle operators is multiplied by the regulating factor, 
+\begin{equation}
+    r_{\Delta \delta} (k^\perp, x) = r_\Delta (k^\perp) r_\delta(x) \theta(x).
+\end{equation}
+
+The transverse regulator factor will be of the form, 
+\begin{equation}
+    r_\Delta (z) = \text{exp} \left( -\frac{z}{\Delta^2} \right),
+\end{equation}
+with $\mathcal{M}$ the invariant mass of the system, ensuring that UV processes are
+suppressed.
+
+The longitudinal regulator factor must verify a similar condition, preventing terms
+of the form $1/x$ or $1/x^2$ to blow up as $x$ approaches 0. The exact form of the 
+longitudinal regulator factor is not important for our purposes, as long as it 
+verifies the condition, since it will be removed once we take the
+limit $\Delta \to \infty$ and $\delta \to 0$.
+
+It's convenient to consider an abbreviated notation for the regulating factor, 
+using the symbol $\tilde{r}_{P, p} = \tilde{r}_{\Delta \delta} (P,p)$, with,
+\begin{equation}
+    \tilde{r}_{\Delta \delta} (P,p) = r_{\Delta \delta} (p^\perp - x_{p/P}P^\perp) 
+    r_{\Delta \delta}\sbrackets{P^\perp-p^\perp-\parenthesis{1-x_{p/P}}P^\perp, 1-x_{p/P}}.
+\end{equation}
+
+The counterterms is an additional term added to the initial or bare Hamiltonian 
+$\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
+process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
+finite at all values of $t$.
+
+The counterterms are defined in a way, such that the coefficients of products 
+of creation and annihilation operators in the effective theory for gluons of size $s$
+become independent of the regularization parameter $\Delta$ when the regularization
+in dynamics of gluons of size zero is being removed. The rest of the unknown parts 
+of the counterterms are adjusted to respect the symmetries of the theory, and must 
+match the predictions of the theory with the experimental results.
+
+The distintion between regularization and counterterms may be confusing, but the
+regularization is a procedure to expose and parameterize the divergences that arise
+in the theory, while the counterterms are the terms added to the Hamiltonian to 
+cancel the regulated divergences, so that after the regulators are removed, the 
+effective Hamiltonian remains finite and regulator independent. Making the 
+regulation an essential first step in the renormalization process.
+
 
 \section{Case study: Gluons self-interactions} \label{sec:cases}
 
@@ -844,8 +882,8 @@ where $F^{\mu\nu}$ is the field strength tensor, defined as,
 \begin{equation}
     F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu + ig [A^\mu, A^\nu],
 \end{equation}
-and $A^\mu = A^{a\mu}t^a$, $t^a$ are the generators of the gauge group, and $g$ is the
-coupling constant. Verifying the following relations,
+where $g$ is the coupling constant, $A^\mu = A^{a\mu}t^a$, $t^a$ are the generators 
+of the gauge group, verifying the following relations,
 
 \begin{equation}
     [t^a, t^b] = i f^{abc} t^c, \quad \text{tr}(t^a t^b) = \frac{1}{2} \delta^{ab}.
@@ -872,7 +910,7 @@ The Hamiltonian in FF quantization is obtained from integrating the component
 $\mathcal{T}^{+-}$ of the energy-momentum tensor, over the hyperplane $x^+=0$. 
 
 By working in the gauge $A^+=0$, the Hamiltonian density can be expressed as the sum of 
-4 terms, as denoted in \cite{glazek_dynamics_2001}
+four terms, as denoted in \cite{glazek_dynamics_2001}
 
 \begin{equation}
     \mathcal{T}^{+-} = \mathcal{H}_{A^2} + \mathcal{H}_{A^3} +
@@ -897,7 +935,7 @@ on the plane $x^+=0$,
     a^\dagger_{k\sigma c}  e^{ikx}}_{x^+=0},
 \end{equation}
 where $[k] = \theta(k^+) dk^+ d^2k^\perp / (16\pi^3k^+)$, $\epsilon^\mu_{k \sigma}$ 
-are the polarization vectors, $t^c$ are the generators of the gauge group, and $a^\dagger_{k\sigma c}$, $a_{k\sigma c}$ are the 
+are the polarization vectors, and $a^\dagger_{k\sigma c}$, $a_{k\sigma c}$ are the 
 creation and annihilation operators (particle operators), respectively. 
 
 
@@ -1198,6 +1236,66 @@ identify these equivalences.
 For lower orders, this approach works well, since the number of diagrams is
 manageable, but at higher orders, this is a problem that needs to be addressed in 
 the future, and a general fix to the problem will be implemented in the program.
+
+
+\subsection{Diagram representation}
+
+Every term in the Hamiltonian can be identified with a diagram, depending on the 
+structure of the creation and annihilation operators present in it. Each diagram 
+will be composed of different elements, 
+
+\begin{itemize}
+    \item External legs, representation of the incoming and outgoing particles or 
+    the annihilation and creation operators, respectively. They determine the type 
+    of process that is being considered.
+    \item Internal legs, represent the virtual particles that are exchanged during the
+    process, or the intermediate creation and annihilation operators that are 
+    eliminated in the normal ordering process.These particles are not observed in 
+    the final state.
+    \item Vertices, points where interactions between particles occur, the number of
+    vertices in a diagram indicates the order at which the diagram is contributing.
+    \item Loops, closed paths in the diagrams, formed by the internal legs. It will
+    indicate the presence of divergences in the process.
+    \item Counterterms, additional terms added to the Hamiltonian to deal with the divergences
+    produced during the process. These will be represented with a dot in the diagram.
+\end{itemize}
+
+Notice that the diagrams are similar to the Feynman diagrams\cite{Peskin:1995ev}, except for the presence
+of the counterterms. The main difference is the order that the processes occur, altering
+the order of the vertices in the diagram will produce a different process. 
+
+Other difference how the diagrams are read, in the context of RGPEP, the diagrams are
+read from the left to the right, meaning that the time evolution is from the left to 
+the right.
+
+As an example, consider the diagram in figure \ref{fig:example_diagram}, this pair of 
+diagrams are one of the contributions to the three-gluon vertex, with the counterterm 
+associated with it. 
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/1.png}
+        \caption{Diagram with a three-gluon loop.}
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/counterterms/1.png}
+        \caption{Counterterm of the diagram}
+    \end{subfigure}
+    \caption{A example of a possible diagram, a third order contribution to the 
+    process of three-gluon vertex, 1 gluon incoming and 2 gluons outgoing. (Outputs of 
+    the programs.)}
+    \label{fig:example_diagram}
+\end{figure*}
+
+Following the previous definitions, the diagram represent a process where a gluon
+interacts in a third order process, forming a three-gluon loop, and 2 gluons are 
+produced in the final state. Due to the presence of a loop, the diagram is
+divergent, and a counterterm diagram is needed to deal with the divergence. This 
+diagram is represented with a dot at the position of the loop, with the same 
+external legs as the original diagram. 
 
 \newpage
 

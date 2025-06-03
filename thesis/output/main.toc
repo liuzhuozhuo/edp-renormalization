@@ -10,8 +10,9 @@
 \contentsline {subsection}{\numberline {2.4}Order by order solutions.}{8}{subsection.2.4}%
 \contentsline {subsection}{\numberline {2.5}Regularization and Counterterms}{8}{subsection.2.5}%
 \contentsline {section}{\numberline {3}Case study: Gluons self-interactions}{9}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Canonical Hamiltonian}{9}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Canonical diagrams}{11}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.1}Quantum Chromodynamics (QCD)}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Canonical Hamiltonian}{10}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Canonical diagrams}{11}{subsection.3.3}%
 \contentsline {section}{\numberline {4}Code implementation}{15}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Diagrams definition}{15}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Order by order procedure}{15}{subsection.4.2}%

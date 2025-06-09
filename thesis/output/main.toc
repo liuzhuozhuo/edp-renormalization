@@ -9,12 +9,12 @@
 \contentsline {subsection}{\numberline {2.3}RGPEP}{6}{subsection.2.3}%
 \contentsline {subsection}{\numberline {2.4}Order by order solutions.}{8}{subsection.2.4}%
 \contentsline {subsection}{\numberline {2.5}Regularization and Counterterms}{8}{subsection.2.5}%
-\contentsline {section}{\numberline {3}Case study: Gluons self-interactions}{9}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Quantum Chromodynamics (QCD)}{9}{subsection.3.1}%
+\contentsline {section}{\numberline {3}Case study: Gluons self-interactions}{10}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Quantum Chromodynamics (QCD)}{10}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Canonical Hamiltonian}{10}{subsection.3.2}%
 \contentsline {subsection}{\numberline {3.3}Canonical diagrams}{11}{subsection.3.3}%
 \contentsline {section}{\numberline {4}Code implementation}{15}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Diagrams definition}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.1}Definition of diagrams}{15}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Order by order procedure}{15}{subsection.4.2}%
 \contentsline {subsection}{\numberline {4.3}Applied to gluons self-interactions}{16}{subsection.4.3}%
 \contentsline {subsection}{\numberline {4.4}Diagram representation}{16}{subsection.4.4}%
@@ -23,4 +23,5 @@
 \contentsline {subsection}{\numberline {5.2}Order 4}{19}{subsection.5.2}%
 \contentsline {subsection}{\numberline {5.3}Higher orders}{20}{subsection.5.3}%
 \contentsline {section}{\numberline {6}Conclusions and future work}{21}{section.6}%
-\contentsline {section}{\numberline {7}Acknowledgements}{21}{section.7}%
+\contentsline {section}{\numberline {7}Conclusiones y trabajo futuro}{21}{section.7}%
+\contentsline {section}{\numberline {8}Acknowledgements}{21}{section.8}%

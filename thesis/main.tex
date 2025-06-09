@@ -201,7 +201,7 @@ mechanics is a theory that describes the behavior of particles at small scales.
 Combining these two pillars gives rise to quantum field theory (QFT) – a formalism 
 in which particles are described as excitations of underlying fields.
 
-An important aspect of any theoretical apporach is that it should be able to describe  
+An important aspect of any theoretical approach is that it should be able to describe  
 different phenomena that occur at different scales. In the context of Quantum 
 Chromodynamics (QCD), at low energies (long distances), experiments see only bound 
 states (hadrons), with the internal structure smoothed out. In contrast, high energies 
@@ -213,9 +213,9 @@ working on the operator space, where the Hamiltonian operator governs the time
 evolution of the states. 
 
 In the context of theoretical physics, the renormalization group procedure 
-for effective particle is a powerful tool to study the behavior of physical systems 
+for effective particle (RGPEP) is a powerful tool to study the behavior of physical systems 
 at different energy scales. In the case of quantum field theories, the renormalization 
-group procedures introduces a scale parameter, which moderates the "resolution" of the 
+group procedures introduce a scale parameter, which moderates the "resolution" of the 
 system, allowing one to select the focus on a particular energy scale, from 
 the smallest details (the short distance behavior) to the largest ones (the grand 
 scale behavior). 
@@ -227,7 +227,7 @@ respect to the scale parameter.
 
 In general, obtaining the exact solution of the RGPEP equation is a non-trivial task, 
 and a perturbative expansion of the effective Hamiltonian is used to obtain the 
-solution. Every interaction term in the Hamiltonian can be identifies with a 
+solution. Every interaction term in the Hamiltonian can be identified with a 
 diagram, which, in term, results as a product of diagrams of lower order.
 These diagrams are usually analyzed by hand, but the 
 number of diagrams increases exponentially with each order, making the process 
@@ -869,6 +869,7 @@ cancel the regulated divergences, so that after the regulators are removed, the
 effective Hamiltonian remains finite and regulator independent. Making the 
 regulation an essential first step in the renormalization process.
 
+\newpage
 
 \section{Case study: Gluons self-interactions} \label{sec:cases}
 
@@ -966,12 +967,16 @@ terms of the Hamiltonian \cite{QCDG},
     1234} a_1^\dagger a_2^\dagger a_3 a_4 } \label{eq:H_partial}.
 \end{align}
 
+Here the notation $[123]$ indicates the integration over the momenta of
+the particles 1 to 3, $[123] = [k_1][k_2][k_3]$. The other functions $\Xi, Y, X, ...$,
+can be found in appendix \ref{sec:appendix_functions}.
+
+
 \subsection{Canonical diagrams}
 
 Each of these interaction terms can be associated with a diagram representing 
-
-The canonical diagrams are the diagrams that are obtained from the canonical
-Hamiltonian, and are the starting point to obtain the diagrams of higher order.
+annihilation and creation of particles in a vertex. They are the elementary 
+objects to obtain the diagrams of higher order.
 
 Following the creation and annihilation operators in the different terms of the 
 Hamiltonian, we can distinguish the different types of process that are being
@@ -996,6 +1001,10 @@ first order term.
         \includegraphics[width=\textwidth]{plots/canonical/order1/1.png}
         \caption{ }
     \end{subfigure}%
+    \begin{subfigure}[t]{0.1\textwidth}
+        \centering
+        {\LARGE $+$}
+    \end{subfigure}
     \begin{subfigure}[t]{0.33\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/canonical/order1/2.png}
@@ -1004,8 +1013,6 @@ first order term.
     \caption{Canonical diagrams of order 1}
     \label{fig:cannonical1}
 \end{figure*}
-
-\newpage
 
 The term $H_{A^4}$ in equation \eqref{eq:H_A^4} is a four-gluon vertex, where either
 1 gluon is annihilated, and 3 gluons are created, 3 gluons are annihilated, and
@@ -1021,8 +1028,9 @@ can be obtained from the product of the canonical first order diagrams, so we
 will not consider them as a new canonical diagrams, but rather as a result that will
 be obtained during the perturbative expansion.
 
-The $H_{\sbrackets{\partial A A}^2}$ term represents an instantaneous gluon exchange 
-(often drawn as a vertical line in light-front diagrams). This allows to consider processes where a gluon is annihilated, and 3 gluons are created, to a 
+The $H_{\sbrackets{\partial A A}^2}$ term \eqref{eq:H_partial} represents an instantaneous gluon exchange 
+(often drawn as a vertical line in light-front diagrams). This allows to consider 
+processes where a gluon is annihilated, and 3 gluons are created, to a 
 pair of three-gluon vertices, similar to $H_{A^4}$. The main difference is that
 the interaction is instantaneous, meaning that the gluon is annihilated, and the
 3 gluons are created at the same time, without any time delay between them.
@@ -1155,12 +1163,13 @@ that can be implemented in a program to obtain the diagrams of higher order.
 
 \section{Code implementation} \label{sec:code}
 
-The code is implemented in Python, but the general method can be applied to any 
+The code is implemented in Python, but the principles of the method can be written in any 
 programming language. The program is designed to be modular, and applicable to
-other theories, by considering some minor modifications and changing the canonical
-diagrams. These modifications are not implemented yet, and remain to be tested.
+other any theory, these require changing the canonical
+diagrams. These modifications are beyond the of this work, and they are not presented
+here explicitly.
 
-\subsection{Diagrams definition}
+\subsection{Definition of diagrams}
 
 The diagrams are defined by 2 arrays, 
 \begin{itemize}
@@ -1183,10 +1192,11 @@ interaction as a new type of virtual particle in the program.
 
 \subsection{Order by order procedure}
 
-To calculate the diagrams of higher order, the code follows the order by order 
-procedure described in Section \ref{sec:theoretical_background}. Having only the
-canonical diagrams, the program aims to obtain all the possible diagrams of an order
-that contribute to a certain process, discarding the other diagrams.
+To calculate the diagram representing a certain order, the code follows the 
+procedure described in Section \ref{sec:orderbyorder_solutions}. Having the
+canonical diagrams as an input, the program aims to obtain all possible diagrams of such order
+that contribute to a certain effective interaction, and discards those diagrams, with
+different structure.
 
 The program would follow a recursive procedure, where the diagrams of order $n$ are
 obtained from the diagrams of order $n-1$ and $n-2$, in a procedure that can be outlines
@@ -1380,12 +1390,6 @@ order 3, the diagrams obtained from the program are shown in the figures
     \centering
     \begin{subfigure}[t]{0.24\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/counterterms/1.png}
-        \caption{ }
-    \end{subfigure}%
-    \hfill
-    \begin{subfigure}[t]{0.24\textwidth}
-        \centering
         \includegraphics[width=\textwidth]{plots/order3/order3_1to2/counterterms/2.png}
         \caption{ }
     \end{subfigure}
@@ -1409,12 +1413,20 @@ order 3, the diagrams obtained from the program are shown in the figures
         \caption{ }
         \label{fig:order3_1to2/counterterms/5}
     \end{subfigure}
-    \caption{Counterterms to the diagrams of third order in figure \ref{fig:order3_1to2}}
+    \hfill
+    \centering
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order3/order3_1to2/counterterms/1.png}
+        \caption{ }
+    \end{subfigure}%
+    \caption{Third-order contributions containing counterterms [graphs (a) to (d)] and the third order
+    counterterm [graph (e)].}
     \label{fig:order3_1to2/counterterms}
 \end{figure*}
 
 
-In the figure \ref{fig:order3_1to2} we can see the diagrams obtained for the process
+In figure \ref{fig:order3_1to2} we can see the diagrams obtained for the interaction
 of 1 gluon going to 2 gluons, with the corresponding counterterms in figure
 \ref{fig:order3_1to2/counterterms}. 
 
@@ -1427,10 +1439,10 @@ come solely from the first order term canonical diagrams $H_{A^3}$
 Referring to the problems mentioned in Section \ref{sec:applied_gluons}, the diagrams 
 with dotted lines are instantaneous interactions, but the program considers them
 as a new type of particle, there are some artifacts that arise from this
-approach. For instance, the diagrams \ref{fig:order3_1to2/5} and \ref{fig:order3_1to2/6} are really the same 
+approach. For instance, the diagrams \ref{fig:order3_1to2/5} and \ref{fig:order3_1to2/6} are actually the same 
 diagram, due to instant process being instantaneous. For any other particle, these 
-2 diagrams would be different, due to the importance of the order in the interactions,
-so the program is kept to consider them as different, to not lose generality.
+2 diagrams would be different, due to the importance of the order in the interactions.
+Hence, the program keeps them different, to avoid the lost of generality.
 
 Other artifact of the program occur for the diagrams \ref{fig:order3_1to2/counterterms/4} and
 \ref{fig:order3_1to2/counterterms/5}, which are counterterms added to cancel the divergences
@@ -1526,6 +1538,10 @@ ensuring that the symmetry factor is correct.
 As future work, we plan to fix the issues mentioned above, and to implement and 
 test the program with other theories, and more types of particles, particularly
 considering the quarks and antiquarks, in the general case of QCD. 
+
+\section{Conclusiones y trabajo futuro} \label{sec:conclusions_es}
+
+
 
 \section{Acknowledgements}
 

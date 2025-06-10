@@ -77,7 +77,7 @@
 \includegraphics[width=8.8cm]{escudoUGRmonocromo.png} \\[-1.8ex]
 \hspace{31mm}\vspace{-8mm}
 \begin{tabular}{c}
-\hline\\[-1ex]\hskip-2mm
+\hline\\[-1ex]\hskip-2 mm
 {\bf Facultad de Ciencias}\hspace{18mm}
 \end{tabular}
 \end{tabular}
@@ -350,7 +350,7 @@ symmetry transformation, which is given by,
     j^\mu = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi_a)} \mathcal{Q}_a 
     - J^\mu, \quad \partial_\mu j^\mu = 0,
 \end{equation}
-where einstein sumation is assumed.
+where Einstein summation is assumed.
 
 Applying Noether's theorem, the conserved charge \(Q\) associated with the symmetry is 
 defined as the integral of the time component of the current over all space:
@@ -530,7 +530,7 @@ making the full state,
 \end{equation}
 
 The creation and annihilation operators satisfy some commutation or anticommutation 
-relations, depending on the nature of the particles, bosons or fermions, acording
+relations, depending on the nature of the particles, bosons or fermions, according
 to \eqref{eq:canonical_commutation_relations}.
 
 For bosons, the creation and annihilation operators satisfy the following commutation 
@@ -605,10 +605,10 @@ A key feature of FF quantization is the positivity condition \( p^+ > 0 \)
 for all physical particles. This kinematic constraint ensures that particle 
 creation from the vacuum, which has total \( P^+ = 0 \), is forbidden due to 
 momentum conservation. As a result, the vacuum in FF is trivial or "empty" \cite{Brodsky_1998}: 
-it contains no virtual particles and cannot mix with multi-particle states
+it contains no virtual particles and cannot mix with multi-particle states.
 \footnote{Although gluons are supposed to be massless and therefore this condition
 does not hold for them, in practice, it is often assumed to have infinitesimally 
-small mass (which is taken to zero at the end of the calculation).}.
+small mass (which is taken to zero at the end of the calculation).}
 
 This property simplifies the structure of the theory, particularly in the 
 context of the RGPEP, where a clean separation between the vacuum and 
@@ -618,7 +618,6 @@ instant-form dynamics.
 
 
 \begin{comment}
-    
 
 The quantization of the system is usually performed in the instant form of the 
 dynamics, where the time is treated as the evolution parameter, and the rest of
@@ -862,7 +861,7 @@ in dynamics of gluons of size zero is being removed. The rest of the unknown par
 of the counterterms are adjusted to respect the symmetries of the theory, and must 
 match the predictions of the theory with the experimental results.
 
-The distintion between regularization and counterterms may be confusing, but the
+The distinction between regularization and counterterms may be confusing, but the
 regularization is a procedure to expose and parameterize the divergences that arise
 in the theory, while the counterterms are the terms added to the Hamiltonian to 
 cancel the regulated divergences, so that after the regulators are removed, the 
@@ -1325,7 +1324,105 @@ In this section, we will present the diagrams obtained from the program. At
 each order, we will consider the types of processes that is the most relevant.
 
 
-\subsection{Order 3}
+\subsection{Order 1}
+
+The first order diagrams correspond to the canonical diagrams of order 1, shown in 
+figure \ref{fig:cannonical1}. These diagrams represent the process of 1 gluon going to 2 gluons,
+and its hermitian conjugate of 2 gluons going to 1 gluon.
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order1/1.png}
+        \caption{ }
+        \label{fig:cannonical1_1}
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.1\textwidth}
+        \centering
+        {\LARGE $+$}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order1/2.png}
+        \caption{ }
+        \label{fig:cannonical1_2}
+    \end{subfigure}
+    \caption{Canonical diagrams of order 1}
+    \label{fig:cannonical1_}
+\end{figure*}
+
+\subsection{Order 2}
+The second order diagrams correspond to the canonical diagrams of order 2,
+plus the diagrams obtained from the combination of the canonical diagrams of order 1 with 
+itself.
+
+\subsubsection{Canonical diagrams}
+
+\subsubsection{Diagrams by combination of order 1}
+
+
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order2/from_order1/1.png}
+        \caption{ }
+        \label{fig:order2_from_order1/1}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order2/from_order1/2.png}
+        \caption{ }
+        \label{fig:order2_from_order1/2}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order2/from_order1/3.png}
+        \caption{ }
+        \label{fig:order2_from_order1/3}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order2/from_order1/4.png}
+        \caption{ }
+        \label{fig:order2_from_order1/4}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order2/from_order1/5.png}
+        \caption{ }
+        \label{fig:order2_from_order1/5}
+    \end{subfigure}
+    \caption{Diagrams of second order, obtained from the combination of the canonical
+diagrams of order 1.}
+    \label{fig:order2_from_order1}
+\end{figure*}
+
+The diagram \ref{fig:order2_from_order1/1} is the combination of 2 
+\ref{fig:cannonical1_1} diagrams, where 1 one of the outgoing gluon from the first
+diagram is the incoming gluon of the second diagram. Similarly, the diagram
+\ref{fig:order2_from_order1/5} is the combination of 2 \ref{fig:cannonical1_2} diagrams, 
+the outgoing gluon of the first diagram is the one of the incoming gluon of the 
+second diagram.
+
+As for the diagrams \ref{fig:order2_from_order1/2} and \ref{fig:order2_from_order1/3}, 
+both result from the combination of \ref{fig:cannonical1_1} and \ref{fig:cannonical1_2} diagrams,
+in that order, where the different diagrams are obtained depending on the number of
+connections between the incoming and outgoing gluons.
+
+The diagram \ref{fig:order2_from_order1/4} is the combination of the
+\ref{fig:cannonical1_2} and \ref{fig:cannonical1_1} diagrams, where the outgoing gluon
+of the first diagram is the incoming gluon of the second diagram.
+
+
+
+\subsection{Three gluon vertex: 1 gluon to 2 gluons}
 
 Considering the three-gluon vertex, the process of 1 gluon going to 2 gluons, up till 
 order 3, the diagrams obtained from the program are shown in the figures 
@@ -1453,15 +1550,16 @@ it adds counterterms to all loop divergences in the diagrams.
 Comparing with the 3rd order contribution diagrams in \cite{QCDG}, the same diagrams
 for the three-gluon vertex are obtained, proving the validity of the program to reproduce the same results.
 
+\subsection{Self energy: Gluon mass}
 
+\subsubsection{Additional applications: Quark interactions}
 
-\subsection{Order 4}
-
-In a non abelian theory such as QCD, the gluons interact with themselves, thus making 
-bound states formed by exclusively gluons, glueballs, possible. 
+\subsection{Bound states: Glueballs}
 
 Considering one of such glueball states, the process of 2 gluons going to 2 gluons, the program
 produces about 140 diagrams, including the counterterms. 
+
+
 
 \begin{figure*}[h!]
     \centering

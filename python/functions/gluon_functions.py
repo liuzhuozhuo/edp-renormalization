@@ -1282,7 +1282,21 @@ def represent_order(points, paths, count_, typeofproc, index_ = True,  lines_ = 
         for j in range(len(paths[0])):
             inp += len(np.trim_zeros(in_out_paths_[j, 0]))
             out += len(np.trim_zeros(in_out_paths_[j, 1]))
-        if inp == typeofproc[0][1] and out == typeofproc[0][0]:
+        if typeofproc == []:
+            points[i], paths[i] = detect_superposition(points[i], paths[i])
+            points[i] = reposition_diagram(points[i], in_out_paths_, paths[i], [inp, out], spacing_=spacing)
+            if docount:    
+                if directory_ != "":
+                    represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=count_[i], directory=directory_+str(n))
+                else:
+                    represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=count_[i])
+            else:
+                if directory_ != "":
+                    represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=0, directory=directory_+str(n))
+                else:
+                    represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=0)
+            n += 1
+        elif inp == typeofproc[0][1] and out == typeofproc[0][0]:
             points[i], paths[i] = detect_superposition(points[i], paths[i])
             points[i] = reposition_diagram(points[i], in_out_paths_, paths[i], typeofproc[0], spacing_=spacing)
             if docount:
@@ -1296,6 +1310,7 @@ def represent_order(points, paths, count_, typeofproc, index_ = True,  lines_ = 
                 else:
                     represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=0)
             n += 1
+
 
 def next_order (points, paths, count, typeofproc, max_order, print_reduction = False):
     next_points, next_paths, next_count = combine_diagrams_order(points, paths, count, typeofproc, max_order, offset = 0)

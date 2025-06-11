@@ -152,7 +152,7 @@ theories at different scales, defining effective theories that describe the
 behaviour of the systems for different energy levels. However, the calculations are
 non-trivial, and perturbation theory is used to obtain the results, representing
 the different terms of the theory as diagrams that describe the process, similar
-to the Feynman diagrams. But the number of diagrams increases exponentially with
+to the Feynman diagrams. The number of diagrams increases exponentially with
 the order of the perturbation, making the calculation process tedious and prone to
 errors. \\
 
@@ -767,7 +767,7 @@ solution can be obtained from 1th order, and the 3rd order from the previous ord
 and so on. At this point, the use of diagrams becomes crucial.
 
 
-\subsection{Order by order solutions.} \label{sec:orderbyorder_solutions}
+\subsubsection{Order by order solutions.} \label{sec:orderbyorder_solutions}
 
 The solution of the differential equations \eqref{eq:diff_order1} to \eqref{eq:diff_order3} 
 and so on, without considering the multiplicative factors, and relative phases between
@@ -1350,7 +1350,7 @@ associated with it.
     \begin{subfigure}[t]{0.5\textwidth}
         \centering
         \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/counterterms/1.png}
-        \caption{Counterterm of the diagram}
+        \caption{Counterterm of order 3 for the diagram (a)}
     \end{subfigure}
     \caption{A example of a possible diagram, a third order contribution to the 
     process of three-gluon vertex, 1 gluon incoming and 2 gluons outgoing. (Outputs of 
@@ -1807,28 +1807,353 @@ The implication of the gluon's self-energy extend to the quark interactions, sin
 is the mediator of the strong force, and thus the effective mass of the gluon will 
 impact the results of the quark interactions.
 
+\begin{figure} [h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{plots/qq_int.jpg}
+    \caption{Quark-quark interaction, mediated by gluons with an effective mass. The quarks
+    are represented by the solid lines, while the gluons are represented by the wavy lines.
+    The big dot in the middle represents the effective mass of the gluon.}
+
+    \label{fig:qq_int}
+\end{figure}
+
+In the case of massless propagators, the interactions between 
+particles are long-range, while for massive propagators, the interactions are short-range.
+Meaning that the effective mass of the gluon will screen the color interactions at
+large distances, modifying the potential between quarks in the infrared regime.
+
+
 
 
 
 \subsection{Bound states: Glueballs}
 
-    
+Glueballs are color-singlet bound states of 2 or more interacting gluons, unlike mesons
+and baryons, which involve quarks and antiquarks, glueballs are composed solely of gluons.
+The existence of glueballs is a consequence of the non-abelian nature of QCD, where gluons
+interact strongly enough with each other to become dinamically confined.
 
+The two to two gluon interaction is the simplest case of a glueball, and it can be
+obtained from the program by considering the process of 2 gluons going to 2 gluons, 
+the diagrams obtained from the program are shown in figure \ref{fig:order4_2to2}.
 
 \begin{figure*}[h!]
     \centering
-    \begin{subfigure}[t]{0.33\textwidth}
+    \begin{subfigure}[t]{0.16\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plots/order4/1.png}
-        \caption{ }
+        \includegraphics[width=\textwidth]{plots/order4_2to2/1.png}
     \end{subfigure}%
-    \begin{subfigure}[t]{0.33\textwidth}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plots/order4/counterterms/1.png}
-        \caption{ }
+        \includegraphics[width=\textwidth]{plots/order4_2to2/2.png}
     \end{subfigure}
-    \caption{Diagrams of fourth order,}
-    \label{fig:order4/1}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/3.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/4.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/5.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/6.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/7.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/8.png}
+    \end{subfigure}
+    \hfill 
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/9.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/10.png}
+    \end{subfigure}
+    \hfill 
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/11.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/12.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/13.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/14.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/15.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/16.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/17.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/18.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/19.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/20.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/21.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/22.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/23.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/24.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/25.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/26.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/27.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/28.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/29.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/30.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/31.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/32.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/33.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/34.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/35.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/36.png}
+    \end{subfigure}
+
+
+    \begin{subfigure}[t]{0.1\textwidth}
+        \centering
+        {\LARGE $\ldots$}
+    \end{subfigure}
+    \vspace{0.5cm}
+
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/1.png}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/2.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/3.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/4.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/5.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/6.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/7.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/8.png}
+    \end{subfigure}
+    \hfill 
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/9.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/10.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/11.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/12.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/13.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/14.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/15.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/16.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/17.png}
+    \end{subfigure}
+    \hfill  
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/18.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/19.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/20.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/21.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/22.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/23.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.16\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/24.png}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.1\textwidth}
+        \centering
+        {\LARGE $\ldots$}
+    \end{subfigure}
+    
+    \caption{Some diagrams of fourth order, contributing to the process of 
+    2 gluons going to 2 gluons.}
+    \label{fig:order4_2to2}
 \end{figure*}
 
 \newpage
@@ -1853,8 +2178,8 @@ with orders up to 6, and the results are shown in table \ref{tab:time_diagrams}.
         6  & 65000  & 157.121\\
         \hline
     \end{tabular}
-    \caption{Number of diagrams obtained by the program at each order, and the Computational
-    time taken to calculate the diagrams.}
+    \caption{Number of diagrams for all possible processes, obtained by the program 
+    at each order, and the Computational time taken at each order.}
     \label{tab:time_diagrams}
 \end{table}
 

@@ -94,9 +94,10 @@ GRADO EN F\'ISICA
 \begin{tabular}{l}
 TRABAJO FIN DE GRADO
 \\[1.5ex]
-\LARGE\bf Herramientas para cálculos \\ 
-\LARGE\bf perturbativos en renormalización \\
-\LARGE\bf de Hamiltonianos \\
+
+\LARGE\bf Computational tools for \\ 
+\LARGE\bf perturbative calculations in \\
+\LARGE\bf Hamiltonian renormalization \\
 \end{tabular}
 %
 \vfill
@@ -990,7 +991,7 @@ terms of the Hamiltonian \cite{QCDG},
 
 Here the notation $[123]$ indicates the integration over the momenta of
 the particles 1 to 3, $[123] = [k_1][k_2][k_3]$. The explicit expression for the 
-functions $\Xi, Y, X, ...$, can be found in appendix \ref{sec:appendix_functions}, for 
+functions $\Xi, Y, X, ...$, can be found in \cite{QCDG}, for 
 the purpose of this thesis, we are only interested in the dependence of the functions 
 on the structure constant $f^{abc}$. 
 
@@ -1697,6 +1698,55 @@ The self-energy describes the interaction of a gluon with its own field, leading
 modifications of the propagator and the effective mass of the gluon, such that 
 at the infrared limit, the gluon mimics a massive particle.
 
+Each order of the effective Hamiltonian contain parts that contribute to different 
+types of processes, 
+
+\begin{equation}
+    \mathcal{H}_{n t} = \mathcal{H}_{n t}^{(1 \rightarrow 1)} + \mathcal{H}_{n t}^{(1 \rightarrow 2)} + 
+    \mathcal{H}_{n t}^{(2 \rightarrow 1)} + \ldots
+\end{equation}
+where $\mathcal{H}_{n t}^{(1 \rightarrow 1)}$ is the part of the Hamiltonian that
+contributes to the process of 1 gluon going to 1 gluon, $\mathcal{H}_{n t}^{(1 \rightarrow 2)}$ 
+is the part that contributes to the process of 1 gluon going to 2 gluons, and so on.
+
+These effective Hamiltonian can be expressed in terms of the creation and annihilation operators,
+similar to Eqs.\eqref{eq:H_A^2}, as follows,
+
+\begin{equation}
+    \mathcal{H}_{n t}^{(1 \rightarrow 1)} = \int [k] g^n \Sigma_t^{(n)} (k) 
+    a^{\dagger}_t (k) a_t (k) 
+    \label{eq:H_1to1}
+\end{equation}
+where $\Sigma_t^{(n)} (k)$ is the self-energy correction at order $n$ for the gluon
+self-energy. Comparing with the expression for the kinetic energy of the gluon, Eq.
+\eqref{eq:H_1to1} introduces a correction, obtaining an effective kinetic energy, where
+$\Sigma_t^{(n)} (k)$ is interpreted as a mass-like term,
+
+\begin{equation}
+    m_{n t}^2 (k) = g^n \Sigma_t^{(n)} (k).
+\end{equation}
+
+This way to study the self-energy of the gluon, we need to focus on the part of the
+Hamiltonian that contributes to the process of 1 gluon going to 1 gluon,
+\begin{equation}
+    \mathcal{H}_{t}^{(1 \rightarrow 1)} = \mathcal{H}_{2 t}^{(1 \rightarrow 1)} + 
+    \mathcal{H}_{4 t}^{(1 \rightarrow 1)} + \ldots
+\end{equation}
+
+As for the effective kinetic term of the gluon, it verifies,
+
+\begin{equation}
+    k_{eff}^- = \frac{k^{\perp 2} + m_{t}^2 (k)}{k^+}
+\end{equation}
+with $m_{t}^2 (k)$ being the effective mass considering all contributions from the 
+expansion,
+
+\begin{equation}
+    m_{t}^2 (k) = g^2 \Sigma_t^{(2)} (k) + g^4 \Sigma_t^{(4)} (k) + g^6 \Sigma_t^{(6)} (k) + \ldots
+\end{equation} 
+
+\begin{comment}
+
 This way the gauge boson propagator in momentum space is of the form, 
 
 \begin{equation}
@@ -1714,14 +1764,15 @@ by considering the sum on the contributions of the diagrams at each order,
 \end{equation}
 with $m^2_{(n), t}$ being the effective mass correction at order $n$.
 
-This way, it is in our best interest to obtain the diagrams at each order that contribute
-to the gluon's self-energy, and thus the effective mass. 
+\end{comment}
 
-At order 2, the diagram that contribute to the gluon's self-energy presented in figure 
-\ref{fig:order2_from_order1/3}  and \ref{fig:order2_from_order1/counterterms}, 
-the only diagrams from one gluon to one gluon.
+Then, it is in our best interest to obtain all the diagrams at each order that contribute
+to the gluon's self-energy.
 
+At order 2, the diagram that contribute to the gluon's self-energy is presented in figure 
+\ref{fig:order2_from_order1/3}  and \ref{fig:order2_from_order1/counterterms}.
 At order 4, the diagrams that contribute to the gluon's self-energy are shown in figure
+\ref{fig:order4_1to1}.
 
 \begin{figure*}[h!]
     \centering
@@ -1767,12 +1818,6 @@ At order 4, the diagrams that contribute to the gluon's self-energy are shown in
     \end{subfigure}
     \begin{subfigure}[t]{0.19\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plots/order4_1to1/counterterms/2.png}
-        \caption{ }
-        
-    \end{subfigure}
-    \begin{subfigure}[t]{0.19\textwidth}
-        \centering
         \includegraphics[width=\textwidth]{plots/order4_1to1/counterterms/3.png}
         \caption{ }
         
@@ -1797,10 +1842,17 @@ At order 4, the diagrams that contribute to the gluon's self-energy are shown in
     \end{subfigure}
 
     \caption{Diagrams of fourth order, contributing to the gluon's self-energy,
-    with (h)-(l) diagrams with counterterms of order 2, and (m) the counterterm 
+    with (h)-(k) diagrams with counterterms of order 2, and (l) the counterterm 
     of order 4}
+    \label{fig:order4_1to1}
     
 \end{figure*}
+
+In this thesis, our focus is in the generation of the diagrams, and thus we will not
+consider any of the calculation for the concepts introduced in this section, since
+they are beyond the scope of this work.
+
+\begin{comment}
 
 \subsubsection{Additional implications: Quark interactions}
 The implication of the gluon's self-energy extend to the quark interactions, since the gluon
@@ -1822,9 +1874,9 @@ particles are long-range, while for massive propagators, the interactions are sh
 Meaning that the effective mass of the gluon will screen the color interactions at
 large distances, modifying the potential between quarks in the infrared regime.
 
+\end{comment}
 
-
-
+\newpage
 
 \subsection{Bound states: Glueballs}
 
@@ -2161,9 +2213,8 @@ the diagrams obtained from the program are shown in figure \ref{fig:order4_2to2}
 
 \subsection{Program performance}
 
-By increasing the orders, the number of diagrams scale exponentially, and so does 
-the computational time needed to calculate the diagrams. The program has been tested
-with orders up to 6, and the results are shown in table \ref{tab:time_diagrams}.
+ The program has been tested with orders up to sixth, and the results are shown in table 
+ \ref{tab:time_diagrams}.
 
 \begin{table} [h!]
     \centering
@@ -2183,31 +2234,73 @@ with orders up to 6, and the results are shown in table \ref{tab:time_diagrams}.
     \label{tab:time_diagrams}
 \end{table}
 
+The table \ref{tab:time_diagrams} shows the number of unique diagrams obtained by
+the program increases exponentially with the perturbative order, this exponential growth
+reflects the combinatorial explosion typical in perturbation theory.
+
+The computational time also increases sharply, confirming that the diagram generation
+and evaluation becomes significantly more complex at higher orders. 
+
+At lower orders (2 and 3), the simulation time is minimal and manageable, around $( 0.2 s)$, 
+showing the program is efficient for small systems or exploratory purposes.
+
+The jump from $10.935 s$ to $157.121 s$ may reflect not only the increased number of diagrams, 
+but also inefficiencies like, such as: diagram redundancy checks, memory allocations or 
+other computational overheads. A possible optimization could be to implement 
+parallel processing or more efficient data structures to handle the growing complexity, 
+which would help to reduce the computational time at higher orders. Other possible
+optimization could be avoiding the generation of diagrams that are not needed for the 
+process considered, which would be relevant for higher orders.
+
+
+
 \newpage
 
 \section{Conclusions and future work} \label{sec:conclusions}
 
-In this thesis, we have presented a program that implements the RGPEP to obtain the
-diagrams of the gluons self-interactions, and the perturbative expansion of the
-Hamiltonian. The program is able to obtain the diagrams of higher order, starting
-from the canonical diagrams, and using the order by order procedure.
-The program is modular, and can be adapted to other theories, by changing the
-canonical diagrams and the types of particles considered.
-The program has been tested with the gluons self-interactions, and has been able to
-obtain the diagrams of higher order, with the corresponding counterterms to cancel
-the divergences produced in the process. The program has been able to reproduce the
+In this thesis, we have presented a program to obtain diagram product of any 
+perturbative expansion, specifically for the RGPEP, in the case of gluon interactions.
+But the program is modular, and can be adapted to other theories, by changing the
+canonical diagrams and the types of particles considered. 
+
+First, we have presented the RGPEP, and the framework necessary to understand the 
+renormalization procedure, and the perturbative expansion of the Hamiltonian. Secondly, 
+we explained the specific case of the gluons self-interactions, within the
+theory of QCD, and the canonical Hamiltonian that describe the theory.
+
+Then, we presented the program that implements the RGPEP, the definition of the diagrams 
+in the program how it is able to obtain the diagrams of higher order, starting
+from the canonical diagrams, and using the order by order procedure described in section
+\ref{sec:orderbyorder_solutions}. In the case of QCD, the canonical diagrams are up to 
+second order. 
+
+To check the validity of the program, we tested it with the three-gluon vertex,
+obtaining the diagrams of third order, and the corresponding counterterms to cancel
+the divergences produced in the process. The program was able to reproduce the
 diagrams obtained in the literature, proving its validity to obtain the diagrams of
 higher order in the perturbative expansion of the Hamiltonian.
 
-The program is able to obtain the diagrams of higher order, but there are still
-some issues that need to be addressed, such as the artifacts produced by the
-instantaneous interactions, and the time taken to calculate the diagrams at higher
-orders. 
+After that, we presented the gluon's self-energy, and how the program is able to
+obtain the diagrams that contribute to the gluon's self-energy, and the effective mass
+of the gluon, which is a consequence of the non-abelian nature of QCD.
+
+Other interesting case is the study of bound states, such as glueballs.
+Using the program, we were able to obtain the diagrams that contribute to the process
+of 2 gluons going to 2 gluons, which is the simplest case of a glueball.
+The program is able to obtain the diagrams of higher order, but the number of
+diagrams increases exponentially with the perturbative order, making it impossible
+to show all the diagrams in this thesis.
+
+Finally, we presented the performance of the program, showing the number of diagrams
+obtained at each order, and the computational time taken to obtain them. The results
+show that the number of diagrams increases exponentially with the perturbative order,
+and the computational time also increases sharply, confirming that the diagram generation
+and evaluation becomes significantly more complex at higher orders.
 
 The program is still in development, and there are many improvements that can
-be made to optimize the process of obtaining the diagrams. Other main issue to 
-address is the counting of the diagrams, as the program is able to obtain the diagrams, 
-but it does not output the symmetry factor correctly, due to the problems with the factors 
+be made to optimize the process of obtaining the diagrams. Other main issue to
+address is the counting of the diagrams, as the program is able to obtain the diagrams,
+but it does not output the symmetry factor correctly, due to the problems with the factors
 associated to the canonical diagrams, and the counterterms, as well as the method
 used to find the diagrams that prioritize ensuring that no diagrams are lost, rather than
 ensuring that the symmetry factor is correct.
@@ -2218,6 +2311,59 @@ considering the quarks and antiquarks, in the general case of QCD.
 
 \section{Conclusiones y trabajo futuro} \label{sec:conclusions_es}
 
+En esta trabajo, hemos presentado un programa para obtener diagramas producto de cualquier
+expansi\'on perturbativa, en particular para el RGPEP, en el caso de las interacciones de gluones.
+El programa es modular, y puede ser adaptado a otras teor\'ias, cambiando los diagramas can\'onicos
+y los tipos de part\'iculas consideradas.
+
+Primero, hemos presentado el RGPEP, y el marco necesario para entender el
+procedimiento de renormalizaci\'on, y la expansi\'on perturbativa del Hamiltoniano.
+En segundo lugar, explicamos el caso espec\'ifico de la interacción de los gluones, dentro de la
+teor\'ia de QCD, y el Hamiltoniano can\'onico que describe la teor\'ia.
+
+Luego, presentamos el programa que implementa el RGPEP, la definici\'on de los diagramas
+en el programa, c\'omo es capaz de obtener los diagramas de orden superior, comenzando
+desde los diagramas can\'onicos, y utilizando el procedimiento orden por orden descrito en la secci\'on
+\ref{sec:orderbyorder_solutions}. En el caso de QCD, los diagramas can\'onicos son hasta
+el segundo orden.
+
+Para comprobar la validez del programa, lo probamos con el v\'ertice de tres gluones,
+obteniendo los diagramas de tercer orden, y los correspondientes contra-t\'erminos para cancelar
+las divergencias producidas en el proceso. El programa fue capaz de reproducir los
+diagramas obtenidos en la literatura, demostrando su validez para obtener los
+diagramas de
+orden superior en la expansi\'on perturbativa del Hamiltoniano.
+
+Despu\'es de eso, presentamos la auto-energ\'ia del glu\'on, y c\'omo el programa es capaz de
+obtener los diagramas que contribuyen a la auto-energ\'ia del glu\'on, y la masa efectiva
+del glu\'on, que es una consecuencia de la naturaleza no abeliana de QCD.
+
+Otro caso interesante es el estudio de estados ligados, como los glueballs.
+Utilizando el programa, pudimos obtener los diagramas que contribuyen al proceso
+de 2 gluones yendo a 2 gluones, que es el caso m\'as simple de un glueball.
+El programa es capaz de obtener los diagramas de orden superior, pero el n\'umero de
+diagramas aumenta exponencialmente con el orden perturbativo, haciendo imposible
+mostrar todos los diagramas en este trabajo.
+
+Finalmente, presentamos el rendimiento del programa, mostrando el n\'umero de diagramas
+obtenidos en cada orden, y el tiempo computacional tomado para obtenerlos. Los resultados
+muestran que el n\'umero de diagramas aumenta exponencialmente con el orden perturbativo,
+y el tiempo computacional tambi\'en aumenta bruscamente, confirmando que la generaci\'on
+y evaluaci\'on de diagramas se vuelve significativamente m\'as compleja a ordenes superiores.
+
+El programa sigue en desarrollo, y hay muchas mejoras que se pueden hacer para optimizar
+el proceso de obtenci\'on de los diagramas. Otro problema principal a abordar es el conteo
+de los diagramas, ya que el programa es capaz de obtener los diagramas,
+pero no
+salida el factor de simetr\'ia correctamente, debido a los problemas con los factores
+asociados a los diagramas can\'onicos, y los contra-t\'erminos, as\'i como el m\'etodo
+utilizado para encontrar los diagramas que prioriza asegurar que no se pierdan diagramas, en lugar de
+asegurar que el factor de simetr\'ia sea correcto.
+
+Como trabajo futuro, planeamos arreglar los problemas mencionados anteriormente, e implementar y
+probar el programa con otras teor\'ias, y m\'as tipos de part\'iculas, particularmente
+considerando los quarks y antiquarks, en el caso general de QCD.
+
 \newpage
 \section{Acknowledgements}
 
@@ -2225,17 +2371,6 @@ considering the quarks and antiquarks, in the general case of QCD.
 
 \newpage
 \appendix
-
-\section{Functions in the Hamiltonians} \label{sec:appendix_functions}
-In this section, we present the functions that are present in the Hamiltonian from
-equations \eqref{eq:H_A^3}, \eqref{eq:H_A^4}, and \eqref{eq:H_partial}.
-
-\begin{equation}
-    Y_{123} = i f^{c_1 c_2 c_3} \sbrackets{\varepsilon^*_{1}\varepsilon^*_{2} \cdot
-    \varepsilon_{3} \kappa-\varepsilon^*_{1}\varepsilon_{3} \cdot
-    \varepsilon^*_{2}\kappa \frac{1}{x^{2/3}}-\varepsilon^*_{2}\varepsilon_{3} \cdot
-    \varepsilon^*_{1}\kappa \frac{1}{x^{1/3}}}.
-\end{equation}
 
 % Referencias %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage

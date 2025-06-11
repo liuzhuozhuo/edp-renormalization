@@ -1499,42 +1499,48 @@ diagrams of order 1, shown in figure \ref{fig:cannonical1}.
 
 \begin{figure*}[h!]
     \centering
-    \begin{subfigure}[t]{0.19\textwidth}
+    \begin{subfigure}[t]{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/order2/from_order1/1.png}
         \caption{ }
         \label{fig:order2_from_order1/1}
     \end{subfigure}%
     \hfill
-    \begin{subfigure}[t]{0.19\textwidth}
+    \begin{subfigure}[t]{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/order2/from_order1/2.png}
         \caption{ }
         \label{fig:order2_from_order1/2}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.19\textwidth}
+    \begin{subfigure}[t]{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/order2/from_order1/3.png}
         \caption{ }
         \label{fig:order2_from_order1/3}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.19\textwidth}
+    \begin{subfigure}[t]{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/order2/from_order1/4.png}
         \caption{ }
         \label{fig:order2_from_order1/4}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.19\textwidth}
+    \begin{subfigure}[t]{0.24\textwidth}
         \centering
         \includegraphics[width=\textwidth]{plots/order2/from_order1/5.png}
         \caption{ }
         \label{fig:order2_from_order1/5}
     \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order2/from_order1/counterterms/1.png}
+        \caption{ }
+        \label{fig:order2_from_order1/counterterms}
+    \end{subfigure}
     \caption{Diagrams of second order, obtained from the combination of the canonical
-diagrams of order 1.}
+diagrams of order 1, with the order 2 counterterms}
     \label{fig:order2_from_order1}
 \end{figure*}
 
@@ -1553,6 +1559,9 @@ connections between the incoming and outgoing gluons.
 The diagram \ref{fig:order2_from_order1/4} is the combination of the
 \ref{fig:cannonical1_2} and \ref{fig:cannonical1_1} diagrams, where the outgoing gluon
 of the first diagram is the incoming gluon of the second diagram.
+
+Finally, the diagram \ref{fig:order2_from_order1/counterterms} is the counterterm
+associated with the second order diagrams, canceling the divergences that arises.
 
 \subsection{Three gluon vertex: 1 gluon to 2 gluons}
 
@@ -1691,15 +1700,119 @@ at the infrared limit, the gluon mimics a massive particle.
 This way the gauge boson propagator in momentum space is of the form, 
 
 \begin{equation}
-    D(p^2) \sim \frac{1}{p^2 - m_{eff}^2} 
+    D(p^2) \sim \frac{1}{p^2 - m_{t}^2} 
 \end{equation}
-where $m_{eff}$ is the effective mass of the gluon. 
+where $m_{t}$ is the effective mass of the gluon at a particular scale, arising due 
+to the presence of loop corrections. 
 
-\subsubsection{Additional applications: Quark interactions}
+To obtain the effective mass of the gluon, we need to consider one to one gluon interactions,
+or equivalently the propagation of a gluon. This way the effective mass can be obtained 
+by considering the sum on the contributions of the diagrams at each order,
+
+\begin{equation}
+    m_{t}^2 = g^2 m^2_{(2), t} + g^4 m^2_{(4), t} + g^6 m^2_{(6), t} + \ldots
+\end{equation}
+with $m^2_{(n), t}$ being the effective mass correction at order $n$.
+
+This way, it is in our best interest to obtain the diagrams at each order that contribute
+to the gluon's self-energy, and thus the effective mass. 
+
+At order 2, the diagram that contribute to the gluon's self-energy presented in figure 
+\ref{fig:order2_from_order1/3}  and \ref{fig:order2_from_order1/counterterms}, 
+the only diagrams from one gluon to one gluon.
+
+At order 4, the diagrams that contribute to the gluon's self-energy are shown in figure
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/1.png}
+        \caption{ }
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/2.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/3.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/4.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/5.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/6.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/7.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/counterterms/1.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/counterterms/2.png}
+        \caption{ }
+        
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/counterterms/3.png}
+        \caption{ }
+        
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/counterterms/4.png}
+        \caption{ }
+        
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/counterterms/5.png}
+        \caption{ }
+        
+    \end{subfigure}
+    \begin{subfigure}[t]{0.19\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/order4_1to1/counterterms/6.png}
+        \caption{ }
+        
+    \end{subfigure}
+
+    \caption{Diagrams of fourth order, contributing to the gluon's self-energy,
+    with (h)-(l) diagrams with counterterms of order 2, and (m) the counterterm 
+    of order 4}
+    
+\end{figure*}
+
+\subsubsection{Additional implications: Quark interactions}
+The implication of the gluon's self-energy extend to the quark interactions, since the gluon
+is the mediator of the strong force, and thus the effective mass of the gluon will 
+impact the results of the quark interactions.
+
+
+
 
 \subsection{Bound states: Glueballs}
 
-
+    
 
 
 \begin{figure*}[h!]

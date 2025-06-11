@@ -4,7 +4,7 @@ from tqdm import tqdm
 import matplotlib as mpl
 from scipy.special import binom, factorial
 from numba import jit
-from collections import deque
+from collections import deque, defaultdict
 
 #Import the canoncial diagrams
 from functions.can_diagrams.gluon_diagrams import *
@@ -164,6 +164,7 @@ def represent_diagram (points, all_paths, index = False, directory = "", colors 
     ax=fig.add_subplot(111)
     ax.axis('off')
     j = 0
+
     # Note the that here the paths are more similar to the 1 particle case, meaning that is a 2D array
     for paths in all_paths:
         loops = find_equal_subarrays(paths)

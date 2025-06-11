@@ -24,10 +24,10 @@
 \contentsline {subsubsection}{\numberline {5.2.2}Diagrams by combination of order 1}{18}{subsubsection.5.2.2}%
 \contentsline {subsection}{\numberline {5.3}Three gluon vertex: 1 gluon to 2 gluons}{19}{subsection.5.3}%
 \contentsline {subsection}{\numberline {5.4}Self-energy: Gluon's effective mass}{20}{subsection.5.4}%
-\contentsline {subsubsection}{\numberline {5.4.1}Additional applications: Quark interactions}{20}{subsubsection.5.4.1}%
-\contentsline {subsection}{\numberline {5.5}Bound states: Glueballs}{20}{subsection.5.5}%
-\contentsline {subsection}{\numberline {5.6}Program performance}{21}{subsection.5.6}%
-\contentsline {section}{\numberline {6}Conclusions and future work}{22}{section.6}%
-\contentsline {section}{\numberline {7}Conclusiones y trabajo futuro}{22}{section.7}%
-\contentsline {section}{\numberline {8}Acknowledgements}{23}{section.8}%
-\contentsline {section}{\numberline {A}Functions in the Hamiltonians}{24}{appendix.A}%
+\contentsline {subsubsection}{\numberline {5.4.1}Additional implications: Quark interactions}{21}{subsubsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.5}Bound states: Glueballs}{21}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Program performance}{22}{subsection.5.6}%
+\contentsline {section}{\numberline {6}Conclusions and future work}{23}{section.6}%
+\contentsline {section}{\numberline {7}Conclusiones y trabajo futuro}{23}{section.7}%
+\contentsline {section}{\numberline {8}Acknowledgements}{24}{section.8}%
+\contentsline {section}{\numberline {A}Functions in the Hamiltonians}{25}{appendix.A}%

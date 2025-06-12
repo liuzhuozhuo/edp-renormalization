@@ -97,7 +97,7 @@ TRABAJO FIN DE GRADO
 
 \LARGE\bf Computational tools for \\ 
 \LARGE\bf perturbative calculations in \\
-\LARGE\bf Hamiltonian renormalization \\
+\LARGE\bf renormalization of Hamiltonian\\
 \end{tabular}
 %
 \vfill
@@ -118,17 +118,21 @@ Curso Académico 2024/2025
 \bigskip
 
 \begin{minipage}{0.8\linewidth}
-Los processos de renormalización son fundamentales para la comprensión de la 
-teorías a distintas escalas, definiendo teorías efectivas que describen el
-comportamiento de los sistemas para las distintas energías. Sin embargo, los 
-cálculos son no triviales, y se emplean la teoría de perturbaciones para obtener
-los resultados, representando los distintos términos de la teoría como diagramas 
+
+El método del grupo de renormalización desempeña un papel fundamenteal en la comprensión
+de fenómenos físicos a distintas escalas, definiendo teorías efectivas que
+representan las interacciones más relevantes en un cierto rango de energías. 
+Construyendo hamiltonianos efectivos a partir de un hamiltoniano inicial y una transformación
+unitaria dependiente de una escala.\\
+
+Se requiere de un tratamiento perturbativo para obtener
+resolver las ecuaciones planteadas, representando los distintos términos de la teoría como diagramas 
 que describen el proceso, similar a los diagramas de Feynman. Pero el número de
 diagramas aumenta exponencialmente con el orden de la perturbación, haciendo que
 el proceso de cálculo sea tedioso y propenso a errores. \\
 
 El objetivo de este trabajo es desarrollar un programa que automatice el proceso
-de obtención de los diagramas asociados a un proceso determinado, hasta un orden
+de obtención de diagramas asociados a un proceso determinado, hasta un orden
 dado, partiendo de unos diagramas base, llamado diagramas canónicos dados por la 
 teoría. Siendo el programa capaz de descartar los diagramas que no contribuyen al 
 proceso, detectar loops y añadir contratérminos a los diagramas para cancelar 
@@ -148,14 +152,16 @@ no abelianas.
 \bigskip
 
 \begin{minipage}{0.8\linewidth}
-The renormalization procedure is fundamental to understand the behavior of the 
-theories at different scales, defining effective theories that describe the
-behaviour of the systems for different energy levels. However, the calculations are
-non-trivial, and perturbation theory is used to obtain the results, representing
-the different terms of the theory as diagrams that describe the process, similar
-to the Feynman diagrams. The number of diagrams increases exponentially with
-the order of the perturbation, making the calculation process tedious and prone to
-errors. \\
+The renormalization group method plays a fundamental role in understanding
+physical phenomena at different scales, defining effective theories that
+represent the most relevant interactions in a certain energy range.
+Effective Hamiltonians are constructed from an initial Hamiltonian and a scale-dependent
+unitary transformation.\\
+
+A perturbative treatment is required to solve the equations, representing the different
+terms of the theory as diagrams that describe the process, similar to Feynman diagrams.
+However, the number of diagrams increases exponentially with the order of the perturbation,
+making the calculation process tedious and error-prone. \\
 
 The aim of this work is to develop a program that automates the process of
 obtaining the diagrams associated with a given process, up to a given order,
@@ -194,55 +200,59 @@ orders, where unique phenomena of non-abelian theories can be observed.
 \section{Introduction}
 
 When trying to build a theory that describes the particles and their interactions, 
-it's fundamental that the theory is compatible with the two pillars of modern physics:
+it's imperative that the theory is compatible with the two pillars of modern physics:
 special relativity and quantum mechanics. Special relativity is a theory 
-that is able to describe the behavior of particles at high energies, and quantum 
-mechanics is a theory that describes the behavior of particles at small scales.
+that describes the behavior of particles at high energies, and quantum 
+mechanics is a theory that describes the behavior of particles at atomic and subatomic scales.
 Combining these two pillars gives rise to quantum field theory (QFT) – a formalism 
 in which particles are described as excitations of underlying fields.
 
-An important aspect of any theoretical approach is that it should be able to describe  
-different phenomena that occur at different scales. In the context of Quantum 
-Chromodynamics (QCD), at low energies (long distances), experiments see only bound 
-states (hadrons), with the internal structure smoothed out. In contrast, high energies 
-(short distances), one can probe inside hadrons – quarks and gluons behave almost free 
+Quantum Chromodynamcis (QCD) is the quantum field theory that describes the strong interaction
+in terms of quarks and gluons. This theory has proven to be extremely difficult to use in practice.
+Many alternative strategies have arisen with the purpose of addressing different aspects
+of the theory while negleting less concerned issues.
+
+An important aspect of any theoretical approach to QCD is that it should be able to describe  
+different phenomena that occur at different scales. While at low energies (long distances), experiments see only bound 
+states (hadrons), with the internal structure smoothed out, at high energies 
+(short distances), one can probe inside hadrons, with quarks and gluons behave almost free 
 (the phenomenon of asymptotic freedom). The theory must interpolate between these regimes.
 
-We will adopt the Hamiltonian formalism to describe the dynamics of the system, 
-working on the operator space, where the Hamiltonian operator governs the time
-evolution of the states. 
-
 In the context of theoretical physics, the renormalization group procedure 
-for effective particle (RGPEP) is a powerful tool to study the behavior of physical systems 
-at different energy scales. In the case of quantum field theories, the renormalization 
-group procedures introduce a scale parameter, which moderates the "resolution" of the 
+for effective particle (RGPEP) is a powerful tool formulated in Hamiltonian dynamics
+ to study the behavior of physical systems 
+at different energy scales\cite{PhysRevD.48.5863}. In the case of quantum field theories, 
+the renormalization 
+group procedure introduces a scale parameter, which moderates the "resolution" of the 
 system, allowing one to select the focus on a particular energy scale, from 
-the smallest details (the short distance behavior) to the largest ones (the grand 
+the smallest details (the short distance behavior) to the largest ones (the large
 scale behavior). 
 
-RGPEP introduces an effective Hamiltonian, that describes the system at a
+The RGPEP yields an effective Hamiltonian, that describes the system at a
 given scale. This effective Hamiltonian is the solution to a differential equation,
 the RGPEP equation, that describes the evolution of the effective Hamiltonian with 
 respect to the scale parameter.
 
 In general, obtaining the exact solution of the RGPEP equation is a non-trivial task, 
 and a perturbative expansion of the effective Hamiltonian is used to obtain the 
-solution. Every interaction term in the Hamiltonian can be identified with a 
-diagram, which, in term, results as a product of diagrams of lower order.
-These diagrams are usually analyzed by hand, but the 
+solution. 
+
+Every interaction term in the Hamiltonian can be identified with a 
+diagram, which, in turn, results as a product of diagrams of lower order.
+These diagrams are usually drawn by hand. But the 
 number of diagrams increases exponentially with each order, making the process 
-tedious and error-prone. The goal of this thesis is to develop a code that automates 
+tedious and error-prone. The goal of this thesis is to develop a tool that automates 
 the process of obtaining the diagrams associated with a certain interaction for a 
 given order.
 
 This thesis is organized as follows. Section \ref{sec:theoretical_background} describes
 the theoretical background needed to understand the renormalization group procedure
-for effective particles, and the Hamiltonian dynamics. Section \ref{sec:cases}
-describes the case studied in this thesis, gluon interactions, where
-holding the simplicity of the scalar case, some peculiarities of the QCD theory are 
-present. Section \ref{sec:code} describes how diagrams are defined in the code, 
-and section \ref{sec:diagrams} describes the steps taken to obtain higher 
-order diagrams, as product of elementary ones. Finally, 
+for effective particles, in the context of Hamiltonian dynamics. Section \ref{sec:cases}
+describes the example studied in this thesis, gluon interactions, whereas we remove
+some of the complexity introduced by quarks, some peculiarities of the QCD theory are 
+explicitly considered. Section \ref{sec:code} describes how diagrams are defined in the code, 
+and Section \ref{sec:diagrams} describes the steps taken to obtain diagrams of arbitrary order,
+as product of elementary ones. Finally, 
 section \ref{sec:conclusions} presents the conclusions, possible future work and 
 further improvement to the code.
 
@@ -304,44 +314,47 @@ For instance, a quarkonium state (a bound state of quark and antiquark) in QCD i
 given by:
 
 \begin{equation}
-    \ket{\Psi} = c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{qqq} 
-    + c_4 \ket{gg} + \cdots,
+    \ket{\Psi} = c_1 \ket{q\bar{q}} + c_2 \ket{q\bar{q}g} + c_3 \ket{q\bar{q}gg} + \cdots,
 \end{equation}
 
 \subsection{Hamiltonian dynamics}
 
-In quantum field theory, 2 equivalent formulations of the dynamics can be used, 
+In quantum field theory, two equivalent formulations of the dynamics can be used, 
 the Lagrangian and the Hamiltonian formulations. Although one often starts with a 
 Lagrangian formulation and then switches to a Hamiltonian via a Legendre transform, 
-here we adopt the Hamiltonian (canonical) formalism because RGPEP is implemented 
-in Hamiltonian dynamics.
+here we adopt the Hamiltonian (canonical) formalism because RGPEP works on the operator
+space and thus is implemented in Hamiltonian dynamics.
 
 \subsubsection{Noether's theorem}
 
-Noether's theorem \cite{Noether:1918zz} states that every continuous symmetry of the
-Lagrangian of a physical system corresponds to a conserved quantity. In the context
-of quantum field theory, this theorem is fundamental as it relates symmetries of the
-Lagrangian to conservation laws, which are crucial for understanding the dynamics of
-the system.
+A Hamiltonian can be derived from the Lagrangian of the theory by the means of Noether'S
+theorem. Noether's theorem \cite{Noether1918, Peskin:1995ev} states that every continuous 
+symmetry of the Lagrangian of a physical system corresponds to a conserved quantity. 
+In the context of quantum field theory, this theorem is fundamental as it relates 
+symmetries of the Lagrangian to conservation laws, which are crucial for understanding 
+the dynamics of the system.
 
-Considering a general continuous transformation of the fields \(\phi_a(x)\), 
+Considering a general continuous transformation of the fields \(\phi_a(x) \rightarrow \tilde{\phi}_a(x)\)
+\footnote{where $x$ indicate a 4-vector, with $x^\mu$ its components, and 
+$\partial_\mu = \frac{\partial}{\partial x^\mu}$}, 
 which in the infinitesimal form can be expressed as,
 
 \begin{equation}
-    \phi_a(x) \to \phi^\prime_a = \phi_a(x) + \delta\phi_a(x) = \phi_a(x) + 
+    \phi_a(x) \to \tilde{\phi}_a (x) = \phi_a(x) + \delta\phi_a(x) = \phi_a(x) + 
     \epsilon \mathcal{Q}_a(x),
 \end{equation}
 where \(\epsilon\) is an infinitesimal parameter, and \(\mathcal{Q}_a(x)\) is some 
 deformation of the field. This transformation is a symmetry if it leaves the
 equations of motion invariant, which means that the Lagrangian density
-\(\mathcal{L}(\phi_a, \partial_\mu \phi_a)\) remains unchanged under the transformation,
-up to a 4-divergence term:
+\(\mathcal{L}(\phi_a, \partial_\mu \phi_a)\) remains unchanged under such transformation,
+up to a total derivative:
 
 \begin{equation}
-    \mathcal{L}(\phi_a^\prime, \partial_\mu \phi_a^\prime) = 
+    \mathcal{L}(\tilde{\phi}_a, \partial_\mu \tilde{\phi}_a) = 
     \mathcal{L}(\phi_a, \partial_\mu \phi_a) + \epsilon \partial_\mu J^\mu.
     \label{eq:lagrangian_symmetry}
 \end{equation}
+where \(J^\mu\) is a vector field that represents the change in the Lagrangian density.
 
 The conserved current \(j^\mu\) is defined as the Noether current associated with the
 symmetry transformation, which is given by,
@@ -352,9 +365,9 @@ symmetry transformation, which is given by,
 \end{equation}
 where Einstein summation is assumed.\footnote{
     The Einstein summation convention is a notational convention in which repeated 
-    indices in a mathematical expression imply summation over those indices. For example, 
-    in the expression \(A_i B^i\), it is understood that there is an implicit sum over 
-    the index \(i\), i.e., \(A_i B^i = \sum_i A_i B^i\). 
+    indices in a mathematical expression imply contraction over those indices, by the 
+    use of the Minkowski metric \(g^{\mu\nu}\). For example, $A^\mu B_\mu = g_{\mu\nu} 
+    A^\mu B^\nu = A^0 B^0 - \sum_i A^i B^i$ 
 }
 
 Applying Noether's theorem, the conserved charge \(Q\) associated with the symmetry is 
@@ -367,13 +380,13 @@ defined as the integral of the time component of the current over all space:
 Applying Noether's theorem to translations, in infinitesimal form, 
 
 \begin{equation}
-    x^\mu \to x^{\prime\mu} = x^\mu + \epsilon \mathcal{A}^\mu,
+    x^\mu \to \tilde{x}^{\mu} = x^\mu + \epsilon \mathcal{A}^\mu,
 \end{equation}
 where \(\mathcal{A}^\mu\) is a vector that represents the infinitesimal translation, 
 the transformation of the fields is given by,
 
 \begin{equation}
-    \phi_a(x) \to \phi_a^\prime(x^\prime) = \phi_a(x) + \epsilon \mathcal{A}^\mu 
+    \phi_a(x) \to \tilde{\phi}_a(\tilde{x}) = \phi_a(x) + \epsilon \mathcal{A}^\mu 
     \partial_\mu \phi_a(x).
 \end{equation}
 
@@ -388,9 +401,10 @@ currents can be identified,
 
 \begin{equation}
     \tensor{T}{^\mu_\nu} = \frac{\partial \mathcal{L}}{\partial (\partial_\mu \phi_a)} 
-    \partial_\nu \phi_a - \tensor{\delta}{^\mu_\nu} \mathcal{L},
+    \partial_\nu \phi_a - \tensor{\delta}{^\mu_\nu} \mathcal{L}.
 \end{equation}
-this is the energy-momentum tensor of the field. The conserved charge associated with
+
+This is the energy-momentum tensor of the field. The conserved charge associated with
 the time translation symmetry is the Hamiltonian \(H\), 
 \begin{equation}
     H = \int d^3x \, T^{00}(x) = \int d^3x \mathcal{H},
@@ -401,6 +415,9 @@ and the conserved charges associated with the spatial translations,
     P^i = \int d^3x \, T^{0i}(x),
 \end{equation}
 which it is interpreted as the physical momentum that the fields carry.
+
+One can proceed analogously to obtain the angular momentum and boost operators. All 
+together form the ten generators of the Poincaré group.
 
 \subsubsection{Canonical Hamiltonian}\label{sec:canonical_hamiltonian}
 
@@ -479,33 +496,28 @@ $M^{\mu\nu}$, which satisfy the following commutation relations,
 
 \end{comment}
 
-Consider a general field theory and a Lagrangian density 
-$\mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x))$\footnote{where $x$ indicate a 
-4-vector, with $x^\mu$ its components, and $\partial_\mu = \frac{\partial}
-{\partial x^\mu}$}, where $\phi_a (x)$ is a particular field of the system.
-
-To formulate the theory in the Hamiltonian framework, we begin by 
+An equivalent formulation of the theory in the Hamiltonian framework, is done by
 defining the canonical conjugate momenta \cite{Peskin:1995ev},
 
 \begin{equation}
     \pi_a (x) = \frac{\partial \mathcal{L}}{\partial (\partial_0 \phi_a (x))}.
 \end{equation}
 
-The Hamiltonian density, from equation \eqref{eq:energy_momentum_hamiltonian},
+The associate Hamiltonian density, which is equivalent to Eq.\eqref{eq:energy_momentum_hamiltonian},
+can be written as,
 
 \begin{equation}
     \mathcal{H} = \pi_a (x) \partial_0 \phi_a (x) - \mathcal{L}(\phi_a (x),\partial_\mu\phi_a (x)),
 \end{equation}
-
 and the momentum, 
 
 \begin{equation}
     P^i = \int d^3x \, T^{0i}(x) = \int d^3x \, \pi_a (x) \partial^i \phi_a (x).
 \end{equation}
 
-In quantum mechanics, or quantum field theory, the canonical variables 
-\( \phi_a(x) \) and \( \pi_a(x) \) are promoted to operators acting on 
-a Hilbert space. Quantization is achieved by imposing equal-time canonical 
+In quantum mechanics, or quantum field theory, the canonical coordinate 
+\( \phi_a(x) \) and the momentum conjugate \( \pi_a(x) \) are promoted to operators 
+acting on a Hilbert space. Quantization is achieved by imposing equal-time canonical 
 commutation relations \cite{Bjorken:100769},
 
 \begin{equation}
@@ -535,8 +547,8 @@ making the full state,
 \end{equation}
 
 The creation and annihilation operators satisfy some commutation or anticommutation 
-relations, depending on the nature of the particles, bosons or fermions, according
-to \eqref{eq:canonical_commutation_relations}.
+relations, depending on the nature of the particles, bosons or fermions, respectively,
+according to \eqref{eq:canonical_commutation_relations}.
 
 For bosons, the creation and annihilation operators satisfy the following commutation 
 relations,
@@ -575,7 +587,8 @@ The normal-ordering is denoted by the symbol $:\,\,\,:$, and it is defined as fo
 \subsubsection{Front form of Hamiltonian Dynamics}
 The quantization of relativistic systems is most commonly performed in the instant form 
 (IF) of dynamics, where the ordinary time coordinate \( x^0 = t \) serves as the evolution 
-parameter, and spatial coordinates \( \vec{x} \) define the hypersurface of equal time. 
+parameter, and spatial coordinates \( \vec{x} \) define the hypersurface of equal time.
+The quantization surface (where the initial conditions are defined) is given by $x^0 = 0$.
 However, alternative forms of dynamics are possible and were classified by Dirac in 
 1949 \cite{dirac_front_forms_1949}.
 
@@ -593,6 +606,7 @@ and the remaining coordinates are,
 \end{equation}
 
 In this framework, quantization is performed on surfaces of constant \( x^+ \), 
+typically $x^+=0$,
 treating it as the "light-front time", while \( x^-, x^\perp \) play the role 
 of spatial coordinates. The corresponding momenta are defined as,
 \begin{equation}
@@ -607,17 +621,17 @@ the evolution in \( x^+ \), analogous to the role of \( H = P^0 \) in instant-fo
 quantization.
 
 A key feature of FF quantization is the positivity condition \( p^+ > 0 \) 
-for all physical particles. This kinematic constraint ensures that particle 
+for all physical particles.\footnote{Although gluons are supposed to be massless and therefore this condition
+does not hold for them, in practice, it is assumed here to have infinitesimally 
+small mass (which is taken to zero at the end of the calculation).}
+ This kinematic constraint ensures that particle 
 creation from the vacuum, which has total \( P^+ = 0 \), is forbidden due to 
 momentum conservation. As a result, the vacuum in FF is trivial or "empty" \cite{Brodsky_1998}: 
 it contains no virtual particles and cannot mix with multi-particle states.
-\footnote{Although gluons are supposed to be massless and therefore this condition
-does not hold for them, in practice, it is often assumed to have infinitesimally 
-small mass (which is taken to zero at the end of the calculation).}
 
-This property simplifies the structure of the theory, particularly in the 
-context of the RGPEP, where a clean separation between the vacuum and 
-the particle spectrum is advantageous. FF quantization avoids the 
+This property simplifies drastically the structure of the theory, 
+where a clean separation between the vacuum and 
+the particle spectrum is advantageous. Hence FF quantization avoids the 
 complexities associated with vacuum fluctuations that are typical in 
 instant-form dynamics.
 
@@ -673,19 +687,22 @@ mix the vacuum with multi-particle states in IF.
 
 \end{comment}
 
-\subsection{RGPEP}
-The RGPEP, is a renormalization scheme applied within the Hamiltonian formalism 
-of quantum field theory, developed in Refs.\cite{PhysRevD.48.5863 ,glazek_dynamics_2001, PEP}. 
-By considering a series of unitary transformations applied to the
-canonical or bare Hamiltonian, the RGPEP is able to construct a sucession of effective 
-Hamiltonians $\mathcal{H}_s$, each describing dynamics in terms of effective particles 
-at a resolution scale set by the parameter \( s \). This is associated with the 
-renormalization group scale $\lambda = 1/s$, where  $\lambda$ have dimension of energy,
-and physically has the interpretation of the characteristic energy scale of the theory, 
-while \( s \) has dimension of length, and physically 
-has the interpretation of the characteristic scale of the theory.
+\newpage
 
-Effective particles, are defined by the use of effective particle 
+\subsection{Renormalization group procedure for effective particles (RGPEP)}
+\label{sec:rgpep}
+The RGPEP, is a renormalization group procedure applied within the Hamiltonian formulation 
+of quantum field theory, formulated by S.D.Głazek and K.G.Wilson \cite{PhysRevD.48.5863 ,glazek_dynamics_2001, PEP}. 
+By considering a series of unitary transformations applied to the
+canonical or bare Hamiltonian, the RGPEP is able to construct a succession of effective 
+Hamiltonians $\mathcal{H}_s$, each describing dynamics in terms of effective particles 
+at a resolution scale set by the parameter~\( s \). This is associated with the 
+renormalization group scale $\lambda = 1/s$, where $\lambda$ has dimension of energy,
+and has the interpretation of the characteristic energy scale of the theory, 
+while \( s \) has dimension of length, and has the interpretation of the 
+\textit{size} of effective particles
+
+Effective particles, are defined by effective particle 
 operators that differs from the canonical ones by the unitary transformation 
 $\mathcal{U}_s$,
 
@@ -697,8 +714,8 @@ $\mathcal{U}_s$,
 Due to dimensional and notational reasons, it's convenient to consider the scale 
 parameter $t = s^4$ instead.
 
-Then $s=0$ or equivalently $t=0$, the theory describes  point-like or bare particles, 
-and recovering the original Hamiltonian $\mathcal{H}_0(a_0)$.
+Then for $s=0$ or, equivalently, $t=0$, the theory describes  point-like or bare particles, 
+and like those described by the canonical Hamiltonian $\mathcal{H}_0(a_0)$.
 
 The effective Hamiltonian $\mathcal{H}_t$, written in terms of the effective particles
 operator $a_s$, is related to the regulated canonical Hamiltonian with counter-terms 
@@ -712,9 +729,10 @@ Using Eq.~\eqref{eq:effective_particle_operator} and expressing all operators in
 terms of the original \( a_0 \), the effective Hamiltonian becomes,
 
 \begin{equation}
-    \mathcal{H}_t(a_0) = \mathcal{U}_t^\dagger\mathcal{H}_0(a_0) \mathcal{U}_t,
+    \mathcal{H}_t(a_0) = \mathcal{U}_t^\dagger\mathcal{H}_0(a_0) \mathcal{U}_t.
 \end{equation}
-differentiating with respect of $t$, one obtains the RGPEP differential equation,
+
+Differentiating with respect of $t$, one obtains the RGPEP differential equation,
 
 \begin{equation}
     \mathcal{H}_t^\prime (a_0) \equiv \frac{d}{dt}\mathcal{H}_t(a_0) = 
@@ -727,17 +745,19 @@ Considering the generator from Ref. \cite{PEP},
 \begin{equation}
     \mathcal{G}_t = \sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}},
 \end{equation}
-where $\mathcal{H}_f$, the free part of $\mathcal{H}_t$ and the part of 
-$\mathcal{H}_0(a_0)$ that does not depend on the coupling constant \( g \), 
-while $\mathcal{H}_{Pt}$ is defined as function of the interacting term. 
+where $\mathcal{H}_f$ is the free part of $\mathcal{H}_t$ and does not depend on 
+the coupling constant \( g \), 
+while $\mathcal{H}_{Pt}$ is defined as $\mathcal{H}_t$ but contains a kinematical factor
+depending on momenta of particle involved.
 
-The resulting RGPEP equation have the form,
+The resulting RGPEP equation has the form,
 \begin{equation}
     \mathcal{H}_t^\prime =  \sbrackets{\sbrackets{\mathcal{H}_f, \mathcal{H}_{Pt}}, \mathcal{H}_t}.
 \end{equation}
 
+Constructing an effective Hamiltonian using RGPEP amounts to solving this equation.
 In general, the solution of the RGPEP equation is a non-trivial task, and a perturbative
-expansion of the effective Hamiltonian is used to obtain them. Expressing  
+expansion of the effective Hamiltonian is used, expressing  
 $\mathcal{H}_t$ as a power series of the coupling constant $g$,
 
 \begin{equation}
@@ -747,7 +767,7 @@ $\mathcal{H}_t$ as a power series of the coupling constant $g$,
 \end{equation}
 
 Substituting into the RGPEP equation, and collecting terms order by order in \( g \),
-the following differential equations are obtained,
+the following system of coupled first-order differential equations is obtained,
 \begin{align}
         \mathcal{H}_{0}^\prime &= 0, \label{eq:diff_order0}\\
         g\mathcal{H}_{t 1}^\prime &= \sbrackets{\sbrackets{\mathcal{H}_0, g\mathcal{H}_{Pt 1}}, 
@@ -762,7 +782,7 @@ the following differential equations are obtained,
         &\vdots \nonumber
 \end{align}
 
-The order 0 term is solvable from an initial condition, and the solution of the 
+The order 0 term is trivially solvable from an initial condition, and the solution of the 
 equation of order 1 will be an exponential of the parameter $t$. The 2nd order 
 solution can be obtained from 1th order, and the 3rd order from the previous orders, 
 and so on. At this point, the use of diagrams becomes crucial.
@@ -771,8 +791,7 @@ and so on. At this point, the use of diagrams becomes crucial.
 \subsubsection{Order by order solutions.} \label{sec:orderbyorder_solutions}
 
 The solution of the differential equations \eqref{eq:diff_order1} to \eqref{eq:diff_order3} 
-and so on, without considering the multiplicative factors, and relative phases between
-the terms, can be expressed as,
+and so on, without considering the RGPEP factors,
 
 \begin{align}
     \mathcal{H}_{t1} & = \mathcal{H}_{01} \\
@@ -790,11 +809,11 @@ the terms, can be expressed as,
     &\vdots  \nonumber
 \end{align}
 
-This is shows how the different solutions for each order are obtained. 
+This shows how the structure of the solutions at each order are obtained. 
 
-For instance, the diagrams for the first order is simply the canonical diagrams from
-$\mathcal{H}_{01}$. As for the second order, it contains the canonical diagrams from 
-the second order $\mathcal{G}_{02}$, and the product of the first order diagrams. The 
+The first-order diagrams are simply the canonical diagrams with one power of $g$ and are
+denoted by $\mathcal{H}_{01}$. As for the second order, they contain the canonical diagrams 
+with power $g^2$ named $\mathcal{G}_{02}$, and the product of 2 first-order diagrams. The 
 third order contains the canonical diagrams from the third order $\mathcal{G}_{03}$,
 and the product of the first order, and second order canonical diagrams, as well as the 
 product of exclusive first order diagrams. This way, we could rewrite the solution for 
@@ -813,7 +832,7 @@ each order in terms of the solution to the previous order,
 This is how different orders are related to each other, and how an iterative 
 process can be used to obtain the solution for each order.
 
-\subsection{Regularization and Counterterms}\label{sec:regulatrization_countertems}
+\subsubsection{Regularization and Counterterms}\label{sec:regulatrization_countertems}
 
 In QCD, the bare Hamiltonian is ill-defined due to the presence of elements 
 that contain ultraviolet (UV) divergences and infrared (IR) divergences
@@ -821,7 +840,7 @@ that contain ultraviolet (UV) divergences and infrared (IR) divergences
 The UV divergences are produced in processes involving large momentum transfers, 
 whereas the IR divergences occur in processes with ‘soft’ particles carrying small 
 longitudinal momentum fractions, $x_{p/P} = p^+/P^+$, yielding zeros in the 
-denominator.
+denominators.
 
 To deal with these divergences a regulating factor $r$ is 
 introduced in every interacting term. These factors make the interacting terms rapidly 
@@ -831,35 +850,21 @@ greater than a cutoff parameter $\delta$ \cite{Collins_1984}.
 
 The particle operators is multiplied by the regulating factor, 
 \begin{equation}
-    r_{\Delta \delta} (k^\perp, x) = r_\Delta (k^\perp) r_\delta(x) \theta(x).
+    r_{\Delta \delta} (k^\perp, x) = r_\Delta (k^\perp) r_\delta(x).
 \end{equation}
 
-The transverse regulator factor will be of the form, 
-\begin{equation}
-    r_\Delta (z) = \text{exp} \left( -\frac{z}{\Delta^2} \right),
-\end{equation}
-with $\mathcal{M}$ the invariant mass of the system, ensuring that UV processes are
-suppressed.
+The transverse regulator factor will ensure that UV processes are suppressed.
+And the longitudinal regulator factor must verify a similar condition, preventing terms
+of the form $1/x$ or $1/x^2$ to blow up as $x$ approaches 0. 
 
-The longitudinal regulator factor must verify a similar condition, preventing terms
-of the form $1/x$ or $1/x^2$ to blow up as $x$ approaches 0. The exact form of the 
-longitudinal regulator factor is not important for our purposes, as long as it 
+The exact form of the regulator factors is not important for our purposes, as long as it 
 verifies the condition, since it will be removed once we take the
 limit $\Delta \to \infty$ and $\delta \to 0$.
 
-It's convenient to consider an abbreviated notation for the regulating factor, 
-using the symbol $\tilde{r}_{P, p} = \tilde{r}_{\Delta \delta} (P,p)$, with,
-\begin{equation}
-    \tilde{r}_{\Delta \delta} (P,p) = r_{\Delta \delta} (p^\perp - x_{p/P}P^\perp) 
-    r_{\Delta \delta}\sbrackets{P^\perp-p^\perp-\parenthesis{1-x_{p/P}}P^\perp, 1-x_{p/P}}.
-\end{equation}
-
 The counterterms is an additional term added to the initial or bare Hamiltonian 
-$\mathcal{H}_0$ to deal with the divergences due to loops, produced during the 
-process. This way, ensure that the effective Hamiltonian $\mathcal{H}_t$ remains 
-finite at all values of $t$.
+$\mathcal{H}_0$ to deal with the divergences due to divergent integrals. 
 
-The counterterms are defined in a way, such that the coefficients of products 
+They are defined in a way, such that the coefficients of products 
 of creation and annihilation operators in the effective theory for gluons of size $s$
 become independent of the regularization parameter $\Delta$ when the regularization
 in dynamics of gluons of size zero is being removed. The rest of the unknown parts 
@@ -869,15 +874,15 @@ match the predictions of the theory with the experimental results.
 The distinction between regularization and counterterms may be confusing, but the
 regularization is a procedure to expose and parameterize the divergences that arise
 in the theory, while the counterterms are the terms added to the Hamiltonian to 
-cancel the regulated divergences, so that after the regulators are removed, the 
-effective Hamiltonian remains finite and regulator independent. Making the 
-regulation an essential first step in the renormalization process.
+cancel the dependency on such regulators, so that after the cutoffs are removed, the 
+effective Hamiltonian remains finite and regulator independent. Regularization is
+an essential first step in the renormalization process.
 
 \newpage
 
-\section{Case study: Gluons self-interactions} \label{sec:cases}
+\subsection{Case study: Gluons self-interactions} \label{sec:cases}
 
-\subsection{Quantum Chromodynamics (QCD)}
+\subsubsection{Quantum Chromodynamics (QCD)}
 QCD is the quantum field theory that describes the
 interactions of quarks and gluons, the fundamental constituents of hadrons.
 QCD is a non-abelian gauge theory based on the SU(3) gauge group, which describes
@@ -910,7 +915,7 @@ generators of the gauge group,
 \end{equation}
 as well as in the Hamiltonian, in the interacting terms involving the gluon fields.
 
-\subsection{Canonical Hamiltonian for the gluon fields}
+\subsubsection{Canonical Hamiltonian for the gluon fields}
 
 For our purposes, we will focus on the gluon fields. The Lagrangian density for 
 the gluon fields is given by the first term of the QCD Lagrangian \eqref{eq:qcd_lagrangian},
@@ -2251,8 +2256,6 @@ parallel processing or more efficient data structures to handle the growing comp
 which would help to reduce the computational time at higher orders. Other possible
 optimization could be avoiding the generation of diagrams that are not needed for the 
 process considered, which would be relevant for higher orders.
-
-
 
 \newpage
 

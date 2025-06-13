@@ -1,4 +1,4 @@
-# Bachelor thesis:  
+# Bachelor thesis: Computational tools for perturbative calculations in renormalization of Hamiltonian. 
 
 ### Abstract
 The renormalization procedure is fundamental to understand the behavior of the 

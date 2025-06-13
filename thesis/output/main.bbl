@@ -36,10 +36,20 @@ Stanley~J. Brodsky, Hans-Christian Pauli, and Stephen~S. Pinsky.
 \newblock Quantum chromodynamics and other field theories on the light cone.
 \newblock {\em Physics Reports}, 301(4–6):299–486, August 1998.
 
-\bibitem{glazek_dynamics_2001}
-S.~D. Głazek.
-\newblock Dynamics of effective gluons.
-\newblock {\em Physical Review D}, 63(11):116006, May 2001.
+\bibitem{Glazek:1997gt}
+Stanislaw~D. Glazek and Kenneth~G. Wilson.
+\newblock {Asymptotic freedom and bound states in Hamiltonian dynamics}.
+\newblock {\em Phys. Rev. D}, 57:3558--3566, 1998.
+
+\bibitem{Wilson:1994fk}
+Kenneth~G. Wilson, Timothy~S. Walhout, Avaroth Harindranath, Wei-Min Zhang, Robert~J. Perry, and Stanislaw~D. Glazek.
+\newblock {Nonperturbative QCD: A Weak coupling treatment on the light front}.
+\newblock {\em Phys. Rev. D}, 49:6720--6766, 1994.
+
+\bibitem{Glazek:1994qc}
+Stanislaw~D. Glazek and K.~G. Wilson.
+\newblock {Perturbative renormalization group for Hamiltonians}.
+\newblock {\em Phys. Rev. D}, 49:4214--4218, 1994.
 
 \bibitem{PEP}
 S.~D. Głazek.
@@ -61,5 +71,10 @@ Stanisław~D. Głazek and Kenneth~G. Wilson.
 John~C. Collins.
 \newblock {\em Renormalization: An Introduction to Renormalization, the Renormalization Group and the Operator-Product Expansion}.
 \newblock Cambridge Monographs on Mathematical Physics. Cambridge University Press, 1984.
+
+\bibitem{glazek_dynamics_2001}
+S.~D. Głazek.
+\newblock Dynamics of effective gluons.
+\newblock {\em Physical Review D}, 63(11):116006, May 2001.
 
 \end{thebibliography}

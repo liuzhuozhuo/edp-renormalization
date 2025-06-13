@@ -305,7 +305,7 @@ This way a general state in the Fock space can be expressed as,
 
 where $\ket{\Psi_0}$ is the vacuum state, $\ket{\Psi_1}$ is the one particle
 state, $\ket{\Psi_2}$ is the two particle state, and so on. The coefficients $c_i$
-are the amplitudes of the states, in general complex numbers. 
+are the amplitudes of the states, in general, complex numbers. 
 
 Fock space provides a natural framework for quantum field theories, where, 
 physical states are expressed as superposition of all allowable multiparticle 
@@ -323,12 +323,12 @@ In quantum field theory, two equivalent formulations of the dynamics can be used
 the Lagrangian and the Hamiltonian formulations. Although one often starts with a 
 Lagrangian formulation and then switches to a Hamiltonian via a Legendre transform, 
 here we adopt the Hamiltonian (canonical) formalism because RGPEP works on the operator
-space and thus is implemented in Hamiltonian dynamics.
+space, and thus it is implemented in Hamiltonian dynamics.
 
 \subsubsection{Noether's theorem}
 
-A Hamiltonian can be derived from the Lagrangian of the theory by the means of Noether'S
-theorem. Noether's theorem \cite{Noether1918, Peskin:1995ev} states that every continuous 
+A Hamiltonian can be derived from the Lagrangian of the theory by the means of Noether's
+theorem\cite{Noether1918, Peskin:1995ev}. It states that every continuous 
 symmetry of the Lagrangian of a physical system corresponds to a conserved quantity. 
 In the context of quantum field theory, this theorem is fundamental as it relates 
 symmetries of the Lagrangian to conservation laws, which are crucial for understanding 
@@ -631,7 +631,7 @@ it contains no virtual particles and cannot mix with multi-particle states.
 
 This property simplifies drastically the structure of the theory, 
 where a clean separation between the vacuum and 
-the particle spectrum is advantageous. Hence FF quantization avoids the 
+the particle spectrum is advantageous. Hence, FF quantization avoids the 
 complexities associated with vacuum fluctuations that are typical in 
 instant-form dynamics.
 
@@ -692,7 +692,7 @@ mix the vacuum with multi-particle states in IF.
 \subsection{Renormalization group procedure for effective particles (RGPEP)}
 \label{sec:rgpep}
 The RGPEP, is a renormalization group procedure applied within the Hamiltonian formulation 
-of quantum field theory, formulated by S.D.Głazek and K.G.Wilson \cite{PhysRevD.48.5863 ,glazek_dynamics_2001, PEP}. 
+of quantum field theory, formulated by S.D.Głazek and K.G.Wilson \cite{Glazek:1997gt,Wilson:1994fk,Glazek:1994qc,PhysRevD.48.5863}. 
 By considering a series of unitary transformations applied to the
 canonical or bare Hamiltonian, the RGPEP is able to construct a succession of effective 
 Hamiltonians $\mathcal{H}_s$, each describing dynamics in terms of effective particles 
@@ -717,7 +717,7 @@ parameter $t = s^4$ instead.
 Then for $s=0$ or, equivalently, $t=0$, the theory describes  point-like or bare particles, 
 and like those described by the canonical Hamiltonian $\mathcal{H}_0(a_0)$.
 
-The effective Hamiltonian $\mathcal{H}_t$, written in terms of the effective particles
+The effective Hamiltonian $\mathcal{H}_t$, written in terms of the effective particle's
 operator $a_s$, is related to the regulated canonical Hamiltonian with counter-terms 
 by the condition (section \ref{sec:regulatrization_countertems}),
 
@@ -756,6 +756,7 @@ The resulting RGPEP equation has the form,
 \end{equation}
 
 Constructing an effective Hamiltonian using RGPEP amounts to solving this equation.
+
 In general, the solution of the RGPEP equation is a non-trivial task, and a perturbative
 expansion of the effective Hamiltonian is used, expressing  
 $\mathcal{H}_t$ as a power series of the coupling constant $g$,
@@ -787,50 +788,6 @@ equation of order 1 will be an exponential of the parameter $t$. The 2nd order
 solution can be obtained from 1th order, and the 3rd order from the previous orders, 
 and so on. At this point, the use of diagrams becomes crucial.
 
-
-\subsubsection{Order by order solutions.} \label{sec:orderbyorder_solutions}
-
-The solution of the differential equations \eqref{eq:diff_order1} to \eqref{eq:diff_order3} 
-and so on, without considering the RGPEP factors,
-
-\begin{align}
-    \mathcal{H}_{t1} & = \mathcal{H}_{01} \\
-    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{01} 
-    \mathcal{H}_{01}\\
-    \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{01} \mathcal{H}_{01}
-    \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} \mathcal{H}_{01} + 
-    \mathcal{H}_{01} \mathcal{G}_{02}}\\
-    \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{01} \mathcal{H}_{01}
-    \mathcal{H}_{01} \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} 
-    \mathcal{H}_{01} \mathcal{H}_{01} +  \mathcal{H}_{01} \mathcal{G}_{02}
-    \mathcal{H}_{01} + \mathcal{H}_{01} \mathcal{H}_{01} \mathcal{G}_{02}} \nonumber\\
-    & + \parenthesis{\mathcal{G}_{03} \mathcal{H}_{01} + \mathcal{H}_{01} 
-    \mathcal{G}_{03} + \mathcal{G}_{02}\mathcal{G}_{02}}. \\
-    &\vdots  \nonumber
-\end{align}
-
-This shows how the structure of the solutions at each order are obtained. 
-
-The first-order diagrams are simply the canonical diagrams with one power of $g$ and are
-denoted by $\mathcal{H}_{01}$. As for the second order, they contain the canonical diagrams 
-with power $g^2$ named $\mathcal{G}_{02}$, and the product of 2 first-order diagrams. The 
-third order contains the canonical diagrams from the third order $\mathcal{G}_{03}$,
-and the product of the first order, and second order canonical diagrams, as well as the 
-product of exclusive first order diagrams. This way, we could rewrite the solution for 
-each order in terms of the solution to the previous order,
-
-\begin{align}
-    \mathcal{H}_{t1} & = \mathcal{H}_{01} = \mathcal{G}_{01}, \\
-    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{t1} \mathcal{G}_{01}, \\
-    \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{t1} \mathcal{G}_{02} + 
-    \mathcal{H}_{t2} \mathcal{G}_{01}, \\
-    \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{t2} \mathcal{G}_{02} + 
-    \mathcal{H}_{t1} \mathcal{G}_{03} + \mathcal{H}_{t3} \mathcal{G}_{01} \label{eq:sol_order4}\\
-    \vdots & \nonumber
-\end{align}
-
-This is how different orders are related to each other, and how an iterative 
-process can be used to obtain the solution for each order.
 
 \subsubsection{Regularization and Counterterms}\label{sec:regulatrization_countertems}
 
@@ -878,7 +835,49 @@ cancel the dependency on such regulators, so that after the cutoffs are removed,
 effective Hamiltonian remains finite and regulator independent. Regularization is
 an essential first step in the renormalization process.
 
-\newpage
+\subsubsection{Order by order solutions.} \label{sec:orderbyorder_solutions}
+
+The solution of the differential equations \eqref{eq:diff_order1} to \eqref{eq:diff_order3} 
+and so on, without considering the RGPEP regulating factors,
+
+\begin{align}
+    \mathcal{H}_{t1} & = \mathcal{H}_{01} \\
+    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{01} 
+    \mathcal{H}_{01}\\
+    \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{01} \mathcal{H}_{01}
+    \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} \mathcal{H}_{01} + 
+    \mathcal{H}_{01} \mathcal{G}_{02}}\\
+    \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{01} \mathcal{H}_{01}
+    \mathcal{H}_{01} \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} 
+    \mathcal{H}_{01} \mathcal{H}_{01} +  \mathcal{H}_{01} \mathcal{G}_{02}
+    \mathcal{H}_{01} + \mathcal{H}_{01} \mathcal{H}_{01} \mathcal{G}_{02}} \nonumber\\
+    & + \parenthesis{\mathcal{G}_{03} \mathcal{H}_{01} + \mathcal{H}_{01} 
+    \mathcal{G}_{03} + \mathcal{G}_{02}\mathcal{G}_{02}}. \\
+    &\vdots  \nonumber
+\end{align}
+
+This shows how the structure of the solutions at each order are obtained. 
+
+The first-order diagrams are simply the canonical diagrams with one power of $g$ and are
+denoted by $\mathcal{H}_{01}$. As for the second order, they contain the canonical diagrams 
+with power $g^2$ named $\mathcal{G}_{02}$, and the product of 2 first-order diagrams. The 
+third order contains the canonical diagrams from the third order $\mathcal{G}_{03}$,
+and the product of the first order, and second order canonical diagrams, as well as the 
+product of exclusive first order diagrams. This way, we could rewrite the solution for 
+each order in terms of the solution to the previous order,
+
+\begin{align}
+    \mathcal{H}_{t1} & = \mathcal{H}_{01} = \mathcal{G}_{01}, \\
+    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{t1} \mathcal{G}_{01}, \\
+    \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{t1} \mathcal{G}_{02} + 
+    \mathcal{H}_{t2} \mathcal{G}_{01}, \\
+    \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{t2} \mathcal{G}_{02} + 
+    \mathcal{H}_{t1} \mathcal{G}_{03} + \mathcal{H}_{t3} \mathcal{G}_{01} \label{eq:sol_order4}\\
+    \vdots & \nonumber
+\end{align}
+
+This is how different orders are related to each other, and how an iterative 
+process can be used to obtain the solution for each order.
 
 \subsection{Case study: Gluons self-interactions} \label{sec:cases}
 
@@ -886,7 +885,7 @@ an essential first step in the renormalization process.
 QCD is the quantum field theory that describes the
 interactions of quarks and gluons, the fundamental constituents of hadrons.
 QCD is a non-abelian gauge theory based on the SU(3) gauge group, which describes
-the strong force, describing the interactions between quarks and gluons.
+the strong force.
 
 The Lagrangian for QCD is given by,
 
@@ -907,7 +906,7 @@ and \( D_\mu \) is the covariant derivative defined as,
 where \( t^a \) are the generators of the SU(3) gauge group, and \( g \) is the
 coupling constant of the strong interaction.
 
-The structure constants \( f^{abc} \) encodes the non-abelian nature of the
+The structure constants \( f^{abc} \) encode the non-abelian nature of the
 theory, and are present explicitly in the commutation relations of the
 generators of the gauge group,
 \begin{equation}
@@ -925,14 +924,15 @@ the gluon fields is given by the first term of the QCD Lagrangian \eqref{eq:qcd_
 \end{equation}
 
 We will be working in the gauge $A^+=0$, where the Lagrange equations constrain
-the component $A^-$ to become 
+the component $A^-$ to become,
 
 \begin{equation}
     A^- = \frac{1}{\partial^+}2 \partial^\perp A^\perp - \frac{2}{\partial^{+2}} ig 
     \sbrackets{\partial^+ A^\perp, A^\perp}.
 \end{equation}
 
-In this way, the only degree of freedom left is the transverse component $A^\perp$.
+In this way, the only degree of freedom left is the transverse component $A^\perp$\footnote{Similar to before, the vectors in FF have components
+$A^\mu = (A^+, A^-, A^\perp)$, where $A^\perp = (A^1, A^2)$.}.
 
 As for the associated energy-momentum tensor,
 
@@ -989,9 +989,10 @@ terms of the Hamiltonian \cite{QCDG},
     \sbrackets{\parenthesis{\Xi_{A^4 1234} a_1^\dagger a_2^\dagger a_3^\dagger a_4 + h.c.}+ X_{A^4 1234} 
     a_1^\dagger a_2^\dagger a_3 a_4 }, \label{eq:H_A^4}\\
     H_{\sbrackets{\partial A A}^2} &= \sum_{1234} \int [1234] \slashed{\delta}
-    (p^\dagger - p) g^2 \sbrackets{\parenthesis{\Xi_{\sbrackets{\partial A A}^2 1234}
-    a_1^\dagger a_2^\dagger a_3^\dagger a_4 + h.c.} + X_{\sbrackets{\partial A A}^2 
-    1234} a_1^\dagger a_2^\dagger a_3 a_4 } \label{eq:H_partial}.
+    (p^\dagger - p) g^2 \left[\parenthesis{\Xi_{\sbrackets{\partial A A}^2 1234}
+    a_1^\dagger a_2^\dagger a_3^\dagger a_4 + h.c.}+\right.\nonumber \\
+    &\left. \hspace{7.5cm} + X_{\sbrackets{\partial A A}^2 
+    1234} a_1^\dagger a_2^\dagger a_3 a_4 \right] \label{eq:H_partial}.
 \end{align}
 
 Here the notation $[123]$ indicates the integration over the momenta of
@@ -1006,7 +1007,7 @@ the kinetic term of the gluon fields, $H_{A^3}$ corresponds to the three-gluon
 vertex and  $H_{A^4}$ together with $H_{\sbrackets{\partial A A}^2}$ corresponds to
 four-gluon vertices. 
 
-In the context of RGPEP, the four-gluon vertices can be treated as a combination of two
+In the context of light-front QCD, the four-gluon vertices can be treated as a combination of two
 time ordered
 three-gluon vertices, by introducing an internal gluon propagator, or as a
 special case of instantaneous interaction, as in the term $H_{\sbrackets{\partial A A}^2}$, 
@@ -1014,15 +1015,9 @@ effectively reproducing the four-gluon interaction at that energy scale.
 
 As for the expansion in terms of the coupling constant \( g \), the term $H_{A^2}$ is
 an order zero term, since it does not contain the coupling constant \( g \).
-The term $H_{A^3}$ is an order first order term, since it contains $g$ to the first power,
-as well as a single structure constant $f^{abc}$. While the term $H_{A^4}$ is a
-second order term, since it contains $g^2$ to the second power, and two structure constants,
-but since it can be expressed as a product of two first order terms, it will not be considered
-as a new canonical term, rather as a result of the perturbative expansion.
-
-The term $H_{\sbrackets{\partial A A}^2}$ is a second order term, for the same reasons as $H_{A^4}$, 
-but it is a special case that can't be considered as a product of two first order terms,
-and thus will be considered as a new canonical term.
+The term $H_{A^3}$ is a first-order term, since it contains $g$ to the first power,
+as well as a single structure constant $f^{abc}$. While the term $H_{A^4}$ and $H_{\sbrackets{\partial A A}^2}$
+are second order term, since they contain $g^2$ to the second power, and two structure constants.
 
 \begin{comment}
 
@@ -1189,39 +1184,13 @@ starting point to obtain the diagrams of higher order.
 
 \end{comment}
 
-As we can see, in the case of QCD, there are only canonical diagrams of order 1 and 2, 
-then referring to the framework laid out in section \ref{sec:orderbyorder_solutions}, 
-from order 3  and onwards, the diagrams only depend explicitly on the diagrams of 
-previous order, as well as the order 1, and the order 2 canonical diagrams.
-
-For example, in Eq. \eqref{eq:sol_order4}, the solution at order $4$, $\mathcal{H}_{t4}$ consists of 
-$\mathcal{H}_{t 3}$ and the canonical diagrams, thus eliminating the term with $\mathcal{G}_{04}$ and
-$\mathcal{H}_{t1}\mathcal{G}_{03}$, since they are not present in the QCD theory.
-This simplifies the number of diagrams that can be obtained at higher orders,
-and making the diagrams have the form,
-
-\begin{align}
-    \mathcal{H}_{t1} & = \mathcal{H}_{01} = \mathcal{G}_{01}, \\
-    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{t1} \mathcal{G}_{01}, \\
-    \mathcal{H}_{t3} & =  \mathcal{H}_{t1} \mathcal{G}_{02} + 
-    \mathcal{H}_{t2} \mathcal{G}_{01}, \\
-    \mathcal{H}_{t4} & =  \mathcal{H}_{t2} \mathcal{G}_{02} + \mathcal{H}_{t3} \mathcal{G}_{01}\\
-    \mathcal{H}_{t5} & =  \mathcal{H}_{t3} \mathcal{G}_{02} + \mathcal{H}_{t4} \mathcal{G}_{01} \\
-    \vdots & \nonumber\\
-    \mathcal{H}_{tn} &=  \mathcal{H}_{t(n-1)} \mathcal{G}_{02} +
-    \mathcal{H}_{t(n-2)} \mathcal{G}_{01} \quad \text{for } n \geq 3.
-\end{align}
-
-Obtaining a simpler recursive relation to obtain the diagrams of higher order,
-that can be implemented in a program to obtain the diagrams of higher order.
-
 \newpage
 
 \section{Code implementation} \label{sec:code}
 
 The code is implemented in Python, but the principles of the method can be written in any 
-programming language. The program is designed to be modular, and applicable to
-other any theory, these require changing the canonical
+programming language. The program is designed to be modular, and applicable to any
+other theory. These require changing the canonical
 diagrams. These modifications are beyond the of this work, and they are not presented
 here explicitly.
 
@@ -1233,84 +1202,27 @@ The diagrams are defined by 2 arrays,
     points in the diagram, each point is defined by its coordinates $(x,y)$.
     \item Paths: arrays of dimension $M \times N^\prime \times 2$, where $M$ is the
     number of different types of particles to consider in the theory, $N^\prime$ 
-    is the number of paths for each types of particle in the diagram, and $2$ indicate
+    is the number of paths for each types of particle in the diagram, and $2$ indicates
     the points to connect.
 \end{itemize}
 
-This way of defining the diagrams is analogous to the way of defining the undirected 
-graphs in the graph theory, where the points are the vertices and the paths are the 
-edges. 
+An example of the different elements can be seen in figure \ref{fig:diagram_representation}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{plots/graph_example.png}
+    \caption{Representation of a diagram as a graph, where the blue points are the $N$ points
+    defined in the program, the different line-style represent the different types of particles 
+    $M$, and the labels associated with each line the $N^\prime$ connections 
+    for each type of particle.}
+    \label{fig:diagram_representation}
+\end{figure}
+
 
 In the case of gluon interactions, although only 1 type of particle is present, the
 instantaneous interactions have to be considered. This is done by defining this 
 interaction as a new type of virtual particle in the program.
 
-\subsection{Order by order procedure}
-
-To calculate the diagram representing a certain order, the code follows the 
-procedure described in Section \ref{sec:orderbyorder_solutions}. Having the
-canonical diagrams as an input, the program aims to obtain all possible diagrams of such order
-that contribute to a certain effective interaction, and discards those diagrams, with
-different structure.
-
-The program would follow a recursive procedure, where the diagrams of order $n$ are
-obtained from the diagrams of order $n-1$ and $n-2$, in a procedure that can be outlines
-as follows,
-
-\begin{enumerate}
-    \item Start with the canonical diagrams of order 1 and 2.
-    \item For each order $n$, starting from 3, do the following,
-    \begin{enumerate}
-        \item Generate all possible combinations of diagrams of order $n-1$ with
-        order 1, and $n-2$ with order 2.
-        \item For each combination, check if it is a valid diagram for the process
-        being considered.
-        \item If it is a valid diagram, add it to the list of diagrams for order $n$.
-    \end{enumerate}
-    \item After generating all the diagrams of order $n$, check for equivalent diagrams,
-    and add their contributions to the list of diagrams.
-    \item If the order is greater than 2, check for loops, and add the counterterms 
-    to the list of diagrams.
-    \item Repeat the process for the next order, until the desired order is reached.
-\end{enumerate}
-
-The step 3 is fundamental in order to reduce the number of diagrams that needs to 
-be used to calculate the next order. This procedure is the most time-consuming process 
-of the program, needing a search algorithm to find the equivalent diagrams, meaning 
-that as the order increases, the number of diagrams increases exponentially, and the 
-time to find the equivalent diagrams increases exponentially too. 
-
-Although the process of finding the equivalent diagrams is time-consuming, it is
-fundamental to reduce the global computational time. Since the number of diagrams 
-tend to decrease by 1 to 2 orders of magnitude, depending on the order and the number of
-particles in the process. This way reduces the time needed to calculate the
-diagrams of the next order, so at the grand scale, the time needed to calculate
-the diagrams of till a certain order is reduced by performing the search algorithm in
-between the orders.
-
-
-\subsection{Applied to gluons self-interactions} \label{sec:applied_gluons}
-Although in this thesis the focus is on the gluons and its self-interactions, 
-and considering only one type of particle, there are tests that can be done to 
-check the validity of the program for multiple types of particles. Thanks to
-the instantaneous interactions, the program can be adapted to consider this 
-type of interactions as a new type of particles, and thus check for bugs or other 
-issues that may arise when considering multiple types of particles.
-
-This approach comes with its own problems. By considering an instantaneous 
-process as a new type of particles, this process need to respect the time 
-evolution of the system, meaning that in the eyes of the program, the 
-instantaneous interaction is no longer instantaneous, but rather a process that
-happens in a certain time interval. 
-
-Nonetheless, this is a valid approach to consider the instantaneous interactions, 
-since no possible diagrams will be lost, rather equivalent diagrams will be 
-obtained, without the program being aware of it, and it rests on the user to
-identify these equivalences. 
-
-For lower orders, this approach works well, since the number of diagrams is
-manageable, but at higher orders, this is a problem that needs to be addressed in 
-the future, and a general fix to the problem will be implemented in the program.
 
 \subsection{Diagram representation}
 
@@ -1370,6 +1282,218 @@ produced in the final state. Due to the presence of a loop, the diagram is
 divergent, and a counterterm diagram is needed to deal with the divergence. This 
 diagram is represented with a dot at the position of the loop, with the same 
 external legs as the original diagram. 
+
+\subsection{Order by order procedure}
+
+To calculate the diagram representing a certain order, the code follows the 
+procedure described in Section \ref{sec:orderbyorder_solutions}. Having the
+canonical diagrams as an input, the program aims to obtain all possible diagrams of such order
+that contribute to a certain effective interaction, and discards those diagrams, with
+different structure.
+
+The program will follow a recursive procedure, where the diagrams of order $n$ are
+obtained from the diagrams of order $n-1$ and $n-2$, in a process that can be outlines
+as follows,
+
+\begin{enumerate}
+    \item Start with the canonical diagrams of order 1 and 2.
+    \item For each order $n$, starting from 3, do the following,
+    \begin{enumerate}
+        \item Generate all possible combinations of diagrams of order $n-1$ with
+        order 1, and $n-2$ with order 2.
+        \item For each combination, check if it is a valid diagram for the type of interaction
+        being considered.
+        \item If it is a valid diagram, add it to the list of diagrams for order $n$.
+    \end{enumerate}
+    \item After generating all the diagrams of order $n$, check for equivalent diagrams,
+    and add their contributions to the list of diagrams.
+    \item If the order is greater than 2, check for loops, and add the counterterms 
+    to the list of diagrams.
+    \item Repeat the process for the next order, until the desired order is reached.
+\end{enumerate}
+
+The step 3 is fundamental in order to reduce the number of diagrams that needs to 
+be used to calculate the next order. This procedure is the most time-consuming process 
+of the program, needing a search algorithm to find the equivalent diagrams, meaning 
+that as the order increases, the number of diagrams increases exponentially, and the 
+time to find the equivalent diagrams increases exponentially too. 
+
+Although the process of finding the equivalent diagrams is time-consuming, it is
+fundamental to reduce the global computational time. Since the number of diagrams 
+tend to decrease by 1 to 2 orders of magnitude, depending on the order and the number of
+particles in the process. This way reduces the time needed to calculate the
+diagrams of the next order, so at the grand scale, the time needed to calculate
+the diagrams of till a certain order is reduced by performing the search algorithm in
+between the orders.
+
+To understand the process, let's consider the first iteration of the program, to calculate
+the diagrams of order 2, starting from the canonical diagrams of order 1.
+
+\newpage
+\begin{figure*}[h!]
+  \centering
+  % switch into math mode, start a stretchy left parenthesis
+  $\displaystyle \mathcal{H}_{01}\mathcal{H}_{01} = 
+    \left(
+      % now vcenter the whole block so its height is taken into account
+      \vcenter{%
+        \hbox{%  
+          % first subfigure
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+          \quad % space between
+          \raisebox{0.9\height}{\LARGE $+$}\quad
+          % second subfigure
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+        }% end \hbox
+        }% end \vcenter
+    \right)$ 
+    $\displaystyle
+    \left(
+      % now vcenter the whole block so its height is taken into account
+      \vcenter{%
+        \hbox{%  
+          % first subfigure
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+          \quad % space between
+          \raisebox{0.9\height}{\LARGE $+$}\quad
+          % second subfigure
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+        }% end \hbox
+        }% end \vcenter
+    \right) = $ 
+\end{figure*}~
+\begin{figure*}[h!]
+  \centering
+  % switch into math mode, start a stretchy left parenthesis
+  $\displaystyle = 
+    \left(
+      % now vcenter the whole block so its height is taken into account
+      \vcenter{%
+        \hbox{%  
+          % first subfigure
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+          \quad % space between
+          \raisebox{0.9\height}{\LARGE $+$}\quad
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+          % second subfigure
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+                    \quad % space between
+          \raisebox{0.9\height}{\LARGE $+$}\quad
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+          % second subfigure
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+                    \quad % space between
+          \raisebox{0.9\height}{\LARGE $+$}\quad
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+          % second subfigure
+          \begin{subfigure}[t]{.08\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+        }% end \hbox
+        }% end \vcenter
+    \right)$ 
+\end{figure*}
+
+From here each term will contribute at second-order to a different type of interaction.
+For instance, the first term will contribute to the process of 1 gluon going to 3 gluons,
+since one of the outgoing gluon from the second diagram will "connect" to the incoming gluon
+of the first diagram. Due to 2 possible connections, this term produces 2 equivalent diagrams.
+
+\begin{figure*}[h!]
+  \centering
+  % switch into math mode, start a stretchy left parenthesis 
+    % first subfigure
+    \begin{subfigure}[t]{.15\textwidth}
+    \includegraphics[width=\textwidth]{plots/1to2.png}
+    \end{subfigure}%
+    \begin{subfigure}[t]{.15\textwidth}
+    \includegraphics[width=\textwidth]{plots/1to2.png}
+    \end{subfigure}%
+    $\displaystyle \quad % space between
+    \raisebox{3\height}{\LARGE $\to$}\quad $
+    $\displaystyle \quad % space between
+    \raisebox{2\height}{\Large $2\quad\cdot$} $
+    \begin{subfigure}[t]{.3\textwidth}
+    \includegraphics[width=\textwidth]{plots/1to3.png}
+    \end{subfigure}%
+\end{figure*}
+
+Similar procedure is followed for both the second and fourth terms, producing similar results.
+Is in the third term where more possibilities arises, since now either one 
+connection or two connections can be considered, producing 2 different diagrams, of multiplicity 2.
+
+\begin{figure*}[h!]
+  \centering
+  % switch into math mode, start a stretchy left parenthesis 
+    % first subfigure
+    \begin{subfigure}[t]{.1\textwidth}
+    \includegraphics[width=\textwidth]{plots/2to1.png}
+    \end{subfigure}%
+    \begin{subfigure}[t]{.1\textwidth}
+    \includegraphics[width=\textwidth]{plots/1to2.png}
+    \end{subfigure}%
+    $\displaystyle \quad % space between
+    \raisebox{1.8\height}{\LARGE $\to$} $
+    $\displaystyle \quad % space between
+    \raisebox{1.2\height}{\Large $2\cdot$} $
+    \begin{subfigure}[t]{.2\textwidth}
+    \includegraphics[width=\textwidth]{plots/1to1_1.png}
+    \end{subfigure}%
+    \raisebox{1.3\height}{\Large $+$}\quad
+    \raisebox{1.2\height}{\Large $2\cdot$}
+    \begin{subfigure}[t]{.2\textwidth}
+    \includegraphics[width=\textwidth]{plots/1to1_2.png}
+    \end{subfigure}%
+\end{figure*}
+
+
+
+
+
+\subsection{Applied to gluons self-interactions} \label{sec:applied_gluons}
+Although the focus of this thesis is the gluons and its self-interactions, 
+and therefore there is only one type of particle, there are tests that can be done to 
+check the validity of the program for multiple species of particles.
+The program can be adapted to consider new type of particles.
+
+This approach comes with its own problems. By considering an instantaneous 
+process as a new type of particles, this process need to respect the time 
+evolution of the system, meaning that in the eyes of the program, the 
+instantaneous interaction is no longer instantaneous, but rather a process that
+happens in a certain time interval. 
+
+Nonetheless, this is a valid approach to consider the instantaneous interactions, 
+since no possible diagrams will be lost, rather equivalent diagrams will be 
+obtained, without the program being aware of it, and it rests on the user to
+identify these equivalences. 
+
+For lower orders, this approach works well, since the number of diagrams is
+manageable, but at higher orders, this is a problem that needs to be addressed in 
+the future, and a general fix to the problem will be implemented in the program.
+
 
 
 

@@ -7,16 +7,16 @@
 \contentsline {subsubsection}{\numberline {2.2.2}Canonical Hamiltonian}{4}{subsubsection.2.2.2}%
 \contentsline {subsubsection}{\numberline {2.2.3}Front form of Hamiltonian Dynamics}{6}{subsubsection.2.2.3}%
 \contentsline {subsection}{\numberline {2.3}Renormalization group procedure for effective particles (RGPEP)}{7}{subsection.2.3}%
-\contentsline {subsubsection}{\numberline {2.3.1}Order by order solutions.}{8}{subsubsection.2.3.1}%
-\contentsline {subsubsection}{\numberline {2.3.2}Regularization and Counterterms}{9}{subsubsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.4}Case study: Gluons self-interactions}{11}{subsection.2.4}%
-\contentsline {subsubsection}{\numberline {2.4.1}Quantum Chromodynamics (QCD)}{11}{subsubsection.2.4.1}%
-\contentsline {subsubsection}{\numberline {2.4.2}Canonical Hamiltonian for the gluon fields}{11}{subsubsection.2.4.2}%
-\contentsline {section}{\numberline {3}Code implementation}{14}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Definition of diagrams}{14}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Order by order procedure}{14}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Applied to gluons self-interactions}{15}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Diagram representation}{15}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {2.3.1}Regularization and Counterterms}{8}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Order by order solutions.}{9}{subsubsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.4}Case study: Gluons self-interactions}{10}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Quantum Chromodynamics (QCD)}{10}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {2.4.2}Canonical Hamiltonian for the gluon fields}{10}{subsubsection.2.4.2}%
+\contentsline {section}{\numberline {3}Code implementation}{13}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Definition of diagrams}{13}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Diagram representation}{13}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Order by order procedure}{15}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Applied to gluons self-interactions}{16}{subsection.3.4}%
 \contentsline {section}{\numberline {4}Diagrams obtained}{17}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Order 1}{17}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Order 2}{17}{subsection.4.2}%

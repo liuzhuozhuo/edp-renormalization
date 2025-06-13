@@ -9,23 +9,19 @@
 \contentsline {subsection}{\numberline {2.3}Renormalization group procedure for effective particles (RGPEP)}{7}{subsection.2.3}%
 \contentsline {subsubsection}{\numberline {2.3.1}Regularization and Counterterms}{8}{subsubsection.2.3.1}%
 \contentsline {subsubsection}{\numberline {2.3.2}Order by order solutions.}{9}{subsubsection.2.3.2}%
-\contentsline {subsection}{\numberline {2.4}Case study: Gluons self-interactions}{10}{subsection.2.4}%
-\contentsline {subsubsection}{\numberline {2.4.1}Quantum Chromodynamics (QCD)}{10}{subsubsection.2.4.1}%
-\contentsline {subsubsection}{\numberline {2.4.2}Canonical Hamiltonian for the gluon fields}{10}{subsubsection.2.4.2}%
-\contentsline {section}{\numberline {3}Code implementation}{13}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Definition of diagrams}{13}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Diagram representation}{13}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Order by order procedure}{15}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Applied to gluons self-interactions}{16}{subsection.3.4}%
-\contentsline {section}{\numberline {4}Diagrams obtained}{17}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Order 1}{17}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Order 2}{17}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Canonical diagrams}{17}{subsubsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2}Diagrams by combination of order 1}{18}{subsubsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.3}Three gluon vertex: 1 gluon to 2 gluons}{19}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Self-energy: Gluon's effective mass}{20}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Bound states: Glueballs}{22}{subsection.4.5}%
-\contentsline {subsection}{\numberline {4.6}Program performance}{23}{subsection.4.6}%
-\contentsline {section}{\numberline {5}Conclusions and future work}{24}{section.5}%
-\contentsline {section}{\numberline {6}Conclusiones y trabajo futuro}{25}{section.6}%
-\contentsline {section}{\numberline {7}Acknowledgements}{27}{section.7}%
+\contentsline {subsection}{\numberline {2.4}Diagram representation}{10}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Case study: Gluons self-interactions}{11}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Quantum Chromodynamics (QCD)}{11}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}Canonical Hamiltonian for the gluon fields}{12}{subsubsection.2.5.2}%
+\contentsline {section}{\numberline {3}Code implementation}{16}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Definition of diagrams}{16}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Order by order procedure}{16}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Applied to gluons self-interactions}{18}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Diagrams obtained}{19}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Order 2}{19}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Three gluon vertex: 1 gluon to 2 gluons}{20}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Self-energy: Gluon's effective mass}{21}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Bound states: Glueballs}{23}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Program performance}{24}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Conclusions and future work}{26}{section.5}%
+\contentsline {section}{\numberline {6}Conclusiones y trabajo futuro}{27}{section.6}%

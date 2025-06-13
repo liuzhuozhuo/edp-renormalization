@@ -1,5 +1,10 @@
 \begin{thebibliography}{10}
 
+\bibitem{Liu_Computational_tools_for_2025}
+ZhuoZhuo Liu.
+\newblock {Computational tools for perturbative calculations in renormalization of Hamiltonian}.
+\newblock \url{https://github.com/liuzhuozhuo/edp-renormalization}, June 2025.
+
 \bibitem{PhysRevD.48.5863}
 Stanis\l{}aw~D. G\l{}azek and Kenneth~G. Wilson.
 \newblock Renormalization of hamiltonians.

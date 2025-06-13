@@ -131,7 +131,7 @@ que describen el proceso, similar a los diagramas de Feynman. Pero el número de
 diagramas aumenta exponencialmente con el orden de la perturbación, haciendo que
 el proceso de cálculo sea tedioso y propenso a errores. \\
 
-El objetivo de este trabajo es desarrollar un programa que automatice el proceso
+El objetivo de este trabajo es desarrollar un programa \cite{Liu_Computational_tools_for_2025} que automatice el proceso
 de obtención de diagramas asociados a un proceso determinado, hasta un orden
 dado, partiendo de unos diagramas base, llamado diagramas canónicos dados por la 
 teoría. Siendo el programa capaz de descartar los diagramas que no contribuyen al 
@@ -163,13 +163,13 @@ terms of the theory as diagrams that describe the process, similar to Feynman di
 However, the number of diagrams increases exponentially with the order of the perturbation,
 making the calculation process tedious and error-prone. \\
 
-The aim of this work is to develop a program that automates the process of
+The aim of this work is to develop a program \cite{Liu_Computational_tools_for_2025} that automates the process of
 obtaining the diagrams associated with a given process, up to a given order,
 starting from a set of base diagrams, called canonical diagrams given by the
 theory. The program is able to discard the diagrams that do not contribute to the
 process, detect loops and add counterterms to the diagrams to cancel divergences. \\
 
-By analysing the diagrams obtained from lower orders, and comparing with known
+By analyzing the diagrams obtained from lower orders, and comparing with known
 results, the correctness of the program has been verified. This allows to obtain
 the diagrams of higher orders, and study the behavior of the theory at those
 orders, where unique phenomena of non-abelian theories can be observed.
@@ -810,8 +810,8 @@ The particle operators is multiplied by the regulating factor,
     r_{\Delta \delta} (k^\perp, x) = r_\Delta (k^\perp) r_\delta(x).
 \end{equation}
 
-The transverse regulator factor will ensure that UV processes are suppressed.
-And the longitudinal regulator factor must verify a similar condition, preventing terms
+The transverse regulator factor, $r_\Delta (k^\perp)$ will ensure that UV processes are suppressed.
+And the longitudinal regulator factor $r_\delta(x)$ must verify a similar condition, preventing terms
 of the form $1/x$ or $1/x^2$ to blow up as $x$ approaches 0. 
 
 The exact form of the regulator factors is not important for our purposes, as long as it 
@@ -878,6 +878,76 @@ each order in terms of the solution to the previous order,
 
 This is how different orders are related to each other, and how an iterative 
 process can be used to obtain the solution for each order.
+
+
+\subsection{Diagram representation}
+
+Every term in the Hamiltonian can be identified with a diagram, according to the 
+structure of the creation and annihilation operators present in it. Each diagram 
+will be composed of different elements:
+
+\begin{itemize}
+    \item \textbf{External legs}: representation of the incoming and outgoing particles or 
+    the annihilation and creation operators, respectively. They determine the type 
+    of interaction that is being considered. (e.g. in figure \ref{fig:loop_example},
+    the connection of points [1, 2] or [3, 4] are external legs of the diagram.)
+    \item \textbf{Internal legs}: represent the virtual particles that are exchanged during the
+    process, or the intermediate creation and annihilation operators that are 
+    eliminated in the normal-ordering process. These creation and annihilation operators
+    are not present in the effective Hamiltonian. (e.g. in figure \ref{fig:loop_example},
+    the 2 connection from [2, 3] are the internal legs of the diagram.)
+    \item \textbf{Vertices}: points where interactions between particles occur, the number of
+    vertices in a diagram indicates the order at which the diagram is contributing. 
+    (e.g. in figure \ref{fig:loop_example}, the points 1, 2, ... are the vertices
+    of the diagram.)
+    \item \textbf{Loops}: closed paths in the diagrams, formed by the internal legs. In 
+    general, they are divergent terms. Example in figure \ref{fig:loop_example}.
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.5\textwidth]{plots/order2/from_order1/3.png}
+        \caption{Example of a loop in a diagram, formed by the internal legs.}
+        \label{fig:loop_example}
+    \end{figure}
+    \item \textbf{Counterterms} additional terms added to the Hamiltonian to deal with the divergences
+    produced during the process. These will be represented with a dot in the diagram.
+\end{itemize}
+
+Notice that the diagrams are different from the well-known Feynman diagrams\cite{Peskin:1995ev}.
+Essentially, except for the presence
+of the counterterms. The essential difference is the importance of the order of appearance
+of the interactions. Altering
+the order of the vertices in the diagram will produce a different interaction terms. 
+In our convention, the time flows from right to left.
+
+As an example, consider the diagram in figure \ref{fig:example_diagram}, this pair of 
+diagrams are one of the contributions to the three-gluon vertex (one gluon yielding two gluons), 
+with the counterterm associated with it. 
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/1.png}
+        \caption{Diagram with a three-gluon loop.}
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/counterterms/1.png}
+        \caption{Counterterm of order 3 for the diagram (a)}
+    \end{subfigure}
+    \caption{A example of a third order contribution to the 
+    process of three-gluon vertex, 1 gluon incoming and 2 gluons outgoing. (Outputs of 
+    the programs.)}
+    \label{fig:example_diagram}
+\end{figure*}
+
+Following the previous definitions, the diagram (figure \ref{fig:example_diagram}) represents
+a third order interaction with a three-gluon loop: and 2 gluons are 
+produced in the final state. Due to the presence of a loop, the diagram is
+divergent, and a counterterm diagram is needed to deal with the divergence. This 
+diagram is represented with a dot at the position of the loop, with the same 
+external legs as the original diagram (figure \ref{fig:example_diagram}). 
+
 
 \subsection{Case study: Gluons self-interactions} \label{sec:cases}
 
@@ -1015,9 +1085,116 @@ effectively reproducing the four-gluon interaction at that energy scale.
 
 As for the expansion in terms of the coupling constant \( g \), the term $H_{A^2}$ is
 an order zero term, since it does not contain the coupling constant \( g \).
-The term $H_{A^3}$ is a first-order term, since it contains $g$ to the first power,
-as well as a single structure constant $f^{abc}$. While the term $H_{A^4}$ and $H_{\sbrackets{\partial A A}^2}$
+The term $H_{A^3}$, Eq.\eqref{eq:H_A^3} is a first-order term, since it contains $g$ to the first power,
+as well as a single structure constant $f^{abc}$. The diagram representation of this term 
+is shown in figure \ref{fig:cannonical1}. These diagrams represent the 
+process of 1 gluon going to 2 gluons, and its hermitian conjugate of 2 gluons going to 1 gluon.
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order1/1.png}
+        \caption{ }
+        \label{fig:cannonical1_1}
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.1\textwidth}
+        \centering
+        {\LARGE $+$}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order1/2.png}
+        \caption{ }
+        \label{fig:cannonical1_2}
+    \end{subfigure}
+    \caption{Canonical diagrams of order 1}
+    \label{fig:cannonical1}
+\end{figure*}
+
+While the term $H_{A^4}$ and $H_{\sbrackets{\partial A A}^2}$
 are second order term, since they contain $g^2$ to the second power, and two structure constants.
+The
+diagrams obtained are shown in figures \ref{fig:cannonical2_1to3},
+\ref{fig:cannonical2_3to1} and \ref{fig:cannonical2_2to2}. Each of these diagrams
+corresponds to a different term in the Hamiltonian, contributing to different processes.
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/1.png}
+        \caption{ }
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/2.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/3.png}
+        \caption{ }
+    \end{subfigure}
+    \caption{Canonical diagrams of order 2, for the term $\Xi_{\sbrackets{\partial AA}^2}$, 
+    where one gluon is annihilated, and 3 gluons are created.}
+    \label{fig:cannonical2_1to3}
+\end{figure*}
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/9.png}
+        \caption{ }
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/10.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/11.png}
+        \caption{ }
+    \end{subfigure}
+    \caption{Canonical diagrams of order 2, for the term hermitian conjugate of 
+    $\Xi_{\sbrackets{\partial AA}^2}$, where 3 gluons are annihilated, and
+    1 gluon is created.}
+    \label{fig:cannonical2_3to1}
+\end{figure*}
+
+\begin{figure*}[h!]
+    \centering
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/4.png}
+        \caption{ }
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/5.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/6.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/7.png}
+        \caption{ }
+    \end{subfigure}
+    \begin{subfigure}[t]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{plots/canonical/order2/8.png}
+        \caption{ }
+    \end{subfigure}
+    \caption{Canonical diagrams of order 2, for the term $X_{\sbrackets{\partial AA}^2}$, 
+    where 2 gluons are annihilated, and 2 gluons are created.}
+    \label{fig:cannonical2_2to2}
+\end{figure*}
 
 \begin{comment}
 
@@ -1184,7 +1361,7 @@ starting point to obtain the diagrams of higher order.
 
 \end{comment}
 
-\newpage
+\clearpage
 
 \section{Code implementation} \label{sec:code}
 
@@ -1222,66 +1399,6 @@ An example of the different elements can be seen in figure \ref{fig:diagram_repr
 In the case of gluon interactions, although only 1 type of particle is present, the
 instantaneous interactions have to be considered. This is done by defining this 
 interaction as a new type of virtual particle in the program.
-
-
-\subsection{Diagram representation}
-
-Every term in the Hamiltonian can be identified with a diagram, depending on the 
-structure of the creation and annihilation operators present in it. Each diagram 
-will be composed of different elements, 
-
-\begin{itemize}
-    \item External legs, representation of the incoming and outgoing particles or 
-    the annihilation and creation operators, respectively. They determine the type 
-    of process that is being considered.
-    \item Internal legs, represent the virtual particles that are exchanged during the
-    process, or the intermediate creation and annihilation operators that are 
-    eliminated in the normal ordering process.These particles are not observed in 
-    the final state.
-    \item Vertices, points where interactions between particles occur, the number of
-    vertices in a diagram indicates the order at which the diagram is contributing.
-    \item Loops, closed paths in the diagrams, formed by the internal legs. It will
-    indicate the presence of divergences in the process.
-    \item Counterterms, additional terms added to the Hamiltonian to deal with the divergences
-    produced during the process. These will be represented with a dot in the diagram.
-\end{itemize}
-
-Notice that the diagrams are similar to the Feynman diagrams\cite{Peskin:1995ev}, except for the presence
-of the counterterms. The main difference is the order that the processes occur, altering
-the order of the vertices in the diagram will produce a different process. 
-
-Other difference how the diagrams are read, in the context of RGPEP, the diagrams are
-read from the left to the right, meaning that the time evolution is from the left to 
-the right.
-
-As an example, consider the diagram in figure \ref{fig:example_diagram}, this pair of 
-diagrams are one of the contributions to the three-gluon vertex, with the counterterm 
-associated with it. 
-
-\begin{figure*}[h!]
-    \centering
-    \begin{subfigure}[t]{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/1.png}
-        \caption{Diagram with a three-gluon loop.}
-    \end{subfigure}%
-    \begin{subfigure}[t]{0.5\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{plots/order3/order3_1to2/counterterms/1.png}
-        \caption{Counterterm of order 3 for the diagram (a)}
-    \end{subfigure}
-    \caption{A example of a possible diagram, a third order contribution to the 
-    process of three-gluon vertex, 1 gluon incoming and 2 gluons outgoing. (Outputs of 
-    the programs.)}
-    \label{fig:example_diagram}
-\end{figure*}
-
-Following the previous definitions, the diagram represent a process where a gluon
-interacts in a third order process, forming a three-gluon loop, and 2 gluons are 
-produced in the final state. Due to the presence of a loop, the diagram is
-divergent, and a counterterm diagram is needed to deal with the divergence. This 
-diagram is represented with a dot at the position of the loop, with the same 
-external legs as the original diagram. 
 
 \subsection{Order by order procedure}
 
@@ -1329,7 +1446,6 @@ between the orders.
 To understand the process, let's consider the first iteration of the program, to calculate
 the diagrams of order 2, starting from the canonical diagrams of order 1.
 
-\newpage
 \begin{figure*}[h!]
   \centering
   % switch into math mode, start a stretchy left parenthesis
@@ -1463,15 +1579,14 @@ connection or two connections can be considered, producing 2 different diagrams,
     \includegraphics[width=\textwidth]{plots/1to1_1.png}
     \end{subfigure}%
     \raisebox{1.3\height}{\Large $+$}\quad
-    \raisebox{1.2\height}{\Large $2\cdot$}
+    \raisebox{1.2\height}{\Large $4\cdot$}
     \begin{subfigure}[t]{.2\textwidth}
     \includegraphics[width=\textwidth]{plots/1to1_2.png}
     \end{subfigure}%
 \end{figure*}
 
-
-
-
+The first diagram will produce a loop, and thus a counterterm will be added to the
+list of diagram, to cancel the divergence produced.
 
 \subsection{Applied to gluons self-interactions} \label{sec:applied_gluons}
 Although the focus of this thesis is the gluons and its self-interactions, 
@@ -1479,14 +1594,15 @@ and therefore there is only one type of particle, there are tests that can be do
 check the validity of the program for multiple species of particles.
 The program can be adapted to consider new type of particles.
 
-This approach comes with its own problems. By considering an instantaneous 
+By considering an instantaneous 
 process as a new type of particles, this process need to respect the time 
 evolution of the system, meaning that in the eyes of the program, the 
 instantaneous interaction is no longer instantaneous, but rather a process that
-happens in a certain time interval. 
+happens in a certain time interval. But since the instantaneous interactions 
+really encodes a vertex, no other vertices can be present during the instantaneous
+interaction, and the program will ensure that this is the case.
 
-Nonetheless, this is a valid approach to consider the instantaneous interactions, 
-since no possible diagrams will be lost, rather equivalent diagrams will be 
+In this way, no possible diagrams will be lost. Instead, equivalent diagrams will be 
 obtained, without the program being aware of it, and it rests on the user to
 identify these equivalences. 
 
@@ -1494,138 +1610,17 @@ For lower orders, this approach works well, since the number of diagrams is
 manageable, but at higher orders, this is a problem that needs to be addressed in 
 the future, and a general fix to the problem will be implemented in the program.
 
-
-
-
 \newpage
 
 \section{Diagrams obtained} \label{sec:diagrams}
 
 In this section, we will present the diagrams obtained from the program. At 
-each order, we will consider the types of processes that is the most relevant.
-
-
-\subsection{Order 1}
-
-The first order diagrams correspond to the canonical diagrams of order 1, from equation
-\eqref{eq:H_A^3}, shown in figure \ref{fig:cannonical1}. These diagrams represent the 
-process of 1 gluon going to 2 gluons, and its hermitian conjugate of 2 gluons going to 1 gluon.
-
-\begin{figure*}[h!]
-    \centering
-    \begin{subfigure}[t]{0.33\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order1/1.png}
-        \caption{ }
-        \label{fig:cannonical1_1}
-    \end{subfigure}%
-    \begin{subfigure}[t]{0.1\textwidth}
-        \centering
-        {\LARGE $+$}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.33\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order1/2.png}
-        \caption{ }
-        \label{fig:cannonical1_2}
-    \end{subfigure}
-    \caption{Canonical diagrams of order 1}
-    \label{fig:cannonical1}
-\end{figure*}
+each order, we will consider the most relevant types of interaction.
 
 \subsection{Order 2}
 The second order diagrams correspond to the canonical diagrams of order 2,
 plus the diagrams obtained from the combination of the canonical diagrams of order 1 with 
-itself.
-
-\subsubsection{Canonical diagrams}
-
-The canonical diagrams of order 2 are obtained from the term 
-$H_{\sbrackets{\partial A A}^2}$, from equation \eqref{eq:H_partial}. The
-diagrams obtained are shown in figures \ref{fig:cannonical2_1to3},
-\ref{fig:cannonical2_3to1} and \ref{fig:cannonical2_2to2}. Each of these diagrams
-corresponds to a different term in the Hamiltonian, contributing to different processes.
-
-\begin{figure*}[h!]
-    \centering
-    \begin{subfigure}[t]{0.33\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/1.png}
-        \caption{ }
-    \end{subfigure}%
-    \begin{subfigure}[t]{0.33\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/2.png}
-        \caption{ }
-    \end{subfigure}
-    \begin{subfigure}[t]{0.33\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/3.png}
-        \caption{ }
-    \end{subfigure}
-    \caption{Canonical diagrams of order 2, for the term $\Xi_{\sbrackets{\partial AA}^2}$, 
-    where one gluon is annihilated, and 3 gluons are created.}
-    \label{fig:cannonical2_1to3}
-\end{figure*}
-
-\begin{figure*}[h!]
-    \centering
-    \begin{subfigure}[t]{0.33\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/9.png}
-        \caption{ }
-    \end{subfigure}%
-    \begin{subfigure}[t]{0.33\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/10.png}
-        \caption{ }
-    \end{subfigure}
-    \begin{subfigure}[t]{0.33\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/11.png}
-        \caption{ }
-    \end{subfigure}
-    \caption{Canonical diagrams of order 2, for the term hermitian conjugate of 
-    $\Xi_{\sbrackets{\partial AA}^2}$, where 3 gluons are annihilated, and
-    1 gluon is created.}
-    \label{fig:cannonical2_3to1}
-\end{figure*}
-
-\begin{figure*}[h!]
-    \centering
-    \begin{subfigure}[t]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/4.png}
-        \caption{ }
-    \end{subfigure}%
-    \begin{subfigure}[t]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/5.png}
-        \caption{ }
-    \end{subfigure}
-    \begin{subfigure}[t]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/6.png}
-        \caption{ }
-    \end{subfigure}
-    \begin{subfigure}[t]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/7.png}
-        \caption{ }
-    \end{subfigure}
-    \begin{subfigure}[t]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order2/8.png}
-        \caption{ }
-    \end{subfigure}
-    \caption{Canonical diagrams of order 2, for the term $X_{\sbrackets{\partial AA}^2}$, 
-    where 2 gluons are annihilated, and 2 gluons are created.}
-    \label{fig:cannonical2_2to2}
-\end{figure*}
-
-\subsubsection{Diagrams by combination of order 1}
-The second order diagrams can also be obtained from the combination of the canonical
-diagrams of order 1, shown in figure \ref{fig:cannonical1}.
+itself, shown in figure \ref{fig:cannonical1}.
 
 \begin{figure*}[h!]
     \centering
@@ -1670,25 +1665,153 @@ diagrams of order 1, shown in figure \ref{fig:cannonical1}.
         \label{fig:order2_from_order1/counterterms}
     \end{subfigure}
     \caption{Diagrams of second order, obtained from the combination of the canonical
-diagrams of order 1, with the order 2 counterterms}
+diagrams of order 1. Fig. (f) represents second-order
+counterterm.}
     \label{fig:order2_from_order1}
 \end{figure*}
 
 The diagram \ref{fig:order2_from_order1/1} is the combination of 2 
 \ref{fig:cannonical1_1} diagrams, where 1 one of the outgoing gluon from the first
-diagram is the incoming gluon of the second diagram. Similarly, the diagram
+diagram is the incoming gluon of the second diagram. 
+
+\begin{figure*}[h!]
+  \centering
+  % switch into math mode, start a stretchy left parenthesis
+  $\displaystyle
+      % now vcenter the whole block so its height is taken into account
+      \vcenter{%
+        \hbox{%  
+          % first subfigure
+          \begin{subfigure}[t]{.15\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+          
+          % second subfigure
+          \begin{subfigure}[t]{.15\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+        \quad % space between
+          \raisebox{3\height}{\LARGE $\to$}\quad
+        \raisebox{-0.1\height}{%  % lower it by 20% of its own height
+        \begin{subfigure}[t]{0.3\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{plots/order2/from_order1/1.png}
+        \end{subfigure}%
+      }%
+        }% end \hbox
+        }% end \vcenter
+    $ 
+\end{figure*}
+
+Similarly, the diagram
 \ref{fig:order2_from_order1/5} is the combination of 2 \ref{fig:cannonical1_2} diagrams, 
 the outgoing gluon of the first diagram is the one of the incoming gluon of the 
 second diagram.
+
+\begin{figure*}[h!]
+  \centering
+  % switch into math mode, start a stretchy left parenthesis
+  $\displaystyle
+      % now vcenter the whole block so its height is taken into account
+      \vcenter{%
+        \hbox{%  
+          % first subfigure
+          \begin{subfigure}[t]{.15\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+          
+          % second subfigure
+          \begin{subfigure}[t]{.15\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+        \quad % space between
+          \raisebox{3\height}{\LARGE $\to$}\quad
+        \raisebox{-0.1\height}{%  % lower it by 20% of its own height
+        \begin{subfigure}[t]{0.3\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{plots/order2/from_order1/4.png}
+        \end{subfigure}%
+      }%
+        }% end \hbox
+        }% end \vcenter
+    $ 
+\end{figure*}
 
 As for the diagrams \ref{fig:order2_from_order1/2} and \ref{fig:order2_from_order1/3}, 
 both result from the combination of \ref{fig:cannonical1_1} and \ref{fig:cannonical1_2} diagrams,
 in that order, where the different diagrams are obtained depending on the number of
 connections between the incoming and outgoing gluons.
+~
+\begin{figure*}[h!]
+  \centering
+  % switch into math mode, start a stretchy left parenthesis
+  $\displaystyle
+      % now vcenter the whole block so its height is taken into account
+      \vcenter{%
+        \hbox{%  
+          % first subfigure
+          \begin{subfigure}[t]{.13\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+          
+          % second subfigure
+          \begin{subfigure}[t]{.13\textwidth}
+            \includegraphics[width=\textwidth]{plots/1to2.png}
+          \end{subfigure}%
+        \quad % space between
+          \raisebox{2.5\height}{\LARGE $\to$}\quad
+
+        \raisebox{-0.2\height}{%  % lower it by 20% of its own height
+        \begin{subfigure}[t]{0.3\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{plots/order2/from_order1/2.png}
+        \end{subfigure}%
+      }%
+        \raisebox{1.5\height}{\LARGE $+$}\quad
+        \raisebox{-0.23\height}{%  % lower it by 20% of its own height
+        \begin{subfigure}[t]{0.3\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{plots/order2/from_order1/3.png}
+        \end{subfigure}%
+      }%
+        }% end \hbox
+        }% end \vcenter
+    $ 
+\end{figure*}
+
 
 The diagram \ref{fig:order2_from_order1/4} is the combination of the
 \ref{fig:cannonical1_2} and \ref{fig:cannonical1_1} diagrams, where the outgoing gluon
 of the first diagram is the incoming gluon of the second diagram.
+
+\begin{figure*}[h!]
+  \centering
+  % switch into math mode, start a stretchy left parenthesis
+  $\displaystyle
+      % now vcenter the whole block so its height is taken into account
+      \vcenter{%
+        \hbox{%  
+          % first subfigure
+          \begin{subfigure}[t]{.15\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+          
+          % second subfigure
+          \begin{subfigure}[t]{.15\textwidth}
+            \includegraphics[width=\textwidth]{plots/2to1.png}
+          \end{subfigure}%
+        \quad % space between
+          \raisebox{3\height}{\LARGE $\to$}\quad
+        \raisebox{-0.1\height}{%  % lower it by 20% of its own height
+        \begin{subfigure}[t]{0.3\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{plots/order2/from_order1/5.png}
+        \end{subfigure}%
+      }%
+        }% end \hbox
+        }% end \vcenter
+    $ 
+\end{figure*}
 
 Finally, the diagram \ref{fig:order2_from_order1/counterterms} is the counterterm
 associated with the second order diagrams, canceling the divergences that arises.
@@ -1799,10 +1922,8 @@ of 1 gluon going to 2 gluons, with the corresponding counterterms in figure
 \ref{fig:order3_1to2/counterterms}. 
 
 Depending on the types of particles in the process, we can deduce the origin of the 
-different diagrams. With the once having dotted lines, and thus coming from the second
-order term canonical diagrams $H_{\sbrackets{\partial A A}^2}$, combined with a first 
-order term canonical diagram $H_{A^3}$. While the diagrams without dotted lines
-come solely from the first order term canonical diagrams $H_{A^3}$
+different diagrams. Since the dotted lines are only present in the canonical diagrams 
+of order 2.
 
 Referring to the problems mentioned in Section \ref{sec:applied_gluons}, the diagrams 
 with dotted lines are instantaneous interactions, but the program considers them
@@ -1812,23 +1933,17 @@ diagram, due to instant process being instantaneous. For any other particle, the
 2 diagrams would be different, due to the importance of the order in the interactions.
 Hence, the program keeps them different, to avoid the lost of generality.
 
-Other artifact of the program occur for the diagrams \ref{fig:order3_1to2/counterterms/4} and
-\ref{fig:order3_1to2/counterterms/5}, which are counterterms added to cancel the divergences
-in the canonical diagrams. These counterterms are already considered in the canonical diagrams, 
-and thus not needed to be added again. But due to the way the program is implemented,
-it adds counterterms to all loop divergences in the diagrams.
-
 Comparing with the 3rd order contribution diagrams in \cite{QCDG}, the same diagrams
 for the three-gluon vertex are obtained, proving the validity of the program to reproduce the same results.
 
 \subsection{Self-energy: Gluon's effective mass}
 
-The self-energy describes the interaction of a gluon with its own field, leading to 
+The self-energy describes the interaction of a gluon with itself, leading to 
 modifications of the propagator and the effective mass of the gluon, such that 
 at the infrared limit, the gluon mimics a massive particle.
 
-Each order of the effective Hamiltonian contain parts that contribute to different 
-types of processes, 
+Each order of the effective Hamiltonian contains parts that contribute to different 
+types of interactions, 
 
 \begin{equation}
     \mathcal{H}_{n t} = \mathcal{H}_{n t}^{(1 \rightarrow 1)} + \mathcal{H}_{n t}^{(1 \rightarrow 2)} + 
@@ -1838,7 +1953,7 @@ where $\mathcal{H}_{n t}^{(1 \rightarrow 1)}$ is the part of the Hamiltonian tha
 contributes to the process of 1 gluon going to 1 gluon, $\mathcal{H}_{n t}^{(1 \rightarrow 2)}$ 
 is the part that contributes to the process of 1 gluon going to 2 gluons, and so on.
 
-These effective Hamiltonian can be expressed in terms of the creation and annihilation operators,
+This effective Hamiltonian can be expressed in terms of creation and annihilation operators,
 similar to Eqs.\eqref{eq:H_A^2}, as follows,
 
 \begin{equation}
@@ -1898,7 +2013,7 @@ with $m^2_{(n), t}$ being the effective mass correction at order $n$.
 Then, it is in our best interest to obtain all the diagrams at each order that contribute
 to the gluon's self-energy.
 
-At order 2, the diagram that contribute to the gluon's self-energy is presented in figure 
+At order 2, the diagram that contributes to the gluon's self-energy is presented in figure 
 \ref{fig:order2_from_order1/3}  and \ref{fig:order2_from_order1/counterterms}.
 At order 4, the diagrams that contribute to the gluon's self-energy are shown in figure
 \ref{fig:order4_1to1}.
@@ -1972,14 +2087,14 @@ At order 4, the diagrams that contribute to the gluon's self-energy are shown in
 
     \caption{Diagrams of fourth order, contributing to the gluon's self-energy,
     with (h)-(k) diagrams with counterterms of order 2, and (l) the counterterm 
-    of order 4}
+    of order 4.}
     \label{fig:order4_1to1}
     
 \end{figure*}
 
-In this thesis, our focus is in the generation of the diagrams, and thus we will not
-consider any of the calculation for the concepts introduced in this section, since
-they are beyond the scope of this work.
+This thesis focuses on the generation of the diagrams, and thus we will not
+consider any calculation beyond this analysis in this section, since
+they are far from the scope of this work.
 
 \begin{comment}
 
@@ -2011,8 +2126,10 @@ large distances, modifying the potential between quarks in the infrared regime.
 
 Glueballs are color-singlet bound states of 2 or more interacting gluons, unlike mesons
 and baryons, which involve quarks and antiquarks, glueballs are composed solely of gluons.
-The existence of glueballs is a consequence of the non-abelian nature of QCD, where gluons
-interact strongly enough with each other to become dinamically confined.
+The existence of glueballs is predicted as a consequence of the non-abelian nature of QCD, where gluons
+interact strongly enough with each other to become dinamically confined. However,
+they are not confirmed experimentally nowadays. So a deep theoretical understanding of 
+their dynamic structure is needed.
 
 The two to two gluon interaction is the simplest case of a glueball, and it can be
 obtained from the program by considering the process of 2 gluons going to 2 gluons, 
@@ -2297,41 +2414,11 @@ the diagrams obtained from the program are shown in figure \ref{fig:order4_2to2}
         \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/18.png}
     \end{subfigure}
     \hfill
-    \begin{subfigure}[t]{0.16\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/19.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.16\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/20.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.16\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/21.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.16\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/22.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.16\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/23.png}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[t]{0.16\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{plots/order4_2to2/counterterms/24.png}
-    \end{subfigure}
-    \hfill
     \begin{subfigure}[t]{0.1\textwidth}
         \centering
         {\LARGE $\ldots$}
     \end{subfigure}
-    
+    \hfill
     \caption{Some diagrams of fourth order, contributing to the process of 
     2 gluons going to 2 gluons.}
     \label{fig:order4_2to2}
@@ -2349,7 +2436,7 @@ the diagrams obtained from the program are shown in figure \ref{fig:order4_2to2}
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
-        Order & Unique diagrams & Computational time (s)\\
+        Order & Types of diagrams & Computational time (s)\\
         \hline
         2  & 16 & 0.150\\
         3  & 76 & 0.198\\
@@ -2359,22 +2446,44 @@ the diagrams obtained from the program are shown in figure \ref{fig:order4_2to2}
         \hline
     \end{tabular}
     \caption{Number of diagrams for all possible processes, obtained by the program 
-    at each order, and the Computational time taken at each order.}
+    at each order, and the computational time taken at each order.}
     \label{tab:time_diagrams}
 \end{table}
 
-The table \ref{tab:time_diagrams} shows the number of unique diagrams obtained by
+The table \ref{tab:time_diagrams} shows the number of types of diagrams obtained by
 the program increases exponentially with the perturbative order, this exponential growth
 reflects the combinatorial explosion typical in perturbation theory.
 
 The computational time also increases sharply, confirming that the diagram generation
-and evaluation becomes significantly more complex at higher orders. 
+and evaluation becomes significantly more complex at higher orders 
+(Figs. \ref{fig:performance}, \ref{fig:performance_log}).
+
+\begin{figure*}[h!]
+    \centering
+    \centering
+    \includegraphics[width=\textwidth]{plots/performance.png}
+    \caption{Representation of the types of diagrams with the computational time taken at
+    each order.}
+    \label{fig:performance}
+\end{figure*}
+~
+\begin{figure*}[h!]
+    \centering
+    \centering
+    \includegraphics[width=\textwidth]{plots/performace_log.png}
+    \caption{Log representation of the types of diagrams with the computational time taken at
+    each order. The exponential growth of the number of diagrams and the computational time
+    is more evident in this representation.}
+    \label{fig:performance_log}
+\end{figure*}
+
+\newpage
 
 At lower orders (2 and 3), the simulation time is minimal and manageable, around $( 0.2 s)$, 
 showing the program is efficient for small systems or exploratory purposes.
 
 The jump from $10.935 s$ to $157.121 s$ may reflect not only the increased number of diagrams, 
-but also inefficiencies like, such as: diagram redundancy checks, memory allocations or 
+but also inefficiencies, such as: diagram redundancy checks, memory allocations or 
 other computational overheads. A possible optimization could be to implement 
 parallel processing or more efficient data structures to handle the growing complexity, 
 which would help to reduce the computational time at higher orders. Other possible
@@ -2385,52 +2494,52 @@ process considered, which would be relevant for higher orders.
 
 \section{Conclusions and future work} \label{sec:conclusions}
 
-In this thesis, we have presented a program to obtain diagram product of any 
-perturbative expansion, specifically for the RGPEP, in the case of gluon interactions.
-But the program is modular, and can be adapted to other theories, by changing the
-canonical diagrams and the types of particles considered. 
+In this thesis, we have presented a program to obtain diagram products in
+perturbative expansions, we have illustrated with an example of gluon interactions in 
+the context of RGPEP.
+The program is modular, and can be adapted to other theories, by changing the
+canonical diagrams and the types of particles considered. It is, however, specific for
+time-ordered perturbation theory in the Hamiltonian formalism.
 
 First, we have presented the RGPEP, and the framework necessary to understand the 
-renormalization procedure, and the perturbative expansion of the Hamiltonian. Secondly, 
-we explained the specific case of the gluons self-interactions, within the
+renormalization procedure, and the perturbative expansion of the Hamiltonian solution. 
+Secondly, we explained the specific case of the gluons self-interac- tions, within the
 theory of QCD, and the canonical Hamiltonian that describe the theory.
 
 Then, we presented the program that implements the RGPEP, the definition of the diagrams 
-in the program how it is able to obtain the diagrams of higher order, starting
+in the program, how it is able to obtain the diagrams of higher order, starting
 from the canonical diagrams, and using the order by order procedure described in section
-\ref{sec:orderbyorder_solutions}. In the case of QCD, the canonical diagrams are up to 
-second order. 
+\ref{sec:orderbyorder_solutions}. 
 
-To check the validity of the program, we tested it with the three-gluon vertex,
+To check the correctness of the code, we tested it with the three-gluon vertex,
 obtaining the diagrams of third order, and the corresponding counterterms to cancel
 the divergences produced in the process. The program was able to reproduce the
-diagrams obtained in the literature, proving its validity to obtain the diagrams of
+diagrams obtained in previous works \cite{QCDG}, offering enough confidence to obtain diagrams of
 higher order in the perturbative expansion of the Hamiltonian.
 
-After that, we presented the gluon's self-energy, and how the program is able to
-obtain the diagrams that contribute to the gluon's self-energy, and the effective mass
-of the gluon, which is a consequence of the non-abelian nature of QCD.
+We presented the gluon's self-energy, and how the program is able to
+obtain the diagrams that contribute to the effective mass
+of the gluon, an important object of study in QCD.
 
-Other interesting case is the study of bound states, such as glueballs.
+Other interesting case is bound state.
 Using the program, we were able to obtain the diagrams that contribute to the process
 of 2 gluons going to 2 gluons, which is the simplest case of a glueball.
 The program is able to obtain the diagrams of higher order, but the number of
 diagrams increases exponentially with the perturbative order, making it impossible
-to show all the diagrams in this thesis.
+to show all the diagrams in this document.
 
 Finally, we presented the performance of the program, showing the number of diagrams
 obtained at each order, and the computational time taken to obtain them. The results
 show that the number of diagrams increases exponentially with the perturbative order,
 and the computational time also increases sharply, confirming that the diagram generation
 and evaluation becomes significantly more complex at higher orders.
+The program is available in a public repository \cite{Liu_Computational_tools_for_2025}.
 
-The program is still in development, and there are many improvements that can
-be made to optimize the process of obtaining the diagrams. Other main issue to
+The program can be further developed in many interesting and useful ways, and there are many improvements that can
+be made to optimize the process of obtaining the diagrams. For instance, a main issue to
 address is the counting of the diagrams, as the program is able to obtain the diagrams,
-but it does not output the symmetry factor correctly, due to the problems with the factors
-associated to the canonical diagrams, and the counterterms, as well as the method
-used to find the diagrams that prioritize ensuring that no diagrams are lost, rather than
-ensuring that the symmetry factor is correct.
+but it does not output the symmetry factor yet, due to complexities involved in the factors
+associated to the canonical diagrams, and counterterms.
 
 As future work, we plan to fix the issues mentioned above, and to implement and 
 test the program with other theories, and more types of particles, particularly
@@ -2438,61 +2547,69 @@ considering the quarks and antiquarks, in the general case of QCD.
 
 \section{Conclusiones y trabajo futuro} \label{sec:conclusions_es}
 
-En esta trabajo, hemos presentado un programa para obtener diagramas producto de cualquier
-expansi\'on perturbativa, en particular para el RGPEP, en el caso de las interacciones de gluones.
-El programa es modular, y puede ser adaptado a otras teor\'ias, cambiando los diagramas can\'onicos
-y los tipos de part\'iculas consideradas.
+En este trabajo, hemos presentado un programa para obtener productos de diagramas en
+expansiones perturbativas, ilustrando con un ejemplo de interacciones de gluones en
+el contexto del RGPEP.
+El programa es modular, y puede ser adaptado a otras teor\'ias, cambiando los
+diagramas can\'onicos y los tipos de part\'iculas consideradas. Es, sin embargo, espec\'ifico para
+la teor\'ia de perturbaciones ordenadas en el formalismo Hamiltoniano.
 
 Primero, hemos presentado el RGPEP, y el marco necesario para entender el
-procedimiento de renormalizaci\'on, y la expansi\'on perturbativa del Hamiltoniano.
+procedimiento de renormalizaci\'on, y la expansi\'on perturbativa de la solución del Hamiltoniano.
 En segundo lugar, explicamos el caso espec\'ifico de la interacción de los gluones, dentro de la
 teor\'ia de QCD, y el Hamiltoniano can\'onico que describe la teor\'ia.
 
 Luego, presentamos el programa que implementa el RGPEP, la definici\'on de los diagramas
 en el programa, c\'omo es capaz de obtener los diagramas de orden superior, comenzando
 desde los diagramas can\'onicos, y utilizando el procedimiento orden por orden descrito en la secci\'on
-\ref{sec:orderbyorder_solutions}. En el caso de QCD, los diagramas can\'onicos son hasta
-el segundo orden.
+\ref{sec:orderbyorder_solutions}
 
-Para comprobar la validez del programa, lo probamos con el v\'ertice de tres gluones,
+Para comprobar la validez del c\'odigo, lo probamos con el v\'ertice de tres gluones,
 obteniendo los diagramas de tercer orden, y los correspondientes contra-t\'erminos para cancelar
 las divergencias producidas en el proceso. El programa fue capaz de reproducir los
-diagramas obtenidos en la literatura, demostrando su validez para obtener los
-diagramas de
+diagramas obtenidos en trabajos anteriores \cite{QCDG}, ofreciendo suficiente confianza para obtener diagramas de
 orden superior en la expansi\'on perturbativa del Hamiltoniano.
 
-Despu\'es de eso, presentamos la auto-energ\'ia del glu\'on, y c\'omo el programa es capaz de
-obtener los diagramas que contribuyen a la auto-energ\'ia del glu\'on, y la masa efectiva
-del glu\'on, que es una consecuencia de la naturaleza no abeliana de QCD.
+Presentamos la auto-energ\'ia del glu\'on, y c\'omo el programa es capaz de
+obtener los diagramas que contribuyen a la masa efectiva
+del glu\'on, un objeto de estudio importante en QCD.
 
-Otro caso interesante es el estudio de estados ligados, como los glueballs.
-Utilizando el programa, pudimos obtener los diagramas que contribuyen al proceso
-de 2 gluones yendo a 2 gluones, que es el caso m\'as simple de un glueball.
+Otro caso interesante es el de los estados ligados.
+Usando el programa, pudimos obtener los diagramas que contribuyen al proceso
+de 2 gluones yendo a 2 gluones, que es el caso m\'as simple de un glubol.
 El programa es capaz de obtener los diagramas de orden superior, pero el n\'umero de
 diagramas aumenta exponencialmente con el orden perturbativo, haciendo imposible
-mostrar todos los diagramas en este trabajo.
+mostrar todos los diagramas en este documento.
 
 Finalmente, presentamos el rendimiento del programa, mostrando el n\'umero de diagramas
 obtenidos en cada orden, y el tiempo computacional tomado para obtenerlos. Los resultados
 muestran que el n\'umero de diagramas aumenta exponencialmente con el orden perturbativo,
 y el tiempo computacional tambi\'en aumenta bruscamente, confirmando que la generaci\'on
 y evaluaci\'on de diagramas se vuelve significativamente m\'as compleja a ordenes superiores.
+El programa est\'a disponible en un repositorio p\'ublico \cite{Liu_Computational_tools_for_2025}.
 
-El programa sigue en desarrollo, y hay muchas mejoras que se pueden hacer para optimizar
-el proceso de obtenci\'on de los diagramas. Otro problema principal a abordar es el conteo
-de los diagramas, ya que el programa es capaz de obtener los diagramas,
-pero no
-salida el factor de simetr\'ia correctamente, debido a los problemas con los factores
-asociados a los diagramas can\'onicos, y los contra-t\'erminos, as\'i como el m\'etodo
-utilizado para encontrar los diagramas que prioriza asegurar que no se pierdan diagramas, en lugar de
-asegurar que el factor de simetr\'ia sea correcto.
+El programa puede ser desarrollado m\'as all\'a de lo presentado en este trabajo, y hay muchas mejoras que se pueden
+hacer para optimizar el proceso de obtenci\'on de los diagramas. Por ejemplo, un problema principal a
+resolver es el conteo de los diagramas, ya que el programa es capaz de obtener los diagramas,
+pero no produce el factor de simetr\'ia todav\'ia, debido a las complejidades involucradas en los factores
+asociados a los diagramas can\'onicos, y contra-t\'erminos.
 
 Como trabajo futuro, planeamos arreglar los problemas mencionados anteriormente, e implementar y
 probar el programa con otras teor\'ias, y m\'as tipos de part\'iculas, particularmente
 considerando los quarks y antiquarks, en el caso general de QCD.
 
-\newpage
-\section{Acknowledgements}
+\section*{Acknowledgements}
+
+I would like to express my gratitude to my supervisor, Prof. Dra. María Gómez Rocha,
+for her guidance, support, and encouragement throughout this project. Her expertise 
+have essential in shaping my understanding of the subject matter and 
+the development of this tool.
+
+I would also like to thank my colleagues and friends for their valuable feedback and
+support not only during the development of this program, but also throughout my academic journey.
+
+Finally, I would like to acknowledge the support of my family, who have always been there
+for me, providing encouragement and motivation throughout my academic journey. 
 
 
 

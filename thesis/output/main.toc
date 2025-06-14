@@ -10,8 +10,8 @@
 \contentsline {subsubsection}{\numberline {2.3.1}Regularization and Counterterms}{8}{subsubsection.2.3.1}%
 \contentsline {subsubsection}{\numberline {2.3.2}Order by order solutions.}{9}{subsubsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.4}Diagram representation}{10}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}Case study: Gluons self-interactions}{11}{subsection.2.5}%
-\contentsline {subsubsection}{\numberline {2.5.1}Quantum Chromodynamics (QCD)}{11}{subsubsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5}Case study: Gluons self-interactions}{12}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}Quantum Chromodynamics (QCD)}{12}{subsubsection.2.5.1}%
 \contentsline {subsubsection}{\numberline {2.5.2}Canonical Hamiltonian for the gluon fields}{12}{subsubsection.2.5.2}%
 \contentsline {section}{\numberline {3}Code implementation}{16}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Definition of diagrams}{16}{subsection.3.1}%

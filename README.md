@@ -3,7 +3,7 @@
 ### Abstract
 The renormalization procedure is fundamental to understand the behavior of the 
 theories at different scales, defining effective theories that describe the
-behaviour of the systems for different energy levels. However, the calculations are
+behavior of the systems for different energy levels. However, the calculations are
 non-trivial, and perturbation theory is used to obtain the results, representing
 the different terms of the theory as diagrams that describe the process, similar
 to the Feynman diagrams. But the number of diagrams increases exponentially with

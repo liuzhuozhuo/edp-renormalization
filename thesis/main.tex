@@ -119,21 +119,21 @@ Curso Académico 2024/2025
 
 \begin{minipage}{0.8\linewidth}
 
-El método del grupo de renormalización desempeña un papel fundamenteal en la comprensión
-de fenómenos físicos a distintas escalas, definiendo teorías efectivas que
-representan las interacciones más relevantes en un cierto rango de energías. 
-Construyendo hamiltonianos efectivos a partir de un hamiltoniano inicial y una transformación
-unitaria dependiente de una escala.\\
+El procedimiento de renormalización del grupo efectivo de partículas juega un papel fundamental
+en la comprensión de fenómenos físicos a distintas escalas, construyendo teorías efectivas que
+capturan las interacciones más relevantes dentro de un rango de energía determinado.
+Hamiltonianos efectivos se construyen a partir de un Hamiltoniano inicial y una transformación
+unitaria dependiente de la escala.\\
 
 Se requiere de un tratamiento perturbativo para obtener
 resolver las ecuaciones planteadas, representando los distintos términos de la teoría como diagramas 
-que describen el proceso, similar a los diagramas de Feynman. Pero el número de
+que describen el proceso, de forma análoga a los diagramas de Feynman. Pero el número de
 diagramas aumenta exponencialmente con el orden de la perturbación, haciendo que
 el proceso de cálculo sea tedioso y propenso a errores. \\
 
 El objetivo de este trabajo es desarrollar un programa \cite{Liu_Computational_tools_for_2025} que automatice el proceso
 de obtención de diagramas asociados a un proceso determinado, hasta un orden
-dado, partiendo de unos diagramas base, llamado diagramas canónicos dados por la 
+dado, partiendo de unos diagramas base, los diagramas canónicos dados por la 
 teoría. Siendo el programa capaz de descartar los diagramas que no contribuyen al 
 proceso, detectar loops y añadir contratérminos a los diagramas para cancelar 
 divergencias. \\
@@ -141,8 +141,7 @@ divergencias. \\
 Analizando los diagramas obtenidos de ordenes inferiores, y comparando con 
 resultados conocidos, se ha comprobado la veracidad del programa. Esto permite
 obtener los diagramas de ordenes superiores, y estudiar el comportamiento de la 
-teoría a dichos ordenes, en las que se pueden observar fenómenos único de teorías 
-no abelianas.
+teoría a dichos ordenes, donde emergen características distintivas de las teorías gauge no abelianas.
 
 \end{minipage}
 
@@ -152,27 +151,27 @@ no abelianas.
 \bigskip
 
 \begin{minipage}{0.8\linewidth}
-The renormalization group method plays a fundamental role in understanding
-physical phenomena at different scales, defining effective theories that
-represent the most relevant interactions in a certain energy range.
+The renormalization group procedure plays a fundamental role in understanding
+physical phenomena at different scales, constructing effective theories that
+capture the most relevant interactions within a certain energy range.
 Effective Hamiltonians are constructed from an initial Hamiltonian and a scale-dependent
 unitary transformation.\\
 
 A perturbative treatment is required to solve the equations, representing the different
-terms of the theory as diagrams that describe the process, similar to Feynman diagrams.
+terms of the theory as diagrams that describe the process, in analogy with Feynman diagrams.
 However, the number of diagrams increases exponentially with the order of the perturbation,
 making the calculation process tedious and error-prone. \\
 
 The aim of this work is to develop a program \cite{Liu_Computational_tools_for_2025} that automates the process of
 obtaining the diagrams associated with a given process, up to a given order,
-starting from a set of base diagrams, called canonical diagrams given by the
+starting from a set of base diagrams, the canonical diagrams given by the
 theory. The program is able to discard the diagrams that do not contribute to the
 process, detect loops and add counterterms to the diagrams to cancel divergences. \\
 
 By analyzing the diagrams obtained from lower orders, and comparing with known
 results, the correctness of the program has been verified. This allows to obtain
 the diagrams of higher orders, and study the behavior of the theory at those
-orders, where unique phenomena of non-abelian theories can be observed.
+orders, where distinct features of non-Abelian gauge theories emerge.
 
 \end{minipage}
 
@@ -199,38 +198,38 @@ orders, where unique phenomena of non-abelian theories can be observed.
 
 \section{Introduction}
 
-When trying to build a theory that describes the particles and their interactions, 
-it's imperative that the theory is compatible with the two pillars of modern physics:
+When building a theory that describes the particles and their interactions, 
+it's imperative that the theory be compatible with the two pillars of modern physics:
 special relativity and quantum mechanics. Special relativity is a theory 
 that describes the behavior of particles at high energies, and quantum 
 mechanics is a theory that describes the behavior of particles at atomic and subatomic scales.
-Combining these two pillars gives rise to quantum field theory (QFT) – a formalism 
-in which particles are described as excitations of underlying fields.
+Combining these two frameworks leads to quantum field theory (QFT) – a formalism 
+in which particles are interpreted as excitations of underlying fields.
 
-Quantum Chromodynamcis (QCD) is the quantum field theory that describes the strong interaction
+Quantum Chromodynamics (QCD) is the quantum field theory that describes the strong interaction
 in terms of quarks and gluons. This theory has proven to be extremely difficult to use in practice.
 Many alternative strategies have arisen with the purpose of addressing different aspects
-of the theory while negleting less concerned issues.
+of the theory while neglecting those less relevant to specific problems.
 
 An important aspect of any theoretical approach to QCD is that it should be able to describe  
-different phenomena that occur at different scales. While at low energies (long distances), experiments see only bound 
-states (hadrons), with the internal structure smoothed out, at high energies 
-(short distances), one can probe inside hadrons, with quarks and gluons behave almost free 
-(the phenomenon of asymptotic freedom). The theory must interpolate between these regimes.
+phenomena occurring at different energy scales. At low energies (long distances), experiments reveal only bound states,
+hadrons, whose internal structure is effectively smoothed out, at high energies 
+(short distances), one can probe inside hadrons, where quarks and gluons behave almost as 
+free particles, a phenomenon known as asymptotic freedom. The theory must interpolate between these regimes.
 
 In the context of theoretical physics, the renormalization group procedure 
 for effective particle (RGPEP) is a powerful tool formulated in Hamiltonian dynamics
- to study the behavior of physical systems 
-at different energy scales\cite{PhysRevD.48.5863}. In the case of quantum field theories, 
+to study the behavior of physical systems across different energy scales \cite{PhysRevD.48.5863}.
+In the case of quantum field theories, 
 the renormalization 
 group procedure introduces a scale parameter, which moderates the "resolution" of the 
-system, allowing one to select the focus on a particular energy scale, from 
+system, allowing one to focus on specific energy scales, from 
 the smallest details (the short distance behavior) to the largest ones (the large
 scale behavior). 
 
 The RGPEP yields an effective Hamiltonian, that describes the system at a
 given scale. This effective Hamiltonian is the solution to a differential equation,
-the RGPEP equation, that describes the evolution of the effective Hamiltonian with 
+the RGPEP equation, which governs the evolution of the effective Hamiltonian with 
 respect to the scale parameter.
 
 In general, obtaining the exact solution of the RGPEP equation is a non-trivial task, 
@@ -239,8 +238,8 @@ solution.
 
 Every interaction term in the Hamiltonian can be identified with a 
 diagram, which, in turn, results as a product of diagrams of lower order.
-These diagrams are usually drawn by hand. But the 
-number of diagrams increases exponentially with each order, making the process 
+These diagrams are usually drawn by hand, but their number grows exponentially with 
+increasing perturbative order, making the process 
 tedious and error-prone. The goal of this thesis is to develop a tool that automates 
 the process of obtaining the diagrams associated with a certain interaction for a 
 given order.
@@ -249,7 +248,7 @@ This thesis is organized as follows. Section \ref{sec:theoretical_background} de
 the theoretical background needed to understand the renormalization group procedure
 for effective particles, in the context of Hamiltonian dynamics. Section \ref{sec:cases}
 describes the example studied in this thesis, gluon interactions, whereas we remove
-some of the complexity introduced by quarks, some peculiarities of the QCD theory are 
+some complexity introduced by quarks, some peculiarities of the QCD theory are 
 explicitly considered. Section \ref{sec:code} describes how diagrams are defined in the code, 
 and Section \ref{sec:diagrams} describes the steps taken to obtain diagrams of arbitrary order,
 as product of elementary ones. Finally, 
@@ -837,47 +836,50 @@ an essential first step in the renormalization process.
 
 \subsubsection{Order by order solutions.} \label{sec:orderbyorder_solutions}
 
+For our purposes, the $\mathcal{H}_{0 n}$ and $\mathcal{G}_{0 n}$ can be interpreted as the
+same, the canonical diagrams with counterterms, at order \( n \). Since we are only
+interested in the structure of the solutions, and not in the actual calculation, let's 
+rename them all as $\mathcal{H}_{0 n}$.
+
+This way, in the case where no canonical diagrams are present, $\mathcal{G}_{0 n}$ is simply the
+counterterm at order \( n \).
+
 The solution of the differential equations \eqref{eq:diff_order1} to \eqref{eq:diff_order3} 
-and so on, without considering the RGPEP regulating factors,
+and so on, without considering the RGPEP factors that would multiply each term.
 
 \begin{align}
-    \mathcal{H}_{t1} & = \mathcal{H}_{01} \\
-    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{01} 
+    \mathcal{H}_{t1} & = f_{t} \mathcal{H}_{01} \\
+    \mathcal{H}_{t2} & \sim \mathcal{H}_{02} + \mathcal{H}_{01} 
     \mathcal{H}_{01}\\
-    \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{01} \mathcal{H}_{01}
-    \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} \mathcal{H}_{01} + 
-    \mathcal{H}_{01} \mathcal{G}_{02}}\\
-    \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{01} \mathcal{H}_{01}
-    \mathcal{H}_{01} \mathcal{H}_{01} + \parenthesis{\mathcal{G}_{02} 
-    \mathcal{H}_{01} \mathcal{H}_{01} +  \mathcal{H}_{01} \mathcal{G}_{02}
-    \mathcal{H}_{01} + \mathcal{H}_{01} \mathcal{H}_{01} \mathcal{G}_{02}} \nonumber\\
-    & + \parenthesis{\mathcal{G}_{03} \mathcal{H}_{01} + \mathcal{H}_{01} 
-    \mathcal{G}_{03} + \mathcal{G}_{02}\mathcal{G}_{02}}. \\
+    \mathcal{H}_{t3} & \sim \mathcal{H}_{03} + \mathcal{H}_{01} \mathcal{H}_{01}
+    \mathcal{H}_{01} + \parenthesis{\mathcal{H}_{02} \mathcal{H}_{01} + 
+    \mathcal{H}_{01} \mathcal{H}_{02}}\\
+    \mathcal{H}_{t4} & \sim \mathcal{H}_{04} + \mathcal{H}_{01} \mathcal{H}_{01}
+    \mathcal{H}_{01} \mathcal{H}_{01} + \parenthesis{\mathcal{H}_{02} 
+    \mathcal{H}_{01} \mathcal{H}_{01} +  \mathcal{H}_{01} \mathcal{H}_{02}
+    \mathcal{H}_{01} + \mathcal{H}_{01} \mathcal{H}_{01} \mathcal{H}_{02}} \nonumber\\
+    & + \parenthesis{\mathcal{H}_{03} \mathcal{H}_{01} + \mathcal{H}_{01} 
+    \mathcal{H}_{03} + \mathcal{H}_{02}\mathcal{H}_{02}},\\
     &\vdots  \nonumber
 \end{align}
+where $f_{t}$ is a form factor that depends on the scale $t$, and is an exponential 
+result of the first-order solution, suppressing the transition between states with 
+different invariant mass.
 
-This shows how the structure of the solutions at each order are obtained. 
-
-The first-order diagrams are simply the canonical diagrams with one power of $g$ and are
-denoted by $\mathcal{H}_{01}$. As for the second order, they contain the canonical diagrams 
-with power $g^2$ named $\mathcal{G}_{02}$, and the product of 2 first-order diagrams. The 
-third order contains the canonical diagrams from the third order $\mathcal{G}_{03}$,
-and the product of the first order, and second order canonical diagrams, as well as the 
-product of exclusive first order diagrams. This way, we could rewrite the solution for 
-each order in terms of the solution to the previous order,
-
-\begin{align}
-    \mathcal{H}_{t1} & = \mathcal{H}_{01} = \mathcal{G}_{01}, \\
-    \mathcal{H}_{t2} & = \mathcal{G}_{02} + \mathcal{H}_{t1} \mathcal{G}_{01}, \\
-    \mathcal{H}_{t3} & = \mathcal{G}_{03} + \mathcal{H}_{t1} \mathcal{G}_{02} + 
-    \mathcal{H}_{t2} \mathcal{G}_{01}, \\
-    \mathcal{H}_{t4} & = \mathcal{G}_{04} + \mathcal{H}_{t2} \mathcal{G}_{02} + 
-    \mathcal{H}_{t1} \mathcal{G}_{03} + \mathcal{H}_{t3} \mathcal{G}_{01} \label{eq:sol_order4}\\
-    \vdots & \nonumber
-\end{align}
-
-This is how different orders are related to each other, and how an iterative 
+This shows how the structure of the solutions at each order are obtained, and how an iterative 
 process can be used to obtain the solution for each order.
+
+The first-order diagrams are simply the canonical diagrams, with one power of $g$ and the 
+counterterms of first-order, all together denoted by $\mathcal{H}_{01}$. 
+
+As for the second order, 
+they contain the canonical diagrams with power $g^2$, and the counterterms,
+all together $\mathcal{G}_{02}$, and the product of 2 first-order diagrams. 
+
+The 
+third order contains only the counterterms from the third order $\mathcal{G}_{03}$,
+the product of the first order, and second order canonical diagrams, as well as the 
+product of exclusive first order diagrams.
 
 
 \subsection{Diagram representation}
@@ -948,7 +950,7 @@ divergent, and a counterterm diagram is needed to deal with the divergence. This
 diagram is represented with a dot at the position of the loop, with the same 
 external legs as the original diagram (figure \ref{fig:example_diagram}). 
 
-
+\newpage
 \subsection{Case study: Gluons self-interactions} \label{sec:cases}
 
 \subsubsection{Quantum Chromodynamics (QCD)}
@@ -1094,17 +1096,14 @@ process of 1 gluon going to 2 gluons, and its hermitian conjugate of 2 gluons go
     \centering
     \begin{subfigure}[t]{0.33\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order1/1.png}
+        \includegraphics[width=\textwidth]{plots/1to2label.png}
         \caption{ }
         \label{fig:cannonical1_1}
     \end{subfigure}%
-    \begin{subfigure}[t]{0.1\textwidth}
-        \centering
-        {\LARGE $+$}
-    \end{subfigure}
+    \quad \raisebox{4.5\height}{\LARGE $+$}\quad
     \begin{subfigure}[t]{0.33\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{plots/canonical/order1/2.png}
+        \includegraphics[width=\textwidth]{plots/2to1label.png}
         \caption{ }
         \label{fig:cannonical1_2}
     \end{subfigure}

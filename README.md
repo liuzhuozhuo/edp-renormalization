@@ -31,7 +31,7 @@ This project uses [ChatGPT](https://openai.com/chatgpt) (GPT-4o and GPT o4-mini-
 
 All AI-generated content was reviewed and verified before inclusion.
 
-### Code description.
+## Code description.
 
 The basic guide of the usage of the codes in this repository can be found in `python\stepbystep-guide.ipynb`. For now the main focus is in reproducing the diagrams considering only gluons, with the functions defined in `python\functions\gluon_functions.py`.
 

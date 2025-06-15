@@ -1,25 +1,35 @@
 # Bachelor thesis: Computational tools for perturbative calculations in renormalization of Hamiltonian. 
 
 ### Abstract
-The renormalization procedure is fundamental to understand the behavior of the 
-theories at different scales, defining effective theories that describe the
-behavior of the systems for different energy levels. However, the calculations are
-non-trivial, and perturbation theory is used to obtain the results, representing
-the different terms of the theory as diagrams that describe the process, similar
-to the Feynman diagrams. But the number of diagrams increases exponentially with
-the order of the perturbation, making the calculation process tedious and prone to
-errors. 
+The renormalization group procedure for effective particles plays
+a fundamental role in understanding physical phenomena at different scales, constructing effective theories that capture the most
+relevant interactions within a certain energy range. Effective
+Hamiltonians are constructed from an initial Hamiltonian and a
+scale-dependent unitary transformation.
+Often, a perturbative treatment is required to solve the
+renormalization-group equations, and it’s useful and convenient representing the different terms of the theory as diagrams
+that describe the process, in analogy with Feynman diagrams.
+However, the number of diagrams increases exponentially with
+the order of the perturbation, making the calculation process
+tedious and error-prone.
+The aim of this work is to develop a program that automates
+the process of obtaining the diagrams associated with a given
+interaction term, and at a given order, starting from the set of
+base diagrams, given by the canonical Hamiltonian of the theory.
+The program is able to discard the diagrams that do not contribute to the desired interaction, detect loops and add counterterms to the divergent contributions. By analyzing the diagrams
+obtained from lower orders, and comparing with known results,
+the correctness of the program has been verified. This allows to
+obtain the diagrams of higher orders, and study the behavior of
+the theory at those orders, where distinct features of non-Abelian
+gauge theories emerge.
 
-The aim of this work is to develop a program that automates the process of
-obtaining the diagrams associated with a given process, up to a given order,
-starting from a set of base diagrams, called canonical diagrams given by the
-theory. The program is able to discard the diagrams that do not contribute to the
-process, detect loops and add counterterms to the diagrams to cancel divergences. 
+## Use of AI Tools
 
-By analysing the diagrams obtained from lower orders, and comparing with known
-results, the correctness of the program has been verified. This allows to obtain
-the diagrams of higher orders, and study the behavior of the theory at those
-orders, where unique phenomena of non-abelian theories can be observed.
+This project uses [ChatGPT](https://openai.com/chatgpt) (GPT-4o and GPT o4-mini-high) to assist in the following aspects:
+- Function generation in the code (all functions from Chatgpt are indicated)
+- Debugging and optimization
+
+All AI-generated content was reviewed and verified before inclusion.
 
 ### Code description.
 

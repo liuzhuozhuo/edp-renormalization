@@ -3,8 +3,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 import matplotlib as mpl
 from scipy.special import binom, factorial
-from numba import jit
-from collections import deque, defaultdict
+from collections import deque
 
 #Import the canoncial diagrams
 from functions.can_diagrams.gluon_diagrams import *

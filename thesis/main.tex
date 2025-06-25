@@ -158,7 +158,7 @@ Effective Hamiltonians are constructed from an initial Hamiltonian and a scale-d
 unitary transformation.\\
 
 Often, a perturbative treatment is required to solve the renormalization-group equations, 
-and it's useful and convenient representing the different
+and it is useful and convenient representing the different
 terms of the theory as diagrams that describe the process, in analogy with Feynman diagrams.
 However, the number of diagrams increases exponentially with the order of the perturbation,
 making the calculation process tedious and error-prone. \\
@@ -201,7 +201,7 @@ orders, where distinct features of non-Abelian gauge theories emerge.
 \section{Introduction}
 
 When building a theory that describes the particles and their interactions, 
-it's imperative that the theory be compatible with the two pillars of modern physics:
+it is imperative that the theory be compatible with the two pillars of modern physics:
 special relativity and quantum mechanics. Special relativity is a theory 
 that describes the behavior of particles at high energies, and quantum 
 mechanics is a theory that describes the behavior of particles at atomic and subatomic scales.
@@ -243,8 +243,8 @@ tedious and error-prone. The goal of this thesis is to develop a tool that autom
 the process of obtaining the diagrams associated with a certain interaction for a 
 given order.
 
-The program is designed from the ground up, using some basic python libraries, and
-to my knowledge, it's the first for this specific application. Similar programs exist for
+The program is designed from scratch, using some basic python libraries, and
+to my knowledge, it is the first for this specific application. Similar programs exist for
 covariant Feynman diagrams \cite{Alwall:2014hca, Huber:2019dkb}, 
 but they are not suitable for the RGPEP.
 
@@ -807,13 +807,13 @@ Here the notation $[123]$ indicates the integration over the momenta of
 the particles 1 to 3, $[123] = [k_1][k_2][k_3]$. The explicit expression for the 
 functions $\Xi, Y, X, ...$, can be found in \cite{QCDG}, for 
 the purpose of this thesis, we are only interested in the dependence of the functions 
-on the structure constant $f^{abc}$. 
+on the structure constant $f^{abc}$. \\
 
 The terms $H_{A^2}$, $H_{A^3}$, $H_{A^4}$ and $H_{\sbrackets{\partial A A}^2}$
 represent the different interaction terms of the gluon fields: $H_{A^2}$ corresponds to 
 the kinetic term of the gluon fields, $H_{A^3}$ corresponds to the three-gluon
 vertex and  $H_{A^4}$ together with $H_{\sbrackets{\partial A A}^2}$ corresponds to
-four-gluon vertices. 
+four-gluon vertices. \\
 
 In the context of light-front QCD, the four-gluon vertices can be treated as a combination of two
 time ordered
@@ -826,7 +826,13 @@ The term $H_{A^3}$, Eq.\eqref{eq:H_A^3} is a first-order term, since it contains
 as well as a single structure constant $f^{abc}$. The diagram representation of this term 
 is shown in figure \ref{fig:cannonical1}. These diagrams represent the 
 process of 1 gluon going to 2 gluons (Fig. \ref{fig:cannonical1_1}), and 
-its hermitian conjugate of 2 gluons going to 1 gluon (Fig. \ref{fig:cannonical1_2}).
+its hermitian conjugate of 2 gluons going to 1 gluon (Fig. \ref{fig:cannonical1_2})
+\footnote{These diagrams are the output of the code, and the 
+numbers at the different points indicate its ordering in the 
+program, which is unrelated to the numbers associated with the 
+creation and annihilation operators. However, these numbers 
+proved to be especially useful in distinguishing vertices from 
+intersections of different lines with no interaction.}.
 
 \begin{figure*}[h!]
     \centering
@@ -843,7 +849,7 @@ its hermitian conjugate of 2 gluons going to 1 gluon (Fig. \ref{fig:cannonical1_
         \caption{ }
         \label{fig:cannonical1_2}
     \end{subfigure}
-    \caption{Canonical diagrams that go with $g$}
+    \caption{Canonical diagrams that go with $g$.}
     \label{fig:cannonical1}
 \end{figure*}
 
@@ -1096,6 +1102,8 @@ they form the basis of the perturbative expansion of the Hamiltonian, and the
 starting point to obtain the diagrams of higher order.
 
 \end{comment}
+
+\newpage
 
 \subsection{Renormalization group procedure for effective particles (RGPEP)}
 \label{sec:rgpep}

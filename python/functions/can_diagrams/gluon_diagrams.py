@@ -127,3 +127,55 @@ can_number_2nd = np.array([[1], [1], [1], [1], [1], [1], [1], [1], [1], [1], [1]
 can_points = [can_points_1st, can_points_2nd]
 can_paths = [can_paths_1st, can_paths_2nd]
 can_count = [can_number_1st, can_number_2nd]
+
+def return_counterterm_diagrams(order):
+    """
+    Generate counterterm diagrams up to the specified perturbative order,
+    using NumPy arrays for better performance and clarity.
+    """
+    all_points = []
+    all_paths = []
+
+    for i in range(2, order + 1):
+        points_orders = []
+        paths_orders = []
+
+        if i > 3:
+            j = i - 4
+            if j >= 0 and j < len(all_points):  # safeguard
+                points_orders.extend(all_points[j])
+                paths_orders.extend(all_paths[j])
+
+        for j in range(1, i):
+            k = i - j
+
+            # Create points:
+            # Outgoing: [1, 1], ..., [1, j]
+            out_pts = np.stack([np.full(j, 1), np.arange(1, j + 1)], axis=1)
+
+            # Counterterm: [2, 1]
+            ct_pt = np.array([[2, 1]])
+
+            # Incoming: [3, 1], ..., [3, k]
+            in_pts = np.stack([np.full(k, 3), np.arange(1, k + 1)], axis=1)
+
+            points = np.vstack([out_pts, ct_pt, in_pts])
+            points_orders.append(points)
+
+            # Create paths:
+            # Outgoing: [1, j+1], ..., [j, j+1]
+            out_paths = np.stack([np.arange(1, j + 1), np.full(j, j + 1)], axis=1)
+
+            # Counterterm: [j+1, j+1]
+            ct_path = np.array([[j + 1, j + 1]])
+
+            # Incoming: [j+1, j+2], ..., [j+1, j+k+1]
+            in_paths = np.stack([np.full(k, j + 1), np.arange(j + 2, j + k + 2)], axis=1)
+
+            paths = np.vstack([out_paths, ct_path, in_paths])
+            paths_orders.append(paths)
+
+        all_points.append(points_orders)
+        all_paths.append(paths_orders)
+
+    return all_points, all_paths

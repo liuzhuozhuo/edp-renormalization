@@ -1,27 +1,39 @@
-"""
-OUTDATED, NEED TO INCLUDE MANY FUNCTIONS FROM THE GLUON FUNCTIONS TO BE FUNCIONAL
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from scipy.special import binom, factorial
+from collections import deque
 
 #Import the canoncial diagrams
 from functions.can_diagrams.gluon_diagrams import *
-
-#From Eddmik in https://stackoverflow.com/questions/34593824/trim-strip-zeros-of-a-numpy-array
-#Note that for numpy 2.2 the function trim_zeros is available for ndarrays.
-#I may rewirte this function as i would have done it myself, but for now we will use this one.
-def trim_zeros_2D(array, axis=1):
-    mask = ~(array==0).all(axis=axis)
-    inv_mask = mask[::-1]
-    start_idx = np.argmax(mask == True)
-    end_idx = len(inv_mask) - np.argmax(inv_mask == True)
+ 
+#From Chatgpt
+def trim_zeros_2D(array: np.ndarray, axis: int = 1) -> np.ndarray:
+    """
+    Remove any rows (axis=1) or columns (axis=0) that are entirely zero,
+    even if they appear between non-zero rows/columns.
+    
+    Parameters
+    ----------
+    array : np.ndarray
+        2D input array.
+    axis : int, optional
+        If 1 (default), drop zero-rows; if 0, drop zero-columns.
+    
+    Returns
+    -------
+    np.ndarray
+        The trimmed array.
+    """
+    # mask[i] is True iff the i-th row/column has at least one non-zero
+    mask = array.any(axis=axis)
+    
     if axis:
-        return array[start_idx:end_idx,:]
+        # drop rows where mask is False
+        return array[mask, :]
     else:
-        return array[:, start_idx:end_idx]
+        # drop columns where mask is False
+        return array[:, mask]
     
 #From chatgpt 
 def trim_zeros_3D(array, axis=None):
@@ -66,7 +78,54 @@ def find_equal_subarrays(array):
     duplicate_positions = [np.where((sorted_subarrays == unique_subarrays[i]).all(axis=1))[0] for i in range(len(unique_subarrays)) if counts[i] > 1]
     return duplicate_positions
 
-def represent_diagram (points, all_paths, index = False, directory = "", colors = ["tab:blue", "tab:red", "black"], line = ["solid", "solid", "photon"], number = 0):
+#From Chatgpt
+def prune_points_and_reindex(points: np.ndarray,
+                              paths: np.ndarray
+                             ) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Remove all [0,0] rows from `points`, then rebuild `paths` so that:
+      - any path entry pointing to a removed point becomes 0,
+      - all other entries are remapped down to a compact 1-based range.
+    
+    Parameters
+    ----------
+    points : np.ndarray, shape (N,2)
+        Your (x,y) coordinates, with placeholder rows exactly equal to [0,0].
+    paths : np.ndarray, shape (T,P,2), dtype=int
+        Your 1-based index pairs, with [0,0] as placeholders.
+    
+    Returns
+    -------
+    new_points : np.ndarray, shape (M,2)
+        The pruned points (no [0,0] rows).
+    new_paths  : np.ndarray, shape (T,P,2)
+        The updated paths, still 1-based with [0,0] placeholders.
+    """
+    # 1) Mask of rows to keep
+    keep = ~(np.all(points == 0, axis=1))
+    new_points = points[keep]
+    
+    # 2) Build old→new 1-based map
+    #    new_idx[i] = new 1-based index of old row i, or 0 if dropped
+    new_idx = np.zeros(points.shape[0], dtype=int)
+    new_idx[keep] = np.arange(1, keep.sum()+1)
+    
+    # 3) Apply to paths
+    #    For each entry u in paths: if u>0, replace with new_idx[u-1], else keep 0
+    T, P, _ = paths.shape
+    flat = paths.reshape(-1,2)
+    # map both columns at once:
+    mapped = np.zeros_like(flat)
+    for col in (0,1):
+        # grab the column, subtract 1 for 0-based indexing into new_idx
+        o = flat[:,col]
+        # for non-zero entries, look up new index; zeros stay zero
+        mapped[:,col] = np.where(o>0, new_idx[o-1], 0)
+    new_paths = mapped.reshape(T, P, 2)
+    
+    return new_points, new_paths
+
+def represent_diagram (points, all_paths, index = False, directory = "", colors = ["tab:blue", "tab:red", "black"], line = ["solid", "solid", "photon"], count = 0):
     """
     Represent a diagram with points and paths.
     Args:
@@ -79,6 +138,8 @@ def represent_diagram (points, all_paths, index = False, directory = "", colors 
     """
     if (np.all(all_paths == 0)):
         return 
+    
+    points, all_paths = prune_points_and_reindex(points, all_paths)
 
     points = trim_zeros_2D(points)
     all_paths = trim_zeros_3D(all_paths, axis=1)
@@ -87,6 +148,7 @@ def represent_diagram (points, all_paths, index = False, directory = "", colors 
     ax=fig.add_subplot(111)
     ax.axis('off')
     j = 0
+
     # Note the that here the paths are more similar to the 1 particle case, meaning that is a 2D array
     for paths in all_paths:
         loops = find_equal_subarrays(paths)
@@ -117,11 +179,11 @@ def represent_diagram (points, all_paths, index = False, directory = "", colors 
     if index:
         for i in range(len(points)):
             ax.text(points[i, 0], points[i, 1], str(i+1), fontsize=12, color="black", ha="right", va="top")
-    if number !=0:
-        ax.text(0.5, 0.5, f"N = {number}", fontsize=12, color="black", ha="center", va="center")
+    if count !=0:
+        ax.text(0.5, 0.5, f"N = {count}", fontsize=12, color="black", ha="center", va="center")
     if directory != "":
         plt.savefig(directory, bbox_inches='tight')
-        plt.close()
+        plt.close() #Added to not show in the notebook 
 
 #From Github copilot
 def unique_values(array):
@@ -192,8 +254,8 @@ def how_connected( max_connections, n_connections, n_1, n_2):
                 i += 1
     else:
         return combinations
-
-def connection (points1, paths1, points2, paths2, offset = 0):
+    
+def connection (points1, paths1, points2, paths2, offset = 0, in_out_limit = [0, 0]):
     in_out_paths1 = in_out_paths(paths1)
     in_out_paths2 = in_out_paths(paths2)
 
@@ -361,362 +423,3 @@ def simplify_diagram_it (points, paths):
                 paths = decrement_number_in_array(paths, k)
 
     return points, trim_zeros_3D(paths, axis=1)
-
-def simplify_diagram (points, paths):
-    """
-    Simplify the diagram by removing the points and paths that are not needed, by iterating the function simplify_diagram_it, until the 
-    number of points and paths does not change anymore.
-    """
-    new_points, new_paths = simplify_diagram_it(points, paths)
-    new_new_points, new_new_paths = simplify_diagram_it(new_points, new_paths)
-    while len(new_points) != len(new_new_points) or len(new_paths) != len(new_new_paths):
-        new_points, new_paths = new_new_points, new_new_paths
-        new_new_points, new_new_paths = simplify_diagram_it(new_points, new_paths)
-    return new_new_points, new_new_paths
-
-
-def partitions_limited(n, allowed=(1,2), min_part=None):
-    """
-    Yield all partitions of n using only parts in `allowed`,
-    in non-decreasing order (each part ≥ min_part).
-    """
-    # ensure our allowed-parts are sorted
-    allowed = sorted(allowed)
-    if min_part is None:
-        min_part = allowed[0]
-    if n == 0:
-        yield []
-    else:
-        for part in allowed:
-            if part < min_part or part > n:
-                continue
-            for tail in partitions_limited(n - part, allowed, part):
-                yield [part] + tail
-
-def combine_diagrams_order (points, paths, number, offset = 0, sector=[]):
-    curr_max_order = len(points)
-    n_types = len(paths[0][0])
-    max_points = np.zeros((n_types, 2), dtype=int)
-
-    n1 = np.zeros(n_types, dtype=int)
-    n2 = np.zeros(n_types, dtype=int)
-    for i in range(len(paths[0])): #in number of first order diagrams
-        for j in range(n_types):
-            n1[j] = len(np.trim_zeros(in_out_paths(paths[0][i])[j, 0]))
-            if (n1[j] > max_points[j, 0]):
-                max_points[j, 0] = n1[j]
-            n2[j] = len(np.trim_zeros(in_out_paths(paths[0][i])[j, 1]))
-            if (n2[j] > max_points[j, 1]):
-                max_points[j, 1] = n2[j]
-    for i in range(len(paths[-1])):
-        for j in range(n_types):
-            n1[j] = len(np.trim_zeros(in_out_paths(paths[-1][i])[j, 0]))
-            if (n1[j] > max_points[j, 0]):
-                max_points[j, 0] = n1[j]
-            n2[j] = len(np.trim_zeros(in_out_paths(paths[-1][i])[j, 1]))
-            if (n2[j] > max_points[j, 1]):
-                max_points[j, 1] = n2[j]
-
-    max_connections = np.zeros(n_types, dtype=int)
-    for i in range(n_types):
-        max_connections[i] = min(max_points[i, 0], max_points[i, 1])
-
-    n_connec = 0
-    n_connections = np.zeros(n_types, dtype=int)
-    for i in range(len(paths[0])):
-        for j in range(n_types):
-            for k in range(int(max_connections[j])):
-                n_connections[j] += int(binom(n1[j], i+1)*binom(n2[j], k+1) * factorial(k+1))
-        #n_connec indicates the total number of connections between the two diagrams
-        for subset in range(1, 1 << n_types):
-            product = 1
-            for i in range(n_types):
-                if subset & (1 << k):
-                    product *= n_connections[k]
-            n_connec += product
-
-    n = 0
-    d = 200
-    f = 20
-    """
-    if(canonical_it == 0 or canonical_it == 1):
-        new_points = np.zeros((n_types*n_connec+d, len(points[0][0]) + len(points[-1][0]), 2))
-        new_paths = np.zeros((n_types*n_connec+d, n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+f , 2), dtype=int)
-        new_number = np.zeros((n_types*n_connec+d, 1), dtype=int)
-        for k in range(len(can_paths[canonical_it])):
-            for l in range(len(paths[0])):
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[0][l]), trim_zeros_3D(paths[0][l], axis=1), trim_zeros_2D(can_points[canonical_it][k]), trim_zeros_3D(can_paths[canonical_it][k], axis = 1), offset=offset)
-                for m in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[m], axis=1))
-                    for o in range(len(simp_points)):
-                        new_points[n, o] = simp_points[o]
-                    for o in range(n_types):
-                        for p in range(len(simp_paths[0])):
-                            new_paths[n, o, p] = simp_paths[o, p]
-                    new_number[n] = 1
-                    n += 1
-    """              
-    if len(points) == 1:
-        new_points = np.zeros((n_types*n_connec+d, len(points[0][0]) + len(points[-1][0]), 2))
-        new_paths = np.zeros((n_types*n_connec+d, n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+f , 2), dtype=int)
-        new_number = np.zeros((n_types*n_connec+d, 1), dtype=int)
-        for i in range(len(paths[0])):
-            for j in range(len(paths[-1])):
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1), offset=offset)
-                for k in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
-                    for l in range(len(simp_points)):
-                        new_points[n, l] = simp_points[l]
-                    for l in range(n_types):
-                        for m in range(len(simp_paths[0])):
-                            new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
-                    n += 1
-        sector = [[2, 0],[n, 0]]
-        for i in range(len(can_points[1])):
-            for j in range(len(can_points[1][i])):
-                new_points[n, j] = can_points[1][i][j]
-            for j in range(n_types):
-                for k in range(len(can_paths[1][i][j])):
-                    new_paths[n, j, k] = can_paths[1][i][j][k]
-            new_number[n] = can_number[1][i][0]
-            n += 1
-    else:
-        new_points = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec+d, len(points[0][0]) + len(points[-1][0]), 2))
-        new_paths = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec+d, n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+d, 2), dtype=int)
-        new_number = np.zeros((n_types*len(paths[0])*len(paths[-1])*n_connec+d, 1), dtype=int)
-        # H_{t_{n-1}}· H_1
-
-        for i in range(len(paths[0])):
-            for j in range(sector[-1][0]):
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1),trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), offset=offset)
-                for k in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
-                    for l in range(len(simp_points)):
-                        new_points[n, l] = simp_points[l]
-                    for l in range(n_types):
-                        for m in range(len(simp_paths[0])):
-                            new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
-                    n += 1
-            for j in range(sector[-1][0], len(paths[-1])):
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1),trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), offset=offset)
-                for k in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
-                    for l in range(len(simp_points)):
-                        new_points[n, l] = simp_points[l]
-                    for l in range(n_types):
-                        for m in range(len(simp_paths[0])):
-                            new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
-                    n += 1
-                
-                dummy_points, dummy_paths = connection(trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1),trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1), offset=offset)
-                for k in range(len(dummy_paths)):
-                    simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[k], axis=1))
-                    for l in range(len(simp_points)):
-                        new_points[n, l] = simp_points[l]
-                    for l in range(n_types):
-                        for m in range(len(simp_paths[0])):
-                            new_paths[n, l, m] = simp_paths[l, m]
-                    new_number[n] = number[0][i] * number[-1][j]
-                    n += 1
-        
-
-
-
- 
-
-
-        """
-        canonical_combination = [p for p in partitions_limited(curr_max_order+1, allowed=(1,2)) if len(p)!=curr_max_order+1]
-        
-        for comb in canonical_combination:
-            dummy_points_2, dummy_paths_2, dummy_number_2 = combine_diagrams_order([can_points[comb[0]]], [can_paths[comb[0]]], can_number[comb[0]], offset=offset, canonical_it=comb[1]-1)
-            for k in range(len(dummy_paths_2)):
-                for l in range(len(dummy_points_2[k])):
-                    new_points[n, l] = dummy_points_2[k][l]
-                for l in range(len(dummy_paths_2[k])):
-                    for m in range(len(dummy_paths[k][l])):
-                        new_paths[n, l, m] = dummy_paths_2[k][l][m]
-                new_number[n] = dummy_number_2[k]
-                n += 1
-                
-            if len(comb) > 2:
-                for i in range(2, len(comb)):
-                    dummy_dummy_points, dummy_dummy_paths, dummy_dummy_number = combine_diagrams_order([dummy_points_2], [dummy_paths_2], dummy_number_2, offset=offset, canonical_it=comb[i]-1)
-                    for k in range(len(dummy_dummy_paths)):
-                        for l in range(len(dummy_dummy_points[k])):
-                            new_points[n, l] = dummy_dummy_points[k][l]
-                        for l in range(len(dummy_dummy_paths[k])):
-                            for m in range(len(dummy_dummy_paths[k][l])):
-                                new_paths[n, l, m] = dummy_dummy_paths[k][l][m]
-                        new_number[n] = dummy_dummy_number[k]
-                        n += 1
-                    dummy_number_2 = dummy_dummy_number
-                    dummy_paths_2 = dummy_dummy_paths
-                    dummy_points_2 = dummy_dummy_points
-        """
-        """
-        for i in range(1, curr_max_order):
-            for j in range(i-1, len(paths)):
-                if (i+1 + j) == curr_max_order:
-                    for k in range(len(can_paths[i])):
-                        for l in range(len(paths[j])):
-                            dummy_points, dummy_paths = connection(trim_zeros_2D(can_points[i][k]), trim_zeros_3D(can_paths[i][k], axis=1), trim_zeros_2D(points[j][l]), trim_zeros_3D(paths[j][l], axis = 1), offset=offset)
-                            for m in range(len(dummy_paths)):
-                                simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[m], axis=1))
-                                for o in range(len(simp_points)):
-                                    new_points[n, o] = simp_points[o]
-                                for o in range(n_types):
-                                    for p in range(len(simp_paths[0])):
-                                        new_paths[n, o, p] = simp_paths[o, p]
-                                new_number[n] = can_number[i][k][0] * number[j][l]        
-                                n += 1
-                                
-        """
-
-    return new_points, new_paths, new_number, sector
-
-def all_components_in_other(array1, array2):
-    for row1 in array1:
-        found = False
-        for row2 in array2:
-            if np.array_equal(np.sort(row1), np.sort(row2)):
-                found = True
-                break
-        if not found:
-            return False
-    return True
-
-def group_diagrams (points, paths, number, sector):
-    group_paths = np.zeros((1, len(paths[0]), len(paths[0, 0]), 2), dtype=int)
-    group_points = np.zeros((1, len(points[0]), 2))
-    group_paths[0] = paths[0]
-    group_points[0] = points[0]
-    count = np.zeros((1), dtype=int)
-    count[0] = number[0][0]
-    for i in range(1, len(paths)):
-        if (paths[i] == 0).all():
-            continue
-        cont = False
-        cont_2 = True
-        for j in range(len(group_paths)):
-            for k in range(len(paths[0])):
-                if all_components_in_other(paths[i, k], group_paths[j, k]):
-                    cont_2 = True
-                else:
-                    cont_2 = False
-                    break
-            if cont_2:
-                cont = False
-                count[j] += number[i][0]
-                if i == sector[0]:
-                    sector[0] = j
-                if i == sector[1]:
-                    sector[1] = j
-                break
-            else:
-                
-                cont = True
-        if cont: 
-            if i == sector[0]:
-                sector[0] = len(group_paths)
-            if i == sector[1]:
-                sector[1] = len(group_paths)
-            group_paths = np.append(group_paths, [paths[i]], axis=0)
-            group_points = np.append(group_points, [points[i]], axis=0)
-            count = np.append(count, [number[i][0]], axis=0)
-    return group_points, group_paths, count, sector
-    
-def reposition_diagram (points, in_out_path):
-    minx_point = np.min(points[:, 0])
-    maxx_point = np.max(points[:, 0])
-
-    for i in range(len(in_out_path)):
-        for j in range(len(in_out_path[i, 0])):
-            if in_out_path[i, 0][j] == 0:
-                continue
-            if points[in_out_path[i, 0][j]-1, 0] == maxx_point:
-                continue
-            else:
-                points[in_out_path[i, 0][j]-1, 1] = maxx_point - points[in_out_path[i, 0][j]-1, 0]
-                points[in_out_path[i, 0][j]-1, 0] = maxx_point
-        for j in range(len(in_out_path[i, 1])):
-            if in_out_path[i, 1][j] == 0:
-                continue
-            if points[in_out_path[i, 1][j]-1, 0] == minx_point:
-                continue
-            else:
-                points[in_out_path[i, 1][j]-1, 1] = - minx_point + points[in_out_path[i, 1][j]-1, 0]
-                points[in_out_path[i, 1][j]-1, 0] = minx_point
-    return points
-
-def detect_3p_loops(points, paths):
-    loop = np.zeros((len(paths), int(len(trim_zeros_2D(paths[0]))/3), 3), dtype=int)
-    n = 0
-    for i in range(len(paths)):
-        if np.count_nonzero(paths[i]) == 0:
-            continue
-        path = trim_zeros_2D(paths[i])
-        if (len(path) < 3):
-            continue
-        index = np.arange(len(path))
-        j = 0
-        for j in range(len(path)):
-            if j in index:
-                start = path[j, 0]
-                end = path[j, 1]
-                next = -1
-                for k in range(len(path)):
-                    if(k != j and k in index):
-                        if path[k, 0] == start:
-                            next = path[k, 1]
-                        elif path[k, 1] == start:
-                            next = path[k, 0]
-                        if next == -1:
-                            continue
-                        for l in range(len(path)):
-                            next2 = -1
-                            if (l != j and l!= k and l in index):
-                                if path[l, 0] == next:
-                                    next2 = path[l, 1]
-                                elif path[l, 1] == next:
-                                    next2 = path[l, 0]
-                                if next2 == next:
-                                    continue
-                                if next2 == end:
-                                    loop[i, n, 0] = j+1
-                                    loop[i, n, 1] = k+1
-                                    loop[i, n, 2] = l+1
-                                    index = np.delete(index, np.where(index == j))
-                                    index = np.delete(index, np.where(index == k))
-                                    index = np.delete(index, np.where(index == l))
-
-    return trim_zeros_3D(loop, axis=0)
-
-def detect_superposition(points, paths):
-    loop = detect_3p_loops(points, paths)
-    if np.count_nonzero(loop) == 0:
-        return points, paths  
-    else:
-        for i in range(len(loop)):
-            if np.count_nonzero(loop[i]) == 0:
-                continue
-            for j in range(len(loop[i])):
-                if np.count_nonzero(loop[i, j]) == 0:
-                    continue
-                else:
-                    height = points[paths[i,loop[i, j, 0]-1, 0]-1, 1]
-                    sorted_array = sorted([paths[i,loop[i, j, 0]-1, 0], paths[i,loop[i, j, 1]-1, 0], paths[i,loop[i, j, 2]-1, 0], paths[i,loop[i, j, 0]-1, 1], paths[i,loop[i, j, 1]-1, 1], paths[i,loop[i, j, 2]-1, 1]])
-                    same_height = True
-                    for k in sorted_array:
-                        if points[k-1, 1] != height:
-                            same_height = False
-                            break
-                    if same_height:
-                        middle = sorted_array[2]-1
-                        points[middle, 1] = height+1
-                    else:
-                        continue
-        return points, paths

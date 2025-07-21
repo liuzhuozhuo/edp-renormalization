@@ -7,7 +7,6 @@ from collections import deque
 
 #Import the canoncial diagrams
 from functions.can_diagrams.gluon_diagrams import *
-from functions.can_diagrams.counter_diagrams import * 
 
 #From Eddmik in https://stackoverflow.com/questions/34593824/trim-strip-zeros-of-a-numpy-array
 #Note that for numpy 2.2 the function trim_zeros is available for ndarrays.
@@ -519,7 +518,7 @@ def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset 
     new_paths = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+5, 2), dtype=int)
     new_count = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), 1), dtype=int)
 
-    for i in range(len(paths[0])):
+    for i in tqdm(range(len(paths[0]))):
         for j in range(len(paths[-1])):
             dummy_points, dummy_paths = connection(trim_zeros_2D(points[-1][j]), trim_zeros_3D(paths[-1][j], axis = 1),trim_zeros_2D(points[0][i]), trim_zeros_3D(paths[0][i], axis=1), offset=offset)
             for k in range(len(dummy_paths)):
@@ -550,7 +549,7 @@ def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset 
                             new_paths[n, l, m] = simp_paths[l, m]
                     new_count[n] = count[0][i] * count[-1][j]
                     n += 1
-    for i in range(1, 2):
+    for i in tqdm(range(1, 2)):
         for j in range(i-1, len(paths)):
             if (i+1 + j) == curr_order:
                 for k in range(len(can_paths[i])):
@@ -1047,6 +1046,232 @@ def detect_superposition(points, paths):
                     else:
                         continue
         return points, paths
+
+#From Chatgpt
+def find_loops_with_global_neighbors(paths: np.ndarray):
+    """
+    Scans each layer t of paths[t,p] = [u,v] (1-based IDs, skip [0,0]/self-loops)
+    and returns two lists:
+
+    loops2: [
+      {
+        "layer": t,
+        "nodes": (u,v),
+        "positions": [p1,p2,…],            # where {u,v} repeats in layer t
+        "other": {
+          x: { layer1: [p…], layer2: [p…], … },
+          …
+        },
+        "input_output": {
+          x: { layer1: [s…], layer2: [s…], … },
+          …
+        }
+      },
+      …
+    ]
+
+    loops3: same structure but for triangles (u,v,w) with first-occurrence positions.
+    """
+    T, P, _ = paths.shape
+
+    # 1) Build a global undirected edge→list of (layer, u, v, p)
+    global_edge_map = {}
+    global_adj      = {}
+    for t in range(T):
+        for p in range(P):
+            u, v = int(paths[t,p,0]), int(paths[t,p,1])
+            if (u,v) == (0,0) or u == v:
+                continue
+            key = tuple(sorted((u,v)))
+            global_edge_map.setdefault(key, []).append((t, u, v, p))
+            # global adjacency
+            global_adj.setdefault(u, set()).add(v)
+            global_adj.setdefault(v, set()).add(u)
+
+    loops2 = []
+    loops3 = []
+
+    for t in range(T):
+        # 2) layer-local edge→occurrences
+        local_map = {}
+        for p in range(P):
+            u, v = int(paths[t,p,0]), int(paths[t,p,1])
+            if (u,v)==(0,0) or u==v:
+                continue
+            key = tuple(sorted((u,v)))
+            local_map.setdefault(key, []).append((u, v, p))
+
+        # 3) find 2-loops
+        for (u,v), occ in local_map.items():
+            if len(occ) >= 2:
+                # where it loops in this layer:
+                loop_ps = [p for (_,_,p) in occ]
+                # external nodes across any layer:
+                ext_nodes = sorted((global_adj.get(u,()) | global_adj.get(v,())) - {u,v})
+
+                ext_pos = {}
+                ext_io  = {}
+                for x in ext_nodes:
+                    # find all (layer, u',v',p) for edges {x,u} or {x,v}
+                    hits = []
+                    for nbr in (u, v):
+                        key_xn = tuple(sorted((x, nbr)))
+                        hits += global_edge_map.get(key_xn, [])
+                    # group by layer
+                    by_layer = {}
+                    io_by_layer = {}
+                    for layer, u2, v2, p2 in hits:
+                        by_layer.setdefault(layer, []).append(p2)
+                        # determine slot of x in paths[layer,p2]
+                        slot = 0 if paths[layer,p2,0] == x else 1
+                        io_by_layer.setdefault(layer, []).append(slot)
+                    ext_pos[x] = by_layer
+                    ext_io[x]  = io_by_layer
+
+                loops2.append({
+                    "layer": t,
+                    "nodes": (u, v),
+                    "positions": loop_ps,
+                    "other": ext_pos,
+                    "input_output": ext_io
+                })
+
+        # 4) find 3-loops (triangles) in this layer
+        #    first build local adjacency
+        local_adj = {}
+        for (a,b) in local_map:
+            local_adj.setdefault(a, set()).add(b)
+            local_adj.setdefault(b, set()).add(a)
+
+        for u in sorted(local_adj):
+            for v in sorted(local_adj[u]):
+                if v <= u: continue
+                for w in sorted(local_adj[v]):
+                    if w <= v: continue
+                    if u not in local_adj[w]:
+                        continue
+                    # first-occurrence positions in this layer
+                    p_uv = local_map[(u,v)][0][2]
+                    p_vw = local_map[(v,w)][0][2]
+                    p_uw = local_map[(u,w)][0][2]
+                    tri_ps = (p_uv, p_vw, p_uw)
+
+                    # external nodes across any layer
+                    ext_nodes = sorted(
+                        (global_adj.get(u,()) |
+                         global_adj.get(v,()) |
+                         global_adj.get(w,())) - {u,v,w}
+                    )
+
+                    ext_pos = {}
+                    ext_io  = {}
+                    for x in ext_nodes:
+                        hits = []
+                        for node in (u, v, w):
+                            key_xn = tuple(sorted((x, node)))
+                            hits += global_edge_map.get(key_xn, [])
+                        by_layer = {}
+                        io_by_layer = {}
+                        for layer, u2, v2, p2 in hits:
+                            by_layer.setdefault(layer, []).append(p2)
+                            slot = 0 if paths[layer,p2,0] == x else 1
+                            io_by_layer.setdefault(layer, []).append(slot)
+                        ext_pos[x] = by_layer
+                        ext_io[x]  = io_by_layer
+
+                    loops3.append({
+                        "layer": t,
+                        "nodes": (u, v, w),
+                        "positions": tri_ps,
+                        "other": ext_pos,
+                        "input_output": ext_io
+                    })
+
+    return loops2, loops3
+
+    
+def counterterms (points, paths, number):
+    n_diagrams = len(points)
+    new_points = np.zeros((n_diagrams, len(points[0]), 2), dtype = int)
+    new_paths = np.zeros((n_diagrams, len(paths[0]), len(paths[0, 0]), 2), dtype=int)
+    new_number = np.zeros((n_diagrams, 1), dtype=int)
+
+    n_deleted = 0
+
+    for i in tqdm(range(n_diagrams)):
+        loops2, loops3 = find_loops_with_global_neighbors(paths[i])
+        if len(loops2) == 0 and len(loops3) == 0:
+            new_points = np.delete(new_points, i-n_deleted, 0)
+            new_paths = np.delete(new_paths, i-n_deleted, 0)
+            new_number = np.delete(new_number, i-n_deleted, 0)
+            n_deleted +=1
+        else:
+            new_points[i-n_deleted] = points[i]
+            new_paths[i-n_deleted] = paths[i]
+            new_number[i-n_deleted] = number[i]
+            for j in range(len(loops2)):
+                greater_node = max(loops2[j]["nodes"])
+                new_paths[i-n_deleted,loops2[j]["layer"], loops2[j]["positions"][0]] = np.array([greater_node, greater_node])
+                new_paths[i-n_deleted,loops2[j]["layer"], loops2[j]["positions"][1]] = np.array([0, 0])
+                for node_id, other_positions in loops2[j]["other"].items():
+                    for layer, positions in other_positions.items():
+                        if len(positions) == 1:
+                            if positions[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                        else:
+                            if positions[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else: 
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                            if positions[1] == 0:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([greater_node, node_id])
+                for k in loops2[j]["nodes"]:
+                    if k != greater_node:
+                        new_points[i-n_deleted, k-1] = np.array([0, 0])
+
+            for j in range(len(loops3)):
+                greater_node = max(loops3[j]["nodes"])
+                new_paths[i-n_deleted,loops3[j]["layer"], loops3[j]["positions"][0]] = np.array([greater_node, greater_node])
+                new_paths[i-n_deleted,loops3[j]["layer"], loops3[j]["positions"][1]] = np.array([0, 0])
+                new_paths[i-n_deleted,loops3[j]["layer"], loops3[j]["positions"][2]] = np.array([0, 0])
+                for node_id, other_positions in loops3[j]["other"].items():
+                    for layer, positions in other_positions.items():
+                        positions_ = loops3[j]["input_output"].get(node_id).get(layer)
+                        if len(positions) == 1:
+                            if positions_[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                        elif len(positions) == 2:
+                            if positions_[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else: 
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                            if positions_[1] == 0:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([greater_node, node_id])
+                        else:
+                            if positions_[0] == 0:
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([node_id, greater_node])
+                            else: 
+                                new_paths[i-n_deleted,layer, positions[0]] = np.array([greater_node, node_id])
+                            if positions_[1] == 0:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[1]] = np.array([greater_node, node_id])
+                            if positions_[2] == 0:
+                                new_paths[i-n_deleted,layer, positions[2]] = np.array([node_id, greater_node])
+                            else:
+                                new_paths[i-n_deleted,layer, positions[2]] = np.array([greater_node, node_id])
+                for k in loops3[j]["nodes"]:
+                    if k != greater_node:
+                        new_points[i-n_deleted, k-1] = np.array([0, 0])
+    return new_points, new_paths, new_number
  
 def represent_order(points, paths, count_, typeofproc, index_ = True,  lines_ = ["solid", "dotted"], colors_ = ["black", "black"], directory_ = "", docount = True, spacing = 1.0):
     n=1

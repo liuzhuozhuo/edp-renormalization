@@ -1,13 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from tqdm import tqdm
 import matplotlib as mpl
 from scipy.special import binom, factorial
 from collections import deque
 
 #Import the canoncial diagrams
 from functions.can_diagrams.gluon_diagrams import *
-from functions.can_diagrams.counter_diagrams import * 
 
 #From Eddmik in https://stackoverflow.com/questions/34593824/trim-strip-zeros-of-a-numpy-array
 #Note that for numpy 2.2 the function trim_zeros is available for ndarrays.
@@ -385,22 +383,6 @@ def decrement_number_in_array(array, number):
     array[array == number] -= 1
     return array
 
-def decrement_number_in_array_2D(array, number):
-    """
-    Decrement a number in a 2D array.
-    Args:
-        array (np.array): 2D array to decrement the number
-        number (int): number to decrement
-    Returns:
-        array (np.array): decremented array
-    """
-    for i in range(len(array)):
-        for j in range(len(array[i])):
-            for k in range(2):
-                if array[i, j, k] == number:
-                    array[i, j, k] -= 1
-    return array
-
 def simplify_diagram_it (points, paths):
     """
     Function that will be iterated to simplify the diagram by removing the points and paths that are not needed.
@@ -471,6 +453,78 @@ def partitions_limited(n, allowed=(1,2), min_part=None):
             for tail in partitions_limited(n - part, allowed, part):
                 yield [part] + tail
 
+def return_counterterm_diagrams (order):
+    """
+    
+    """
+    #initialize the list of points and paths where the diagrams will be stored, and returned at the end.
+    all_points = []
+    all_paths = []
+    #iterate through the order in perturbation (variable i)
+    for i in range(2, order + 1):
+        #initialize the list of points and paths for this order
+        points_orders = []
+        paths_orders = []
+        #at each order, compute the counterterm diagrams
+        #where j is the number of outgoing particles
+
+        if (i > 3):
+            if (i%2 == 0):
+                j = i-4
+                for l in range(len(all_points[j])):
+                    points_orders.append(all_points[j][l])
+                for l in range(len(all_paths[j])):
+                    paths_orders.append(all_paths[j][l])
+
+            if (i%2 == 1):
+                j = i-4
+                for l in range(len(all_points[j])):
+                    points_orders.append(all_points[j][l])
+                for l in range(len(all_paths[j])):
+                    paths_orders.append(all_paths[j][l])
+
+        for j in range(1, i):
+            """
+            Starting with the points for the diagrams.
+            """
+            #initialize a dummy array variable for each diagram
+            points = []
+            #k is the number of incoming particles
+            k = i - j
+            #create the outgoing points for the diagram
+            for l in range(1, j+1):
+                points.append([1, l])
+            #create the point where the counterterm is located
+            points.append([2, 1])
+            #create the incoming points for the diagram
+            for l in range(1, k+1):
+                points.append([3, l])
+            #append the points for this diagram
+            points_orders.append(points)
+
+            """
+            Following a similar procedure for the paths.
+            """
+            #initialize a dummy array variable for each path
+            paths = []
+            for l in range(1, j+1):
+                #create the outgoing paths for the diagram
+                paths.append([l, j+1])
+            paths.append([j+1, j+1])
+            for l in range(1, k+1):
+                #create the incoming paths for the diagram
+                paths.append([j+1, j+l+1])
+            #append the paths for this diagram
+            paths_orders.append(paths)
+            
+        #append the points for this order
+        all_points.append(points_orders)
+
+        #append the paths for this order
+        all_paths.append(paths_orders)
+    
+    return all_points, all_paths
+
 def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset = 0):
     curr_order = len(points)
     n_types = len(paths[0][0])
@@ -515,9 +569,11 @@ def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset 
     n = 0
     f = 20
 
-    new_points = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), len(points[0][0]) + len(points[-1][0]), 2))
-    new_paths = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+5, 2), dtype=int)
-    new_count = np.zeros((2*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), 1), dtype=int)
+    new_points = np.zeros((4*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), len(points[0][0]) + len(points[-1][0]), 2))
+    new_paths = np.zeros((4*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), n_types, len(paths[0][0]) + len(paths[-1][0])+np.max(max_connections)+5, 2), dtype=int)
+    new_count = np.zeros((4*n_types*len(paths[0])*len(paths[-1])*n_connec*(curr_order+1), 1), dtype=int)
+
+    counter_points, counter_paths = return_counterterm_diagrams(max_order+1)
 
     for i in range(len(paths[0])):
         for j in range(len(paths[-1])):
@@ -585,6 +641,43 @@ def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset 
                                     new_paths[n, o, p] = simp_paths[o, p]
                             new_count[n] = can_count[i][k] * count[j][l] 
                             n += 1
+
+    for i in range(len(counter_points)):
+        for j in range(i, len(paths)):
+            if (i+2+ j +1) == curr_order:
+                for k in range(len(counter_points[i])):
+                    for l in range(len(paths[j])):
+                        dummy_points, dummy_paths = connection(trim_zeros_2D(np.array(counter_points[i][k])), trim_zeros_3D(np.array([counter_paths[i][k],np.zeros_like(counter_paths[i][k])]), axis=1), trim_zeros_2D(points[j][l]), trim_zeros_3D(paths[j][l], axis = 1), offset=offset)
+                        for m in range(len(dummy_paths)):
+                            if(curr_order+1  == max_order): 
+                                in_out_path = in_out_paths(dummy_paths[m])
+                                if (len(np.trim_zeros(in_out_path[0, 0])) != typeofproc[0][0] or len(np.trim_zeros(in_out_path[0, 1]))!= typeofproc[0][1]):
+                                    continue
+                            simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[m], axis=1))
+                            for o in range(len(simp_points)):
+                                new_points[n, o] = simp_points[o]
+                            for o in range(n_types):
+                                for p in range(len(simp_paths[0])):
+                                    new_paths[n, o, p] = simp_paths[o, p]
+                            new_count[n] = can_count[i][k] * count[j][l]        
+                            n += 1
+                for k in range(len(counter_points[i])):
+                    for l in range(len(paths[j])):
+                        dummy_points, dummy_paths = connection(trim_zeros_2D(points[j][l]), trim_zeros_3D(paths[j][l], axis=1), trim_zeros_2D(np.array(counter_points[i][k])), trim_zeros_3D(np.array([counter_paths[i][k],np.zeros_like(counter_paths[i][k])]), axis=1), offset=offset)
+                        for m in range(len(dummy_paths)):
+                            if(curr_order+1  == max_order): 
+                                in_out_path = in_out_paths(dummy_paths[m])
+                                if (len(np.trim_zeros(in_out_path[0, 0])) != typeofproc[0][0] or len(np.trim_zeros(in_out_path[0, 1]))!= typeofproc[0][1]):
+                                    continue
+                            simp_points, simp_paths = simplify_diagram(dummy_points, trim_zeros_3D(dummy_paths[m], axis=1))
+                            for o in range(len(simp_points)):
+                                new_points[n, o] = simp_points[o]
+                            for o in range(n_types):
+                                for p in range(len(simp_paths[0])):
+                                    new_paths[n, o, p] = simp_paths[o, p]
+                            new_count[n] = can_count[i][k] * count[j][l] 
+                            n += 1 
+
                 
     #In the case of the gluon diagrams, there is only it second order diagrams, so this will only be used for curr_order = 1, but it should be general, for the cases where 
     #there are higher order canonical diagrams.
@@ -597,7 +690,19 @@ def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset 
                     new_paths[n, j, k] = can_paths[curr_order][i][j][k]
             new_count[n] = can_count[curr_order][i][0]
             n += 1
-
+    
+    if curr_order < len(counter_points):
+        for i in range(len(counter_points[curr_order-1])):
+            for j in range(len(counter_points[curr_order-1][i])):
+                new_points[n, j] = counter_points[curr_order-1][i][j]
+            for j in range(n_types):
+                for k in range(len(counter_paths[curr_order-1][i])):
+                    if j == 0:
+                        new_paths[n, j, k] = counter_paths[curr_order-1][i][k]
+                    else:
+                        new_paths[n, j, k] = np.zeros(2, dtype=int)
+            new_count[n] = 0
+            n += 1
     
     return new_points, new_paths, new_count
 
@@ -619,7 +724,7 @@ def my_group_diagrams (points, paths, number):
     group_points[0] = points[0]
     count = np.zeros((1))
     count[0] = number[0]
-    for i in tqdm(range(1, len(paths))):
+    for i in range(1, len(paths)):
         if (paths[i] == 0).all():
             continue
         cont = False

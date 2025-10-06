@@ -199,7 +199,6 @@ def represent_diagram (points, all_paths, index = False, directory = "", colors 
         plt.savefig(directory, bbox_inches='tight')
         plt.close() #Added to not show in the notebook 
 
-#From Github copilot
 def unique_values(array):
     unique, counts = np.unique(array, return_counts=True)
     unique_values = unique[counts == 1]
@@ -269,7 +268,7 @@ def how_connected( max_connections, n_connections, n_1, n_2):
     else:
         return combinations
 
-def connection (points1, paths1, points2, paths2, offset = 0, in_out_limit = [0, 0]):
+def connection (points1, paths1, points2, paths2, offset = 0):
     in_out_paths1 = in_out_paths(paths1)
     in_out_paths2 = in_out_paths(paths2)
 
@@ -434,28 +433,9 @@ def simplify_diagram (points, paths):
         new_new_points, new_new_paths = simplify_diagram_it(new_points, new_paths)
     return new_new_points, new_new_paths
 
-#From Chatgpt
-def partitions_limited(n, allowed=(1,2), min_part=None):
-    """
-    Yield all partitions of n using only parts in `allowed`,
-    in non-decreasing order (each part ≥ min_part).
-    """
-    # ensure our allowed-parts are sorted
-    allowed = sorted(allowed)
-    if min_part is None:
-        min_part = allowed[0]
-    if n == 0:
-        yield []
-    else:
-        for part in allowed:
-            if part < min_part or part > n:
-                continue
-            for tail in partitions_limited(n - part, allowed, part):
-                yield [part] + tail
-
 def return_counterterm_diagrams (order):
     """
-    
+    Return all the counterterm diagrams up till a given order.
     """
     #initialize the list of points and paths where the diagrams will be stored, and returned at the end.
     all_points = []
@@ -526,6 +506,12 @@ def return_counterterm_diagrams (order):
     return all_points, all_paths
 
 def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset = 0):
+    """
+    Combine all the diagrams that would contribute to a give order, and type of interaction. If the order that is calculating is 
+    the max_order intended, then it will try to skip products that definitely do not contribute.
+    """
+
+    #Similar to the one type of particle case, we need to first approximate the number of new diagrams that will produce.
     curr_order = len(points)
     n_types = len(paths[0][0])
     max_points = np.zeros((n_types, 2), dtype=int)
@@ -706,48 +692,6 @@ def combine_diagrams_order (points, paths, count, typeofproc, max_order, offset 
     
     return new_points, new_paths, new_count
 
-def all_components_in_other(array1, array2):
-    for row1 in array1:
-        found = False
-        for row2 in array2:
-            if np.array_equal(np.sort(row1), np.sort(row2)):
-                found = True
-                break
-        if not found:
-            return False
-    return True
-
-def my_group_diagrams (points, paths, number):
-    group_paths = np.zeros((1, len(paths[0]), len(paths[0, 0]), 2), dtype=int)
-    group_points = np.zeros((1, len(points[0]), 2), dtype=int)
-    group_paths[0] = paths[0]
-    group_points[0] = points[0]
-    count = np.zeros((1))
-    count[0] = number[0]
-    for i in range(1, len(paths)):
-        if (paths[i] == 0).all():
-            continue
-        cont = False
-        cont_2 = True
-        for j in range(len(group_paths)):
-            for k in range(len(paths[0])):
-                if all_components_in_other(paths[i, k], group_paths[j, k]):
-                    cont_2 = True
-                else:
-                    cont_2 = False
-                    break
-            if cont_2:
-                cont = False
-                count[j] += number[i]
-                break
-            else:
-                cont = True
-        if cont: 
-            group_paths = np.append(group_paths, [paths[i]], axis=0)
-            group_points = np.append(group_points, [points[i]], axis=0)
-            count = np.append(count, [number[i]], axis=0)
-    return group_points, group_paths, count
-
 #From Chatgpt
 def diagram_signature(paths: np.ndarray) -> tuple:
     """
@@ -803,24 +747,6 @@ def group_diagrams(points: np.ndarray,
     counts         = np.array(counts)                # (G,)
 
     return grouped_points, grouped_paths, counts
-
-"""
-def group_diagrams(points, paths, number):
-    grouped_points, grouped_paths, counts = chat_group_diagrams(points, paths, number)
-    new_grouped_points, new_grouped_paths, new_counts = my_group_diagrams(grouped_points, grouped_paths, counts)
-    return new_grouped_points, new_grouped_paths, new_counts
-"""
-
-#From Chatgpt
-def find_partner(paths: np.ndarray, x: int) -> int:
-    # find the indices (type_idx, pair_idx, slot_idx) where paths == x
-    type_idx, pair_idx, slot_idx = np.where(paths == x)
-    if len(type_idx) == 0:
-        raise ValueError(f"{x!r} not found in any path")
-    # since x appears only once, grab the first (and only) occurrence
-    i, j, k = type_idx[0], pair_idx[0], slot_idx[0]
-    # the “other” slot in that pair is 1-k
-    return int(paths[i, j, 1 - k])
 
 #From Chatgpt
 def find_shortest_undirected_path(paths: np.ndarray, start: int, end: int):
@@ -943,6 +869,14 @@ def equalize_x_spacing(points: np.ndarray, spacing: float = 1.0) -> np.ndarray:
     return new_pts
 
 def reposition_diagram (points, in_out_path, paths, typeofproc, print_=False, spacing_=1.0):
+    """
+    Tries to avoid superposition using a different strategy depending on the type of interaction, e.g.
+    - for [2, 2] interactions, it will try to find the 2 longest paths that connect each in-particle with each out-particle, 
+    straightening both paths and keeping them at different height, while all the rest of paths connecting them will be inbetween.
+    - for [2, 1] interactions, it will try to find which of the 2 particle from one side have the longest path to the other particle,
+    making that one straight and at a certain height, making all other points out of said height.
+    -etc.
+    """
     minx_point = np.min(points[:, 0])
     maxx_point = np.max(points[:, 0])
 
@@ -1059,32 +993,21 @@ def reposition_diagram (points, in_out_path, paths, typeofproc, print_=False, sp
                 points[i-1, 1] = maxy_point
         
     points = equalize_x_spacing(points, spacing=spacing_)
-    """
-        
-        if in_out_path[0, 0][0] > in_out_path[0, 0][1]:
-            points[in_out_path[0, 0][0]-1, 1] = 1
-            points[in_out_path[0, 0][1]-1, 1] = maxy_point
-        else:
-            points[in_out_path[0, 0][0]-1, 1] = maxy_point
-            points[in_out_path[0, 0][1]-1, 1] = 1
-            
-        if in_out_path[0, 1][0] > in_out_path[0, 1][1]:
-            points[in_out_path[0, 1][0]-1, 1] = maxy_point
-            points[in_out_path[0, 1][1]-1, 1] = 1
-        else:
-            points[in_out_path[0, 1][0]-1, 1] = 1
-            points[in_out_path[0, 1][1]-1, 1] = maxy_point
-    
-        if (find_partner(paths, in_out_path[0, 0][0]) != find_partner(paths,in_out_path[0, 0][1])):
-            points[find_partner(paths, in_out_path[0, 0][0])-1, 1] = maxy_point
-            points[find_partner(paths,in_out_path[0, 0][1])-1, 1] = 1
-        if (find_partner(paths, in_out_path[0, 1][0]) != find_partner(paths,in_out_path[0, 1][1])):
-            points[find_partner(paths,in_out_path[0, 1][0])-1, 1] = 1
-            points[find_partner(paths,in_out_path[0, 1][1])-1, 1] = maxy_point
-    """
+
     return points
 
+"""
+3 particle loops are specially problematic when it comes to superpositions, using the method above 
+we can not avoid, since making the "longest" path straight (2 of the paths), forces the 3rd path to be also
+in the same direction.
+
+So we need to detect the 3-particle loops and treat them separately.
+"""
+
 def detect_3p_loops(points, paths):
+    """
+    
+    """
     loop = np.zeros((len(paths), int(len(trim_zeros_2D(paths[0]))/3), 3), dtype=int)
     n = 0
     for i in range(len(paths)):
@@ -1154,6 +1077,9 @@ def detect_superposition(points, paths):
         return points, paths
  
 def represent_order(points, paths, count_, typeofproc, index_ = True,  lines_ = ["solid", "dotted"], colors_ = ["black", "black"], directory_ = "", docount = True, spacing = 1.0):
+    """
+    Represent all the diagrams calculated of a certain order, for a specific type of interaction.
+    """
     n=1
     for i in range(len(points)):
         in_out_paths_ = in_out_paths(paths[i])
@@ -1193,6 +1119,9 @@ def represent_order(points, paths, count_, typeofproc, index_ = True,  lines_ = 
 
 
 def next_order (points, paths, count, typeofproc, max_order, print_reduction = False):
+    """
+    Group 2 functions needed to calculate the diagrams for the next order.
+    """
     next_points, next_paths, next_count = combine_diagrams_order(points, paths, count, typeofproc, max_order, offset = 0)
     if print_reduction:
         print("Number of diagrams in order", print(len(points)), ":", len(next_points))

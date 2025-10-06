@@ -1,0 +1,45 @@
+{
+  "slides": [
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/diagram_product/49a8ff90ab44cde01a5736ddad0d355769ad92c4f38c8ea97900a10286832006.mp4",
+      "rev_file": "slides/files/diagram_product/49a8ff90ab44cde01a5736ddad0d355769ad92c4f38c8ea97900a10286832006_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/diagram_product/705d83b1f8cfb9d30b7101f4bece6a94d2021f89c8b09cc2a64b5c1f238c7ed3.mp4",
+      "rev_file": "slides/files/diagram_product/705d83b1f8cfb9d30b7101f4bece6a94d2021f89c8b09cc2a64b5c1f238c7ed3_reversed.mp4"
+    },
+    {
+      "loop": false,
+      "auto_next": false,
+      "playback_rate": 1.0,
+      "reversed_playback_rate": 1.0,
+      "notes": "",
+      "dedent_notes": true,
+      "skip_animations": false,
+      "src": null,
+      "file": "slides/files/diagram_product/0c91e80f5acc0038114b8abe19f4e6f732df6b085cbba1eac0f551968c6cb25d.mp4",
+      "rev_file": "slides/files/diagram_product/0c91e80f5acc0038114b8abe19f4e6f732df6b085cbba1eac0f551968c6cb25d_reversed.mp4"
+    }
+  ],
+  "resolution": [
+    1920,
+    1080
+  ],
+  "background_color": "white"
+}

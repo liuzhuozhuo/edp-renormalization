@@ -2,10 +2,12 @@
 cff-version: "1.2.0"         # CFF spec version
 message: "If you use this software, please cite it using the metadata below."
 title: "Computational tools for perturbative calculations in renormalization of Hamiltonian"
-version: "0.1.0"              # e.g. your current release tag
+version: "0.2.0"              # e.g. your current release tag
 date-released: "2025-06-13"   # adjust to your release date
 url: "https://github.com/liuzhuozhuo/edp-renormalization" 
 
 authors:
   - family-names: Liu
     given-names: ZhuoZhuo
+  - family-names: Gómez Rocha
+    given-names: María

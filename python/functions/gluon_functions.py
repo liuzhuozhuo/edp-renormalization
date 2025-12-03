@@ -1117,7 +1117,6 @@ def represent_order(points, paths, count_, typeofproc, index_ = True,  lines_ = 
                     represent_diagram(points[i], paths[i], index=index_, line=lines_, colors=colors_, count=0)
             n += 1
 
-
 def next_order (points, paths, count, typeofproc, max_order, print_reduction = False):
     """
     Group 2 functions needed to calculate the diagrams for the next order.
